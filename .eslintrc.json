@@ -34,12 +34,6 @@
     "import/no-extraneous-dependencies": "off",
     "react/display-name": "off",
     "import/no-unresolved": ["off", { "caseSensitive": false }],
-    "no-restricted-imports": [
-      "error",
-      {
-        "patterns": ["@mui/*/*/*", "!@mui/material/test-utils/*"]
-      }
-    ],
     "no-unused-vars": "warn"
   }
 }
