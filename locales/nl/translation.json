@@ -1,3 +1,28 @@
 {
-  "test_title": "Getest titel in nederlands"
+  "test_title": "Getest titel in nederlands",
+  "loading": "Laden...",
+  "backHome": "Terug naar home pagina",
+  "NotFoundPage": {
+    "title": "Pagina niet gevonden",
+    "description": "Controleer de adresbalk van de browser of gebruik de navigatie om naar een bekende pagina te gaan."
+  },
+  "homePage": {
+    "hero": {
+      "title": "Plan uw volgende tour met ons",
+      "description": "Wij bieden de beste prijzen en de beste tours. Boek nu uw volgende reis bij ons!"
+    }
+  },
+  "datePicker": {
+    "pickDate": "Kies een datum",
+    "required": "Datum is verplicht",
+    "selectStartDate": "Selecteer startdatum.",
+    "selectEndDate": "Selecteer einddatum.",
+    "done": "Klaar",
+    "reset": "Reset"
+  },
+  "search": {
+    "placeholder": "Plaatsen en activiteiten zoeken",
+    "requiredError": "Voer een plaats of activiteit in alstublieft",
+    "submit": "Zoeken"
+  }
 }
