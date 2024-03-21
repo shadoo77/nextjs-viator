@@ -1,0 +1,28 @@
+{
+  "test_title": "Test Title",
+  "loading": "Loading...",
+  "backHome": "Back to home page",
+  "NotFoundPage": {
+    "title": "Page not found",
+    "description": "Please double-check the browser address bar or use the navigation to go to a known page."
+  },
+  "homePage": {
+    "hero": {
+      "title": "Plan your next tour with us",
+      "description": "We offer the best prices & the best tours. Book your next trip with us now!"
+    }
+  },
+  "datePicker": {
+    "pickDate": "Pick a date",
+    "required": "This field is required",
+    "selectStartDate": "Please select start date.",
+    "selectEndDate": "Please select end date.",
+    "done": "Done",
+    "reset": "Reset"
+  },
+  "search": {
+    "placeholder": "Search for a place or activity",
+    "requiredError": "Enter a place or activity please",
+    "submit": "Search"
+  }
+}
