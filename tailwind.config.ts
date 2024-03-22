@@ -82,6 +82,9 @@ const config = {
           'url("https://res.cloudinary.com/tripplazr/image/upload/w_1300,h_700,c_auto,g_auto/v1710942318/random/AU-Main-Homepage-Thumbnail_cgwvze.jpg")',
         'hero-header-sm':
           'url("https://res.cloudinary.com/tripplazr/image/upload/w_600,h_400,c_auto,g_auto/v1710942318/random/AU-Main-Homepage-Thumbnail_cgwvze.jpg")'
+      },
+      transitionProperty: {
+        height: 'height'
       }
     }
   },

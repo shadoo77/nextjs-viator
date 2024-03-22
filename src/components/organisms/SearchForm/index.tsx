@@ -8,6 +8,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SearchBox } from '@/components/organisms/SearchBox';
 import { DatePicker } from '@/components/organisms/DatePicker';
 import { Button } from '@/components/ui/button';
+import SearchResultsList from '@/components/organisms/SearchResultsList';
+import { cn } from '@/lib/utils';
 
 export default function SearchForm() {
   const { t } = useTranslation();
@@ -20,10 +22,15 @@ export default function SearchForm() {
       .min(1, {
         message: t('search.requiredError')
       }),
-    date: z.object({
-      from: z.date().nullable(),
-      to: z.date().nullable()
-    })
+    date: z
+      .object({
+        from: z.date().optional(),
+        to: z.date().optional()
+      })
+      .refine((data) => data.from || data.to, {
+        message: t('datePicker.required')
+      }),
+    openSearch: z.boolean()
   });
 
   const methods = useForm<z.infer<typeof formSchema>>({
@@ -31,17 +38,18 @@ export default function SearchForm() {
     defaultValues: {
       searchTerm: '',
       date: {
-        from: null,
-        to: null
-      }
+        from: undefined,
+        to: undefined
+      },
+      openSearch: false
     }
   });
 
   const validateDate = () => {
     const formValues = methods.getValues();
-    if (!formValues.date.from || !formValues.date.to) {
+    if (!formValues.date.from && !formValues.date.to) {
       methods.setError('date', {
-        message: 'Please select a date range'
+        message: 'Please select a date'
       });
       return false;
     }
@@ -57,15 +65,27 @@ export default function SearchForm() {
     }
   };
 
+  const openSearch = methods.watch('openSearch');
+
   return (
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
-        className="flex flex-col gap-2 md:flex-row w-full"
+        className="flex flex-col gap-2 w-full sm:flex-row relative"
       >
-        <div className="flex-grow flex flex-col gap-2 md:flex-row">
+        <div className="flex-grow flex flex-col gap-2 sm:flex-row relative">
           <SearchBox />
           <DatePicker />
+          {/* Search results list */}
+          <div
+            className={cn(
+              'absolute z-20 py-2 mt-2 bg-white rounded shadow-lg drop-shadow-lg w-full top-full shadow-slate-500/10 text-start',
+              'transition-all duration-300 ease-in-out basis-0',
+              openSearch ? 'visible opacity-100' : 'invisible opacity-0'
+            )}
+          >
+            <SearchResultsList />
+          </div>
         </div>
         <Button
           type="submit"
