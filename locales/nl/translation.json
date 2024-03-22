@@ -15,8 +15,6 @@
   "datePicker": {
     "pickDate": "Kies een datum",
     "required": "Datum is verplicht",
-    "selectStartDate": "Selecteer startdatum.",
-    "selectEndDate": "Selecteer einddatum.",
     "done": "Klaar",
     "reset": "Reset"
   },

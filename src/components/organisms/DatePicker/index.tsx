@@ -18,7 +18,7 @@ import { Separator } from '@/components/ui/separator';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import 'dayjs/locale/nl';
 import { fallbackLng } from '@/i18nConfig';
-import { FormControl, FormField, FormItem } from '@/components/ui/form';
+import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 
 type PickerFooterProps = {
   date: DateRange | undefined;
@@ -35,10 +35,7 @@ const PickerFooter: FC<PickerFooterProps> = ({ date, done, reset }) => {
         {!date?.from && !date?.to && (
           <p className="w-full text-center">{t('datePicker.pickDate')}</p>
         )}
-        {date?.from && !date?.to && (
-          <p className="w-full text-center">{t('datePicker.selectStartDate')}</p>
-        )}
-        {date?.from && date?.to && (
+        {(date?.from || date?.to) && (
           <>
             <Button
               onClick={() => reset()}
@@ -146,11 +143,7 @@ export function DatePicker({ className }: HTMLAttributes<HTMLDivElement>) {
                 </PopoverContent>
               </Popover>
             </FormControl>
-            {invalid && (
-              <p className={cn('text-sm font-medium text-destructive', className)}>
-                {t('datePicker.required')}
-              </p>
-            )}
+            <FormMessage />
           </FormItem>
         )}
       />
