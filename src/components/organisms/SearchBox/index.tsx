@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
@@ -8,9 +9,16 @@ import { cn } from '@/lib/utils';
 
 export function SearchBox() {
   const { t } = useTranslation();
-  const { formState, control } = useFormContext();
+  const { formState, control, setFocus, watch } = useFormContext();
 
   const errors = formState.errors;
+  const openSearch = watch('openSearch');
+
+  useEffect(() => {
+    if (openSearch) {
+      setFocus('searchTerm');
+    }
+  }, [openSearch, setFocus]);
 
   return (
     <div className="space-y-8 basis-1 md:basis-1/2">
@@ -24,6 +32,10 @@ export function SearchBox() {
                 id="search-places"
                 type="search"
                 placeholder={t('search.placeholder')}
+                // onFocus={() => {
+                //   setValue('openSearch', !openSearch);
+                //   console.log('on focus triggered');
+                // }}
                 className={cn('', { 'border-destructive': errors.searchTerm })}
                 {...field}
               />
