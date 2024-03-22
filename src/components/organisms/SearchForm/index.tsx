@@ -1,7 +1,5 @@
 'use client';
 
-import { useResizeObserver } from 'usehooks-ts';
-import { useRef } from 'react';
 import { LuSearch, LuLoader2 } from 'react-icons/lu';
 import { useTranslation } from 'react-i18next';
 import z from 'zod';
@@ -10,8 +8,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SearchBox } from '@/components/organisms/SearchBox';
 import { DatePicker } from '@/components/organisms/DatePicker';
 import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import SearchResultsList from '@/components/organisms/SearchResultsList';
+import { cn } from '@/lib/utils';
 
 export default function SearchForm() {
   const { t } = useTranslation();
@@ -32,7 +30,7 @@ export default function SearchForm() {
       .refine((data) => data.from || data.to, {
         message: t('datePicker.required')
       }),
-    openSearch: z.boolean().optional()
+    openSearch: z.boolean()
   });
 
   const methods = useForm<z.infer<typeof formSchema>>({
@@ -68,44 +66,41 @@ export default function SearchForm() {
   };
 
   const openSearch = methods.watch('openSearch');
-  const ref = useRef<HTMLDivElement>(null);
-  const { width = 0 } = useResizeObserver({
-    ref,
-    box: 'border-box'
-  });
 
   return (
     <FormProvider {...methods}>
-      <Popover open={openSearch} onOpenChange={() => methods.setValue('openSearch', !openSearch)}>
-        <form
-          onSubmit={methods.handleSubmit(onSubmit)}
-          className="flex flex-col gap-2 md:flex-row w-full relative"
-        >
-          <div className="flex-grow flex flex-col gap-2 md:flex-row" ref={ref}>
-            <PopoverTrigger>
-              <SearchBox />
-            </PopoverTrigger>
-            <DatePicker />
-          </div>
-          <Button
-            type="submit"
-            disabled={isLoading}
-            className="font-bold"
-            onClick={() => validateDate()}
-          >
-            {isLoading ? (
-              <LuLoader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : (
-              <LuSearch className="mr-2 h-4 w-4" />
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className="flex flex-col gap-2 w-full sm:flex-row relative"
+      >
+        <div className="flex-grow flex flex-col gap-2 sm:flex-row relative">
+          <SearchBox />
+          <DatePicker />
+          {/* Search results list */}
+          <div
+            className={cn(
+              'absolute z-20 py-2 mt-2 bg-white rounded shadow-lg drop-shadow-lg w-full top-full shadow-slate-500/10 text-start',
+              'transition-all duration-300 ease-in-out basis-0',
+              openSearch ? 'visible opacity-100' : 'invisible opacity-0'
             )}
-            {t('search.submit')}
-          </Button>
-        </form>
-
-        <PopoverContent style={{ width }} align="start" sideOffset={10} className="p-0">
-          <SearchResultsList />
-        </PopoverContent>
-      </Popover>
+          >
+            <SearchResultsList />
+          </div>
+        </div>
+        <Button
+          type="submit"
+          disabled={isLoading}
+          className="font-bold"
+          onClick={() => validateDate()}
+        >
+          {isLoading ? (
+            <LuLoader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <LuSearch className="mr-2 h-4 w-4" />
+          )}
+          {t('search.submit')}
+        </Button>
+      </form>
     </FormProvider>
   );
 }

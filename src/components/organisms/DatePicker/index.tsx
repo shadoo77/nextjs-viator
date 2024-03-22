@@ -86,7 +86,7 @@ export function DatePicker({ className }: HTMLAttributes<HTMLDivElement>) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className={cn('grid gap-2 basis-1 md:basis-1/2', className)}>
+    <div className={cn('grid gap-2 basis-1 sm:basis-1/2', className)}>
       <FormField
         control={control}
         name="date"

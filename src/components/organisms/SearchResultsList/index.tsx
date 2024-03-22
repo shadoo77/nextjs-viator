@@ -1,3 +1,6 @@
+'use client';
+
+import { useFormContext } from 'react-hook-form';
 import {
   LuAirplay,
   LuAlertCircle,
@@ -35,16 +38,24 @@ const items = [
 ];
 
 export default function SearchResultsList() {
+  const { setValue } = useFormContext();
+
   return (
     <ul className="divide-y divide-slate-100 p-2">
       {items.map(({ Icon, title, description }, index) => (
-        <li key={index} className="flex items-start gap-4 px-4 py-3 cursor-pointer hover:bg-accent">
+        <li
+          key={index}
+          onClick={() => setValue('searchTerm', title)}
+          className="flex items-start gap-4 px-4 py-3 cursor-pointer hover:bg-primary/10 group"
+        >
           <div className="flex items-center text-primary">
             <Icon className="w-6 h-6" />
           </div>
           <div className="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full min-w-0">
-            <h4 className="text-base text-slate-700">{title}</h4>
-            <p className="w-full text-sm text-slate-500">{description}</p>
+            <h4 className="text-base text-slate-700 group-hover:text-primary">{title}</h4>
+            <p className="w-full text-sm text-slate-500 group-hover:text-primary/50">
+              {description}
+            </p>
           </div>
         </li>
       ))}
