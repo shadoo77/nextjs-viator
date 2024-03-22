@@ -109,7 +109,7 @@ export function DatePicker({ className }: HTMLAttributes<HTMLDivElement>) {
                     {date?.from ? (
                       date.to ? (
                         <>
-                          {dayjs(date.from).format('ll')} - {dayjs(date.from).format('ll')}
+                          {dayjs(date.from).format('ll')} - {dayjs(date.to).format('ll')}
                         </>
                       ) : (
                         dayjs(date.from).format('ll')
