@@ -20,10 +20,14 @@ export default function SearchForm() {
       .min(1, {
         message: t('search.requiredError')
       }),
-    date: z.object({
-      from: z.date().nullable(),
-      to: z.date().nullable()
-    })
+    date: z
+      .object({
+        from: z.date().optional(),
+        to: z.date().optional()
+      })
+      .refine((data) => data.from || data.to, {
+        message: t('datePicker.required')
+      })
   });
 
   const methods = useForm<z.infer<typeof formSchema>>({
@@ -31,17 +35,17 @@ export default function SearchForm() {
     defaultValues: {
       searchTerm: '',
       date: {
-        from: null,
-        to: null
+        from: undefined,
+        to: undefined
       }
     }
   });
 
   const validateDate = () => {
     const formValues = methods.getValues();
-    if (!formValues.date.from || !formValues.date.to) {
+    if (!formValues.date.from && !formValues.date.to) {
       methods.setError('date', {
-        message: 'Please select a date range'
+        message: 'Please select a date'
       });
       return false;
     }
