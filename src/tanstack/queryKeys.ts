@@ -1,4 +1,5 @@
 export const queryKeys = {
   login: 'login',
-  me: 'me'
+  me: 'me',
+  attractions: 'attractions'
 };
