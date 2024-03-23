@@ -6,10 +6,33 @@
     "title": "Page not found",
     "description": "Please double-check the browser address bar or use the navigation to go to a known page."
   },
+  "locales": {
+    "en": "English",
+    "nl": "Dutch"
+  },
   "homePage": {
     "hero": {
       "title": "Plan your next tour with us",
       "description": "We offer the best prices & the best tours. Book your next trip with us now!"
+    },
+    "featureSection": {
+      "title": "Why book with us?",
+      "feature1": {
+        "title": "Free Cancellation",
+        "description": "Cancel up to 24 hours in advance for a full refund."
+      },
+      "feature2": {
+        "title": "Thousands of Tours",
+        "description": "Find the perfect tour for your next adventure."
+      },
+      "feature3": {
+        "title": "Lowest Price Guarantee",
+        "description": "We guarantee the lowest price on all 200,000+ experiences we sell."
+      },
+      "feature4": {
+        "title": "Reserve Now & Pay Later",
+        "description": "Secure your spot while staying flexible."
+      }
     }
   },
   "datePicker": {
