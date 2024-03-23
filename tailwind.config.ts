@@ -85,6 +85,9 @@ const config = {
       },
       transitionProperty: {
         height: 'height'
+      },
+      zIndex: {
+        'top-navbar': '51'
       }
     }
   },

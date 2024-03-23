@@ -8,6 +8,7 @@ import {
   LuAlarmClock,
   LuBadgePlus
 } from 'react-icons/lu';
+import { textHighlighter } from '@/lib/utils';
 
 const items = [
   {
@@ -38,7 +39,9 @@ const items = [
 ];
 
 export default function SearchResultsList() {
-  const { setValue } = useFormContext();
+  const { setValue, watch } = useFormContext();
+
+  const searchTerm: string = watch('searchTerm');
 
   return (
     <ul className="divide-y divide-slate-100 p-2">
@@ -52,10 +55,15 @@ export default function SearchResultsList() {
             <Icon className="w-6 h-6" />
           </div>
           <div className="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full min-w-0">
-            <h4 className="text-base text-slate-700 group-hover:text-primary">{title}</h4>
-            <p className="w-full text-sm text-slate-500 group-hover:text-primary/50">
-              {description}
-            </p>
+            <h4
+              className="text-base text-slate-700 group-hover:text-primary"
+              dangerouslySetInnerHTML={textHighlighter({ text: title, searchTerm })}
+            />
+
+            <p
+              className="w-full text-sm text-slate-500 group-hover:text-primary/50"
+              dangerouslySetInnerHTML={textHighlighter({ text: description, searchTerm })}
+            />
           </div>
         </li>
       ))}

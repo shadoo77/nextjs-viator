@@ -7,6 +7,7 @@ import { menuItems } from '@/components/organisms/TopNavbar/menuItems';
 import MobileNav from '@/components/organisms/TopNavbar/MobileNav';
 import { cn } from '@/lib/utils';
 import { useAbstractPath } from '@/hooks/useAbstractPath';
+import LanguageChanger from '@/components/atoms/LanguageSwitcher';
 
 export default function TopNavbar() {
   const [isToggleOpen, setIsToggleOpen] = useState(false);
@@ -97,6 +98,10 @@ export default function TopNavbar() {
                 </li>
               ))}
             </ul>
+
+            <span className="hidden lg:inline-block self-center">
+              <LanguageChanger />
+            </span>
           </nav>
           <MobileNav open={isToggleOpen} />
         </div>

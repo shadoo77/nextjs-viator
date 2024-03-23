@@ -1,12 +1,6 @@
-import {
-  LuHome,
-  LuBookOpen,
-  LuInspect,
-  LuPhone,
-  LuMessageSquare,
-  LuMailQuestion
-} from 'react-icons/lu';
 import { JSX } from 'react';
+import { LuHome, LuBookOpen, LuInspect } from 'react-icons/lu';
+
 type MenuItem = {
   id: string;
   href: string;
@@ -16,13 +10,6 @@ type MenuItem = {
 };
 
 export const menuItems: MenuItem[] = [
-  {
-    id: 'getQuotation',
-    href: '/quotation',
-    label: 'Get quotation',
-    icon: <LuMessageSquare className="w-4 h-4 mr-2" />,
-    type: 'text'
-  },
   {
     id: 'home',
     href: '/',
@@ -42,20 +29,6 @@ export const menuItems: MenuItem[] = [
     href: '/get-inspired',
     label: 'Get inspired',
     icon: <LuInspect />,
-    type: 'text'
-  },
-  {
-    id: 'faq',
-    href: '/faq',
-    label: 'FAQ',
-    icon: <LuMailQuestion />,
-    type: 'text'
-  },
-  {
-    id: 'getInTouch',
-    href: '/get-in-touch',
-    label: 'Get in touch',
-    icon: <LuPhone />,
     type: 'text'
   }
 ];

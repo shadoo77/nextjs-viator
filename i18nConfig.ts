@@ -2,9 +2,9 @@ import { type Config } from 'next-i18n-router/dist/types';
 
 export const fallbackLng = 'en';
 
-export const locales = [fallbackLng, 'nl'];
-
 export type Locale = typeof fallbackLng | 'nl';
+
+export const locales: Locale[] = [fallbackLng, 'nl'];
 
 const i18nConfig: Config = {
   locales,
