@@ -2,7 +2,10 @@
 
 import { useTranslation } from 'react-i18next';
 import { LuDollarSign, LuTicket, LuMapPin, LuCalendarClock } from 'react-icons/lu';
+import { useEffect } from 'react';
 import FeatureItem from '@/components/molecules/FeatureItem';
+import { useAttractions } from '@/tanstack/queries/attractions';
+import { Locale } from '@/i18nConfig';
 
 const items = [
   {
@@ -28,7 +31,14 @@ const items = [
 ];
 
 export default function FeatureSection() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const { data, isPending, error, mutate } = useAttractions(i18n.language as Locale);
+
+  useEffect(() => {
+    mutate(i18n.language as Locale);
+  }, [i18n.language, mutate]);
+
+  console.log({ data, isPending, error });
 
   return (
     <section className="py-4">
