@@ -6,10 +6,33 @@
     "title": "Pagina niet gevonden",
     "description": "Controleer de adresbalk van de browser of gebruik de navigatie om naar een bekende pagina te gaan."
   },
+  "locales": {
+    "en": "Engels",
+    "nl": "Nederlands"
+  },
   "homePage": {
     "hero": {
       "title": "Plan uw volgende tour met ons",
       "description": "Wij bieden de beste prijzen en de beste tours. Boek nu uw volgende reis bij ons!"
+    },
+    "featureSection": {
+      "title": "Waarom bij ons boeken?",
+      "feature1": {
+        "title": "Gratis annuleren",
+        "description": "Annuleer tot 24 uur voor uw activiteit begint voor een volledige terugbetaling."
+      },
+      "feature2": {
+        "title": "Duizenden rondleidingen",
+        "description": "Vind en boek unieke rondleidingen en activiteiten aangeboden door lokale experts over de hele wereld."
+      },
+      "feature3": {
+        "title": "Laagste prijs garantie",
+        "description": "Wij garanderen de laagste prijs op alle 200.000+ ervaringen die we verkopen."
+      },
+      "feature4": {
+        "title": "Reserveer nu en betaal later",
+        "description": "We zijn er voor u, overal. Als u hulp nodig heeft, zijn we er om u te helpen."
+      }
     }
   },
   "datePicker": {

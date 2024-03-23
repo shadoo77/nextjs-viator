@@ -42,3 +42,21 @@ export const safelyParseJSON = (jsonString: string | null | undefined) => {
 
   return parsed as Record<string, unknown>;
 };
+
+// Highlight search term
+export const textHighlighter = ({
+  text = '',
+  searchTerm = ''
+}: {
+  text: string;
+  searchTerm: string;
+}) => {
+  if (!searchTerm) return { __html: text };
+  const escapedSearchTerm = searchTerm.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+  const regExp = new RegExp(escapedSearchTerm, 'gi');
+  const highlightedText = text.replace(
+    regExp,
+    (match) => `<strong class="font-bold">${match}</strong>`
+  );
+  return { __html: highlightedText };
+};
