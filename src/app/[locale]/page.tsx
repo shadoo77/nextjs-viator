@@ -4,7 +4,7 @@ import FeatureSection from '@/components/organisms/FeatureSection';
 import getQueryClient from '@/tanstack/queryClient';
 import { Locale } from '@/i18nConfig';
 
-export default async function Home({ locale }: { locale: Locale }) {
+export default async function Home({ params: { locale } }: { params: { locale: Locale } }) {
   const queryClient = getQueryClient();
 
   // await queryClient.prefetchQuery({
