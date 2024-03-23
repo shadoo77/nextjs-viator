@@ -1,5 +1,5 @@
 import { UseMutationOptions, useMutation } from '@tanstack/react-query';
-import axios from '@/axios';
+import axios from 'axios';
 import { queryKeys } from '@/tanstack/queryKeys';
 import { isSSR } from '@/lib/utils';
 import { Attraction } from '@/types/attractions';
@@ -24,10 +24,11 @@ export const getAttractions = async (locale: Locale): Promise<any> => {
       ],
       currency: 'EUR'
     };
-    const { data } = await axios.post('/search/freetext?campaign-value=JUNE', body, {
-      headers: {
-        'Accept-Language': locale
-      }
+
+    const { data } = await axios.post('/api/proxy', {
+      path: '/search/freetext?campaign-value=JUNE',
+      requestBody: JSON.stringify(body),
+      locale
     });
     return data;
   } catch (error) {

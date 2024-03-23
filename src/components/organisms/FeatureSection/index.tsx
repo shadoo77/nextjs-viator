@@ -3,6 +3,7 @@
 import { useTranslation } from 'react-i18next';
 import { LuDollarSign, LuTicket, LuMapPin, LuCalendarClock } from 'react-icons/lu';
 import { useEffect } from 'react';
+import axios from 'axios';
 import FeatureItem from '@/components/molecules/FeatureItem';
 import { useAttractions } from '@/tanstack/queries/attractions';
 import { Locale } from '@/i18nConfig';
