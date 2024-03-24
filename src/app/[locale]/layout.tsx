@@ -39,7 +39,10 @@ export default async function Layout({ children, params: { locale } }: Props) {
               <TopNavbar />
               <ScrollToTop />
               <Toaster richColors />
-              <main className="container bg-background">{children}</main>
+              <main className="container bg-background min-h-[calc(100vh-var(--navbar-height)-1px)] flex flex-col">
+                <section className="flex-1">{children}</section>
+                <div>Footer</div>
+              </main>
             </Providers>
           </TranslationsProvider>
         </Suspense>
