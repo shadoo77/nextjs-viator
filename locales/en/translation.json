@@ -33,6 +33,10 @@
         "title": "Reserve Now & Pay Later",
         "description": "Secure your spot while staying flexible."
       }
+    },
+    "topDestinationSection": {
+      "title": "Top Destinations",
+      "description": "Explore the most popular destinations around the world"
     }
   },
   "datePicker": {
@@ -45,5 +49,21 @@
     "placeholder": "Search for a place or activity",
     "requiredError": "Enter a place or activity please",
     "submit": "Search"
+  },
+  "destinations": {
+    "paris": "Paris",
+    "newYork": "New York",
+    "london": "London",
+    "dubai": "Dubai",
+    "amsterdam": "Amsterdam",
+    "rome": "Rome",
+    "barcelona": "Barcelona",
+    "istanbul": "Istanbul",
+    "tokyo": "Tokyo",
+    "sydney": "Sydney",
+    "bangkok": "Bangkok",
+    "venice": "Venice",
+    "losAngeles": "Los Angeles",
+    "miami": "Miami"
   }
 }

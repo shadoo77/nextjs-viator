@@ -33,6 +33,10 @@
         "title": "Reserveer nu en betaal later",
         "description": "We zijn er voor u, overal. Als u hulp nodig heeft, zijn we er om u te helpen."
       }
+    },
+    "topDestinationSection": {
+      "title": "Top bestemmingen",
+      "description": "Ontdek de beste bestemmingen en activiteiten over de hele wereld."
     }
   },
   "datePicker": {
@@ -45,5 +49,21 @@
     "placeholder": "Plaatsen en activiteiten zoeken",
     "requiredError": "Voer een plaats of activiteit in alstublieft",
     "submit": "Zoeken"
+  },
+  "destinations": {
+    "paris": "Parijs",
+    "newYork": "New York",
+    "london": "Londen",
+    "dubai": "Dubai",
+    "amsterdam": "Amsterdam",
+    "rome": "Rome",
+    "barcelona": "Barcelona",
+    "istanbul": "Istanbul",
+    "tokyo": "Tokyo",
+    "sydney": "Sydney",
+    "bangkok": "Bangkok",
+    "venice": "Venetië",
+    "losAngeles": "Los Angeles",
+    "miami": "Miami"
   }
 }
