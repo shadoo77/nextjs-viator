@@ -7,7 +7,7 @@ export default function Hero() {
   const { t } = useTranslation();
 
   return (
-    <section className="bg-hero-header-sm md:bg-hero-header h-96 max-h-96 md:h-[600px] md:max-h-[600px] w-full flex-1 flex items-center justify-center bg-no-repeat bg-center bg-cover relative p-4">
+    <section className="bg-hero-header-sm md:bg-hero-header h-96 max-h-96 md:h-[600px] md:max-h-[600px] w-full flex items-center justify-center bg-no-repeat bg-center bg-cover relative p-4">
       {/* overlay */}
       <div className="absolute inset-0 z-[1] bg-black opacity-50" />
       {/* content */}

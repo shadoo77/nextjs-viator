@@ -1,21 +1,88 @@
-export const topDestinations = [
-  { city: 'Paris', imageUrl: '', destinationId: 479, translationKey: 'destinations.paris' },
-  { city: 'Rome', imageUrl: '', destinationId: 511, translationKey: 'destinations.rome' },
-  { city: 'New York', imageUrl: '', destinationId: 5560, translationKey: 'destinations.newYork' },
-  { city: 'London', imageUrl: '', destinationId: 737, translationKey: 'destinations.london' },
-  { city: 'Barcelona', imageUrl: '', destinationId: 562, translationKey: 'destinations.barcelona' },
-  { city: 'Tokyo', imageUrl: '', destinationId: 334, translationKey: 'destinations.tokyo' },
-  { city: 'Venice', imageUrl: '', destinationId: 522, translationKey: 'destinations.venice' },
-  { city: 'Amsterdam', imageUrl: '', destinationId: 525, translationKey: 'destinations.amsterdam' },
-  { city: 'Dubai', imageUrl: '', destinationId: 828, translationKey: 'destinations.dubai' },
-  { city: 'Istanbul', imageUrl: '', destinationId: 585, translationKey: 'destinations.istanbul' },
-  { city: 'Sydney', imageUrl: '', destinationId: 357, translationKey: 'destinations.sydney' },
-  { city: 'Bangkok', imageUrl: '', destinationId: 343, translationKey: 'destinations.bangkok' },
+import { resizedBaseImageURL } from '@/lib/imageURLs';
+
+export const populaireDestinations = [
   {
-    city: 'Los Angeles',
-    imageUrl: '',
+    destinationName: 'Paris',
+    imageUrl: `${resizedBaseImageURL(400, 300)}/v1711384529/populaire destinations/Paris.jpg`,
+    destinationId: 479,
+    translationKey: 'destinations.paris'
+  },
+  {
+    destinationName: 'Rome',
+    imageUrl: `${resizedBaseImageURL(400, 300)}/v1711384477/populaire destinations/Rome.jpg`,
+    destinationId: 511,
+    translationKey: 'destinations.rome'
+  },
+  {
+    destinationName: 'New York',
+    imageUrl: `${resizedBaseImageURL(400, 300)}/v1711384023/populaire destinations/New York.jpg`,
+    destinationId: 5560,
+    translationKey: 'destinations.newYork'
+  },
+  {
+    destinationName: 'London',
+    imageUrl: `${resizedBaseImageURL(400, 300)}/v1711384142/populaire destinations/London.jpg`,
+    destinationId: 737,
+    translationKey: 'destinations.london'
+  },
+  {
+    destinationName: 'Barcelona',
+    imageUrl: `${resizedBaseImageURL(400, 300)}/v1711384586/populaire destinations/Barcelona.jpg`,
+    destinationId: 562,
+    translationKey: 'destinations.barcelona'
+  },
+  {
+    destinationName: 'Tokyo',
+    imageUrl: `${resizedBaseImageURL(400, 300)}/v1711384674/populaire destinations/Tokyo.jpg`,
+    destinationId: 334,
+    translationKey: 'destinations.tokyo'
+  },
+  {
+    destinationName: 'Venice',
+    imageUrl: `${resizedBaseImageURL(400, 300)}/v1711384729/populaire destinations/Venice.jpg`,
+    destinationId: 522,
+    translationKey: 'destinations.venice'
+  },
+  {
+    destinationName: 'Amsterdam',
+    imageUrl: `${resizedBaseImageURL(400, 300)}/v1711384812/populaire destinations/Amsterdam.jpg`,
+    destinationId: 525,
+    translationKey: 'destinations.amsterdam'
+  },
+  {
+    destinationName: 'Dubai',
+    imageUrl: `${resizedBaseImageURL(400, 300)}/v1711385106/populaire destinations/Dubai.jpg`,
+    destinationId: 828,
+    translationKey: 'destinations.dubai'
+  },
+  {
+    destinationName: 'Istanbul',
+    imageUrl: `${resizedBaseImageURL(400, 300)}/v1711385049/populaire destinations/Istanbul.jpg`,
+    destinationId: 585,
+    translationKey: 'destinations.istanbul'
+  },
+  {
+    destinationName: 'Sydney',
+    imageUrl: `${resizedBaseImageURL(400, 300)}/v1711385154/populaire destinations/Sydney.png`,
+    destinationId: 357,
+    translationKey: 'destinations.sydney'
+  },
+  {
+    destinationName: 'Bangkok',
+    imageUrl: `${resizedBaseImageURL(400, 300)}/v1711385232/populaire destinations/Bangkok.jpg`,
+    destinationId: 343,
+    translationKey: 'destinations.bangkok'
+  },
+  {
+    destinationName: 'Los Angeles',
+    imageUrl: `${resizedBaseImageURL(400, 300)}/v1711385411/populaire destinations/Los Angeles.jpg`,
     destinationId: 645,
     translationKey: 'destinations.losAngeles'
   },
-  { city: 'Miami', imageUrl: '', destinationId: 662, translationKey: 'destinations.miami' }
+  {
+    destinationName: 'Miami',
+    imageUrl: `${resizedBaseImageURL(400, 300)}/v1711385332/populaire destinations/Miami.jpg`,
+    destinationId: 662,
+    translationKey: 'destinations.miami'
+  }
 ];
