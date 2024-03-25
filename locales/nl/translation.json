@@ -34,8 +34,8 @@
         "description": "We zijn er voor u, overal. Als u hulp nodig heeft, zijn we er om u te helpen."
       }
     },
-    "topDestinationSection": {
-      "title": "Top bestemmingen",
+    "popularDestinationSection": {
+      "title": "Populaire bestemmingen",
       "description": "Ontdek de beste bestemmingen en activiteiten over de hele wereld."
     }
   },

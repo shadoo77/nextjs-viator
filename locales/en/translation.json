@@ -34,8 +34,8 @@
         "description": "Secure your spot while staying flexible."
       }
     },
-    "topDestinationSection": {
-      "title": "Top Destinations",
+    "popularDestinationSection": {
+      "title": "Popular Destinations",
       "description": "Explore the most popular destinations around the world"
     }
   },

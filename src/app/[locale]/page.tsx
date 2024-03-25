@@ -2,7 +2,7 @@ import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
 // page sections
 import Hero from '@/components/organisms/Hero';
 import FeatureSection from '@/components/organisms/FeatureSection';
-import TopDestinations from '@/components/organisms/TopDestinations';
+import PopularDestinations from '@/components/organisms/PopularDestinations';
 
 import getQueryClient from '@/tanstack/queryClient';
 import { Locale } from '@/i18nConfig';
@@ -25,8 +25,8 @@ export default async function Home({ params: { locale } }: { params: { locale: L
         {/* Feature Section */}
         <FeatureSection />
         {/* Top Tours */}
-        {/* Top Destinations */}
-        <TopDestinations />
+        {/* Popular Destinations */}
+        <PopularDestinations />
         {/* Top Attractions */}
       </div>
     </HydrationBoundary>
