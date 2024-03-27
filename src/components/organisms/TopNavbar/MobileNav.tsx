@@ -10,7 +10,7 @@ import { useAbstractPath } from '@/hooks/useAbstractPath';
 import LanguageChanger from '@/components/atoms/LanguageSwitcher';
 
 export default function MobileNav({ open }: { open: boolean }) {
-  const { t } = useTranslation();
+  const { i18n } = useTranslation();
   const minWidthLarge = useMediaQuery('(min-width: 1024px)');
 
   const abstractPath = useAbstractPath();
@@ -46,6 +46,7 @@ export default function MobileNav({ open }: { open: boolean }) {
                       ? 'bg-primary/10 text-primary'
                       : ''
                   )}
+                  locale={i18n.language}
                 >
                   <div className="flex w-6 items-center self-center">{icon}</div>
                   <div className="flex w-full flex-1 flex-col items-start justify-center gap-0 overflow-hidden truncate text-sm">

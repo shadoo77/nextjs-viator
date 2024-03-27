@@ -57,6 +57,7 @@ export default function TopDestinations({ locale }: { locale: Locale }) {
               href="/"
               style={{ backgroundImage: `url('${imageUrl}')` }}
               className="relative w-full h-32 rounded-md flex items-center justify-center font-extrabold transition-all duration-300 hover:scale-110 group bg-cover bg-center"
+              locale={locale}
             >
               <div className="rounded-md inset-0 absolute z-[1] bg-black transition-all duration-300 opacity-40 group-hover:opacity-5" />
               <span className="text-primary-foreground z-10">{t(translationKey)}</span>
