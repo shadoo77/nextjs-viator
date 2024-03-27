@@ -1,18 +1,13 @@
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import axios from 'axios';
+import axios from '@/axios';
 import { queryKeys } from '@/tanstack/queryKeys';
 import { isSSR } from '@/lib/utils';
 import { DestinationResponse } from '@/types/destinations';
 
-const url = `${isSSR ? process.env.NEXT_PUBLIC_APP_URL : ''}/api/proxy`;
-
 export const getDestinations = async () => {
   try {
-    const { data } = await axios.get<DestinationResponse>(url, {
-      params: {
-        path: '/v1/taxonomy/destinations',
-        locale: 'en'
-      }
+    const { data } = await axios.get<DestinationResponse>('/v1/taxonomy/destinations', {
+      headers: { 'Accept-Language': 'fr' }
     });
     return data.data;
   } catch (error) {
