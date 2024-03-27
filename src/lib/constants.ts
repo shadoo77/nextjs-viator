@@ -1,6 +1,6 @@
 import { resizedBaseImageURL } from '@/lib/imageURLs';
 
-export const populaireDestinations = [
+export const popularDestinations = [
   {
     destinationName: 'Paris',
     imageUrl: `${resizedBaseImageURL(400, 300)}/v1711384529/populaire destinations/Paris.jpg`,

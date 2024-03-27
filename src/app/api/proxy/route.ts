@@ -12,6 +12,8 @@ const axiosInstance = axios.create({
 });
 
 export async function GET(request: NextRequest) {
+  // const hhh = request.cookies;
+  // console.log({ hhh });
   const path = request.nextUrl.searchParams.get('path');
   const locale = request.nextUrl.searchParams.get('locale');
   const res = await axiosInstance.get(`${path}`, {

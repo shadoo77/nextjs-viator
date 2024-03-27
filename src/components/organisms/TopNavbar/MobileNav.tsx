@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
 import { useMediaQuery } from 'usehooks-ts';
@@ -8,9 +7,10 @@ import { menuItems } from '@/components/organisms/TopNavbar/menuItems';
 import { cn } from '@/lib/utils';
 import { useAbstractPath } from '@/hooks/useAbstractPath';
 import LanguageChanger from '@/components/atoms/LanguageSwitcher';
+import Link from '@/components/atoms/NextLink';
 
 export default function MobileNav({ open }: { open: boolean }) {
-  const { t } = useTranslation();
+  const { i18n } = useTranslation();
   const minWidthLarge = useMediaQuery('(min-width: 1024px)');
 
   const abstractPath = useAbstractPath();
@@ -46,6 +46,7 @@ export default function MobileNav({ open }: { open: boolean }) {
                       ? 'bg-primary/10 text-primary'
                       : ''
                   )}
+                  locale={i18n.language}
                 >
                   <div className="flex w-6 items-center self-center">{icon}</div>
                   <div className="flex w-full flex-1 flex-col items-start justify-center gap-0 overflow-hidden truncate text-sm">

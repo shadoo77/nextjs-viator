@@ -1,13 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
-import Link from 'next/link';
+import { usePathname, useSearchParams, useParams } from 'next/navigation';
 import { menuItems } from '@/components/organisms/TopNavbar/menuItems';
 import MobileNav from '@/components/organisms/TopNavbar/MobileNav';
 import { cn } from '@/lib/utils';
 import { useAbstractPath } from '@/hooks/useAbstractPath';
 import LanguageChanger from '@/components/atoms/LanguageSwitcher';
+import { Locale } from '@/i18nConfig';
+import Link from '@/components/atoms/NextLink';
 
 export default function TopNavbar() {
   const [isToggleOpen, setIsToggleOpen] = useState(false);
@@ -16,6 +17,7 @@ export default function TopNavbar() {
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { locale } = useParams();
 
   // Close the mobile menu when the route changes
   useEffect(() => {
@@ -38,6 +40,7 @@ export default function TopNavbar() {
               aria-current="page"
               className="flex items-center gap-2 py-3 text-lg whitespace-nowrap focus:outline-none"
               href="/"
+              locale={locale as Locale}
             >
               <img src="https://placehold.co/120X40" alt="logo" />
             </Link>
@@ -91,6 +94,7 @@ export default function TopNavbar() {
                           : ''
                       )}
                       href={href}
+                      locale={locale as Locale}
                     >
                       <span>{label}</span>
                     </Link>
