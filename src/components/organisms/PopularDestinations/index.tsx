@@ -6,12 +6,15 @@ import { popularDestinations } from '@/lib/constants';
 import { Locale } from '@/i18nConfig';
 import Link from '@/components/atoms/NextLink';
 import { useDestination } from '@/tanstack/queries/destinations';
+import { isSSR } from '@/lib/utils';
 
 export default function TopDestinations({ locale }: { locale: Locale }) {
   const { t } = useTranslation();
   const { data: destinations, error } = useDestination();
 
-  console.log({ error, destinations });
+  if (!isSSR) {
+    console.log({ error, destinations });
+  }
 
   return (
     <SectionWithTitle title={t('homePage.popularDestinationSection.title')}>

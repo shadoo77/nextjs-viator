@@ -1,6 +1,7 @@
 import { ParsedUrlQuery } from 'querystring';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { getHostName } from '@/lib/serverActions';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -8,6 +9,9 @@ export function cn(...inputs: ClassValue[]) {
 
 // Check whether it's a server side or client side
 export const isSSR = typeof window === 'undefined';
+
+// Check whether it's a development environment
+export const isDevelopment = process.env.NODE_ENV === 'development';
 
 // Check if some variable, array or object is empty
 export const isEmpty = <T>(value: T): boolean =>
@@ -59,4 +63,15 @@ export const textHighlighter = ({
     (match) => `<strong class="font-bold">${match}</strong>`
   );
   return { __html: highlightedText };
+};
+
+export const getServerApiUrlByHost = async (url: string) => {
+  try {
+    if (!isSSR) return url;
+    const host = await getHostName();
+    const currentUrl = isDevelopment ? `http://${host}/api` : `https//${host}/api`;
+    return `${currentUrl}${url}`;
+  } catch (error) {
+    return url;
+  }
 };

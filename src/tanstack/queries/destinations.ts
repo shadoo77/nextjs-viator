@@ -1,15 +1,17 @@
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import axios from '@/axios';
 import { queryKeys } from '@/tanstack/queryKeys';
-import { isSSR } from '@/lib/utils';
+import { getServerApiUrlByHost, isSSR } from '@/lib/utils';
 import { DestinationResponse } from '@/types/destinations';
 
 export const getDestinations = async () => {
   try {
-    const { data } = await axios.get<DestinationResponse>('/v1/taxonomy/destinations', {
+    const url = await getServerApiUrlByHost('/v1/taxonomy/destinations');
+
+    const { data } = await axios.get<DestinationResponse>(url, {
       headers: { 'Accept-Language': 'fr' }
     });
-    return data.data;
+    return data;
   } catch (error) {
     if (!isSSR) throw error;
     return undefined;
