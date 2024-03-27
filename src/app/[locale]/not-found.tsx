@@ -1,9 +1,9 @@
 'use client';
 
+import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import Link from '@/components/atoms/NextLink';
 
 export default function NotFound() {
   const { t } = useTranslation();
