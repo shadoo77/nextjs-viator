@@ -11,7 +11,7 @@ type Options = UseMutationOptions<any, Error, string, unknown>;
 
 export const getAttractions = async (locale: Locale): Promise<any> => {
   try {
-    const body = {
+    const requestBody = {
       searchTerm: 'antalya',
       searchTypes: [
         {
@@ -27,7 +27,7 @@ export const getAttractions = async (locale: Locale): Promise<any> => {
 
     const { data } = await axios.post('/api/proxy', {
       path: '/search/freetext?campaign-value=JUNE',
-      requestBody: JSON.stringify(body),
+      requestBody,
       locale
     });
     return data;

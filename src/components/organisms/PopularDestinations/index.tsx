@@ -1,17 +1,57 @@
 'use client';
 
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
+import axios from '@/axios';
 import SectionWithTitle from '@/components/templates/SectionWithTitle';
-import { populaireDestinations } from '@/lib/constants';
+import { popularDestinations } from '@/lib/constants';
+import { useAttractions } from '@/tanstack/queries/attractions';
+import { Locale } from '@/i18nConfig';
 
-export default function TopDestinations() {
+export default function TopDestinations({ locale }: { locale: Locale }) {
   const { t } = useTranslation();
+  // const { data, mutate, error } = useAttractions(locale);
+  // console.log({ data, error });
+
+  // useEffect(() => {
+  //   mutate(locale);
+  // }, [mutate, locale]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const requestBody = {
+          searchTerm: 'antalya',
+          searchTypes: [
+            {
+              searchType: 'ATTRACTIONS',
+              pagination: {
+                start: 1,
+                count: 10
+              }
+            }
+          ],
+          currency: 'EUR'
+        };
+
+        const { data } = await axios.post('/search/freetext?campaign-value=JUNE', requestBody, {
+          headers: {
+            'Accept-Language': locale
+          }
+        });
+        console.log('============= data ============== >>>', data);
+        return data;
+      } catch (error) {
+        console.log('============= error ============== >>>', error);
+      }
+    })();
+  }, [locale]);
 
   return (
     <SectionWithTitle title={t('homePage.popularDestinationSection.title')}>
       <div className="grid gap-6 grid-cols-4 md:grid-cols-8 lg:grid-cols-12">
-        {populaireDestinations.slice(0, 12).map(({ translationKey, imageUrl }, index) => (
+        {popularDestinations.slice(0, 12).map(({ translationKey, imageUrl }, index) => (
           <div className="col-span-2 lg:col-span-2" key={index}>
             <Link
               href="/"

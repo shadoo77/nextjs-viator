@@ -26,7 +26,7 @@ export default async function Home({ params: { locale } }: { params: { locale: L
         <FeatureSection />
         {/* Top Tours */}
         {/* Popular Destinations */}
-        <PopularDestinations />
+        <PopularDestinations locale={locale} />
         {/* Top Attractions */}
       </div>
     </HydrationBoundary>
