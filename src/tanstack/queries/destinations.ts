@@ -8,9 +8,7 @@ export const getDestinations = async () => {
   try {
     const url = await getServerApiUrlByHost('/v1/taxonomy/destinations');
 
-    const { data } = await axios.get<DestinationResponse>(url, {
-      headers: { 'Accept-Language': 'fr' }
-    });
+    const { data } = await axios.get<DestinationResponse>(url);
     return data;
   } catch (error) {
     if (!isSSR) throw error;
