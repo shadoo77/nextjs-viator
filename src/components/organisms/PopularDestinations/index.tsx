@@ -10,10 +10,10 @@ import { isSSR } from '@/lib/utils';
 
 export default function TopDestinations({ locale }: { locale: Locale }) {
   const { t } = useTranslation();
-  const { data: destinations, error } = useDestination();
+  const { data: destinations, error, isLoading, isFetching, isSuccess } = useDestination();
 
   if (!isSSR) {
-    console.log({ error, destinations });
+    console.log({ error, destinations, isLoading, isFetching, isSuccess });
   }
 
   return (
