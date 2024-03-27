@@ -11,7 +11,7 @@ export default function Link({ children, href, ...rest }: PropsWithChildren<Prop
   const { locale } = useParams();
 
   return (
-    <NextLink href={`/${locale}/${href}`} {...rest}>
+    <NextLink href={`/${locale}${href}`} {...rest}>
       {children}
     </NextLink>
   );
