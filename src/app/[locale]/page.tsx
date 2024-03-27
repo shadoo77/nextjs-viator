@@ -1,6 +1,5 @@
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
 // page sections
-import { headers } from 'next/headers';
 import Hero from '@/components/organisms/Hero';
 import FeatureSection from '@/components/organisms/FeatureSection';
 import PopularDestinations from '@/components/organisms/PopularDestinations';
@@ -12,12 +11,6 @@ import { getDestinations } from '@/tanstack/queries/destinations';
 
 export default async function Home({ params: { locale } }: { params: { locale: Locale } }) {
   const queryClient = getQueryClient();
-  const headerList = headers();
-  const host = headers().get('host');
-
-  const headers2 = Object.fromEntries(headerList.entries());
-
-  console.log('host >>>>>>>>>>>>> ', { headers2, host });
 
   await queryClient.prefetchQuery({
     queryKey: [queryKeys.destinations],
