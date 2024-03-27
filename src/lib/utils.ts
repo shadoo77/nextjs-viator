@@ -68,7 +68,9 @@ export const textHighlighter = ({
 // Get server api url by host
 export const getServerApiUrlByHost = async (url: string) => {
   try {
-    if (!isSSR) return url;
+    if (!isSSR) {
+      return process.env.NEXT_PUBLIC_VIATOR_API_URL_TEST ? url : `${location.origin}/api${url}`;
+    }
     const host = await getHostName();
     const currentUrl = isDevelopment ? `http://${host}/api` : `https//${host}/api`;
     return `${currentUrl}${url}`;

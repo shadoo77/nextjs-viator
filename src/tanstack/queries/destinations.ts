@@ -8,15 +8,9 @@ export const getDestinations = async () => {
   try {
     const url = await getServerApiUrlByHost('/v1/taxonomy/destinations');
 
-    console.log('>>>>>>>>>>>>>>>>>>>>>>> url >>>>>> ', { url });
-
-    const { data } = await axios.get<DestinationResponse>(url, {
-      headers: { 'Accept-Language': 'fr' }
-    });
-    console.log('>>>>>>>>>>>>>>>>>>>>>>> data >>>>>> ', { data });
+    const { data } = await axios.get<DestinationResponse>(url);
     return data;
   } catch (error) {
-    console.log('>>>>>>>>>>>>>>>>>>>>>>> error >>>>>> ', { error });
     if (!isSSR) throw error;
     return undefined;
   }
