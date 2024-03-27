@@ -65,6 +65,7 @@ export const textHighlighter = ({
   return { __html: highlightedText };
 };
 
+// Get server api url by host
 export const getServerApiUrlByHost = async (url: string) => {
   try {
     if (!isSSR) return url;
