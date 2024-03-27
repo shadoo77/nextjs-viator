@@ -1,54 +1,17 @@
 'use client';
 
-import { useEffect } from 'react';
-
-// import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
-import axios from '@/axios';
 import SectionWithTitle from '@/components/templates/SectionWithTitle';
 import { popularDestinations } from '@/lib/constants';
-import { useAttractions } from '@/tanstack/queries/attractions';
 import { Locale } from '@/i18nConfig';
 import Link from '@/components/atoms/NextLink';
+import { useDestination } from '@/tanstack/queries/destinations';
 
 export default function TopDestinations({ locale }: { locale: Locale }) {
   const { t } = useTranslation();
-  // const { data, mutate, error } = useAttractions(locale);
-  // console.log({ data, error });
+  const { data: destinations, error } = useDestination();
 
-  // useEffect(() => {
-  //   mutate(locale);
-  // }, [mutate, locale]);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const requestBody = {
-          searchTerm: 'antalya',
-          searchTypes: [
-            {
-              searchType: 'ATTRACTIONS',
-              pagination: {
-                start: 1,
-                count: 10
-              }
-            }
-          ],
-          currency: 'EUR'
-        };
-
-        const { data } = await axios.post('/search/freetext?campaign-value=JUNE', requestBody, {
-          headers: {
-            'Accept-Language': locale
-          }
-        });
-        console.log('============= data ============== >>>', data);
-        return data;
-      } catch (error) {
-        console.log('============= error ============== >>>', error);
-      }
-    })();
-  }, [locale]);
+  console.log({ error, destinations });
 
   return (
     <SectionWithTitle title={t('homePage.popularDestinationSection.title')}>

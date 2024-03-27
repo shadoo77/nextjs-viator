@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-export const baseURL = process.env.NEXT_PUBLIC_VIATOR_API_URL_TEST;
+export const baseURL =
+  process.env.NEXT_PUBLIC_VIATOR_API_URL_TEST || `${process.env.NEXT_PUBLIC_LOCAL_APP_URL}/api`;
 
 const instance = axios.create({
   baseURL,
