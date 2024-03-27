@@ -1,13 +1,15 @@
 'use client';
 
 import { useEffect } from 'react';
-import Link from 'next/link';
+
+// import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import axios from '@/axios';
 import SectionWithTitle from '@/components/templates/SectionWithTitle';
 import { popularDestinations } from '@/lib/constants';
 import { useAttractions } from '@/tanstack/queries/attractions';
 import { Locale } from '@/i18nConfig';
+import Link from '@/components/atoms/NextLink';
 
 export default function TopDestinations({ locale }: { locale: Locale }) {
   const { t } = useTranslation();

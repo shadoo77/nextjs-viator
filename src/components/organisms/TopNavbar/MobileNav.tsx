@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
 import { useMediaQuery } from 'usehooks-ts';
@@ -8,6 +7,7 @@ import { menuItems } from '@/components/organisms/TopNavbar/menuItems';
 import { cn } from '@/lib/utils';
 import { useAbstractPath } from '@/hooks/useAbstractPath';
 import LanguageChanger from '@/components/atoms/LanguageSwitcher';
+import Link from '@/components/atoms/NextLink';
 
 export default function MobileNav({ open }: { open: boolean }) {
   const { i18n } = useTranslation();

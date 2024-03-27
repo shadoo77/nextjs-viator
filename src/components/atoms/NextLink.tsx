@@ -1,11 +1,13 @@
 'use client';
 
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, AnchorHTMLAttributes } from 'react';
 import NextLink from 'next/link';
 import { type LinkProps } from 'next/link';
 import { useParams } from 'next/navigation';
 
-export default function Link({ children, href, ...rest }: PropsWithChildren<LinkProps>) {
+type Props = LinkProps & AnchorHTMLAttributes<HTMLAnchorElement>;
+
+export default function Link({ children, href, ...rest }: PropsWithChildren<Props>) {
   const { locale } = useParams();
 
   return (

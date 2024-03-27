@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { usePathname, useSearchParams, useParams } from 'next/navigation';
-import Link from 'next/link';
 import { menuItems } from '@/components/organisms/TopNavbar/menuItems';
 import MobileNav from '@/components/organisms/TopNavbar/MobileNav';
 import { cn } from '@/lib/utils';
 import { useAbstractPath } from '@/hooks/useAbstractPath';
 import LanguageChanger from '@/components/atoms/LanguageSwitcher';
 import { Locale } from '@/i18nConfig';
+import Link from '@/components/atoms/NextLink';
 
 export default function TopNavbar() {
   const [isToggleOpen, setIsToggleOpen] = useState(false);
