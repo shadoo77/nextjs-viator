@@ -1,7 +1,6 @@
 import { ParsedUrlQuery } from 'querystring';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { getHostName } from '@/lib/serverActions';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -63,18 +62,4 @@ export const textHighlighter = ({
     (match) => `<strong class="font-bold">${match}</strong>`
   );
   return { __html: highlightedText };
-};
-
-// Get server api url by host
-export const getServerApiUrlByHost = async (url: string) => {
-  try {
-    if (!isSSR) {
-      return process.env.NEXT_PUBLIC_VIATOR_API_URL_TEST ? url : `${location.origin}/api${url}`;
-    }
-    const host = await getHostName();
-    const currentUrl = isDevelopment ? `http://${host}/api` : `https//${host}/api`;
-    return `${currentUrl}${url}`;
-  } catch (error) {
-    return url;
-  }
 };
