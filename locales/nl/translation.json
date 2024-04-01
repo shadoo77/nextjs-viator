@@ -36,7 +36,11 @@
     },
     "popularDestinationSection": {
       "title": "Populaire bestemmingen",
-      "description": "Ontdek de beste bestemmingen en activiteiten over de hele wereld."
+      "description": "Ontdek de beste bestemmingen en activiteiten over de hele wereld.",
+      "error": {
+        "title": "Fout",
+        "description": "Er is een fout opgetreden bij het ophalen van de populaire bestemmingen. Probeer maar later opnieuw."
+      }
     }
   },
   "datePicker": {
