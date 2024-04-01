@@ -20,7 +20,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/i18nConfig": ["./i18nConfig.ts"],
-      "@/locales": ["./locales"]
+      "@/locales": ["./locales"],
+      "@/emails/*": ["./emails/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
