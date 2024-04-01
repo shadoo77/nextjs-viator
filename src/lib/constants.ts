@@ -1,4 +1,4 @@
-import { resizedBaseImageURL } from '@/lib/imageURLs';
+import { resizedBaseImageURL } from '@/lib/utils';
 
 export const popularDestinations = [
   {
