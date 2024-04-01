@@ -8,6 +8,7 @@ import getQueryClient from '@/tanstack/queryClient';
 import { Locale } from '@/i18nConfig';
 import { queryKeys } from '@/tanstack/queryKeys';
 import { getDestinations } from '@/tanstack/queries/destinations';
+import { getBlock } from '@/tanstack/queries/block';
 
 export default async function Home({ params: { locale } }: { params: { locale: Locale } }) {
   const queryClient = getQueryClient();
@@ -15,6 +16,11 @@ export default async function Home({ params: { locale } }: { params: { locale: L
   await queryClient.prefetchQuery({
     queryKey: [queryKeys.destinations],
     queryFn: getDestinations
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: [queryKeys.block, locale, 'popular_destinations'],
+    queryFn: getBlock
   });
 
   return (

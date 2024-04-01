@@ -1,6 +1,8 @@
 import { ParsedUrlQuery } from 'querystring';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { Image } from '@/types/block';
+import { imageBaseUrl } from '@/lib/imageURLs';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -62,4 +64,27 @@ export const textHighlighter = ({
     (match) => `<strong class="font-bold">${match}</strong>`
   );
   return { __html: highlightedText };
+};
+
+// Get base image url
+export const resizedBaseImageURL = (width?: number, height?: number) => {
+  let restPath = 'c_auto,g_auto';
+  if (width) restPath += `,w_${width}`;
+  if (height) restPath += `,h_${height}`;
+  return `${imageBaseUrl}/${restPath}`;
+};
+
+// Get image url
+export const getImageUrl = ({
+  image,
+  width,
+  height
+}: {
+  image: Image;
+  width?: number;
+  height?: number;
+}) => {
+  const { version, public_id, format } = image;
+  const baseImgUrl = resizedBaseImageURL(width, height);
+  return `${baseImgUrl}/v${version}/${public_id}.${format}`;
 };

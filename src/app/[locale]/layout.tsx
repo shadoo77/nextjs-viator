@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ReactNode, Suspense } from 'react';
+import AppLoader from './loading';
 import i18nConfig, { Locale } from '@/i18nConfig';
 import initTranslations from '@/i18n';
 import '@/app/globals.css';
@@ -9,18 +10,36 @@ import TranslationsProvider from '@/lib/TranslationsProvider';
 import { Toaster } from '@/components/ui/sonner';
 import TopNavbar from '@/components/organisms/TopNavbar';
 import ScrollToTop from '@/components/organisms/ScrollToTop';
-import { Loader } from '@/components/molecules/Loader';
+import { getGlobal } from '@/tanstack/queries/global';
+import { queryKeys } from '@/tanstack/queryKeys';
 
 const inter = Inter({ subsets: ['latin'] });
-
-export const metadata: Metadata = {
-  title: 'Marketplace',
-  description: 'A marketplace for wall painting jobs'
-};
 
 interface Props {
   children: ReactNode;
   params: { locale: Locale };
+}
+
+export async function generateMetadata({
+  params: { locale }
+}: {
+  params: { locale: Locale };
+}): Promise<Metadata> {
+  const { t } = await initTranslations(locale);
+  const data = await getGlobal({ queryKey: [queryKeys.global, locale] });
+
+  const siteTitle = !data ? t('siteTitle') : data.items[0].fields.siteTitle;
+  const description = !data ? t('siteDescription') : data.items[0].fields.siteDescription;
+
+  const metadata: Metadata = {
+    title: {
+      template: `%s | ${siteTitle}`,
+      absolute: siteTitle
+    },
+    description
+  };
+
+  return metadata;
 }
 
 export function generateStaticParams() {
@@ -33,7 +52,7 @@ export default async function Layout({ children, params: { locale } }: Props) {
   return (
     <html lang={locale}>
       <body className={inter.className} suppressHydrationWarning>
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<AppLoader />}>
           <TranslationsProvider locale={locale} resources={resources}>
             <Providers>
               <TopNavbar />

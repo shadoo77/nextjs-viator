@@ -36,7 +36,11 @@
     },
     "popularDestinationSection": {
       "title": "Popular Destinations",
-      "description": "Explore the most popular destinations around the world"
+      "description": "Explore the most popular destinations around the world",
+      "error": {
+        "title": "Error",
+        "description": "An error occurred while fetching the popular destinations, please try again later."
+      }
     }
   },
   "datePicker": {
