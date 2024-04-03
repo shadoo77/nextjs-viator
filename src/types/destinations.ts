@@ -9,7 +9,7 @@ export type Destination = {
   iataCode: string;
   destinationName: string;
   destinationId: number;
-  destinationType: string;
+  destinationType: 'COUNTRY' | 'REGION' | 'CITY' | string;
   latitude: number;
   longitude: number;
 };

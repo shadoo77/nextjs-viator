@@ -3,6 +3,9 @@ import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { Image } from '@/types/block';
 import { imageBaseUrl } from '@/lib/imageURLs';
+import { Destination } from '@/types/destinations';
+import { Product } from '@/types/products';
+import { Locale } from '@/i18nConfig';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -87,4 +90,67 @@ export const getImageUrl = ({
   const { version, public_id, format } = image;
   const baseImgUrl = resizedBaseImageURL(width, height);
   return `${baseImgUrl}/v${version}/${public_id}.${format}`;
+};
+
+// Sanitize html
+export const sanitizeHtml = (html: string) => html.replace(/(<([^>]+)>)/gi, '');
+
+// Get location details
+export const getLocationDetails = (
+  allDestinations: Destination[],
+  destinations: Product['destinations']
+) => {
+  const location = {
+    city: '',
+    region: '',
+    country: ''
+  };
+
+  const productLocation = destinations.find((destination) => destination.primary);
+  if (!productLocation) return location;
+
+  const destination = allDestinations?.find(
+    (des) => des.destinationId === Number(productLocation?.ref)
+  );
+  if (!destination) return location;
+
+  location.city = destination.destinationName;
+
+  const parentDestination = allDestinations.find(
+    (des) => des.destinationId === destination.parentId
+  );
+
+  if (parentDestination?.destinationType === 'COUNTRY') {
+    location.country = parentDestination.destinationName;
+    return location;
+  }
+
+  if (parentDestination?.destinationType === 'REGION') {
+    location.region = parentDestination.destinationName;
+    const regionDestination = allDestinations.find(
+      (des) => des.destinationId === parentDestination.parentId
+    );
+    location.country = regionDestination?.destinationName || '';
+  }
+
+  return location;
+};
+
+// Get currency symbol
+export const getCurrencySymbol = ({
+  currency,
+  locale,
+  price
+}: {
+  currency: string;
+  locale: Locale;
+  price: number;
+}) => {
+  const intl = new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency,
+    currencyDisplay: 'narrowSymbol'
+  });
+
+  return intl.format(price);
 };

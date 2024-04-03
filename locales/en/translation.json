@@ -8,7 +8,18 @@
   },
   "locales": {
     "en": "English",
-    "nl": "Dutch"
+    "nl": "Nederlands"
+  },
+  "from": "From",
+  "to": "To",
+  "price": {
+    "from": "From",
+    "variesByGroupSize": "Price varies by group size"
+  },
+
+  "error": {
+    "title": "Error",
+    "description": "An error occurred while fetching the data, please try again later."
   },
   "homePage": {
     "hero": {
@@ -36,11 +47,15 @@
     },
     "popularDestinationSection": {
       "title": "Popular Destinations",
-      "description": "Explore the most popular destinations around the world",
-      "error": {
-        "title": "Error",
-        "description": "An error occurred while fetching the popular destinations, please try again later."
-      }
+      "description": "Explore the most popular destinations around the world"
+    },
+    "recommendedAttractions": {
+      "title": "Recommended Attractions",
+      "description": "Book tickets and tours for the most popular attractions"
+    },
+    "recommendedTours": {
+      "title": "Top Tours",
+      "description": "Discover the best tours around the world"
     }
   },
   "datePicker": {
