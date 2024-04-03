@@ -25,6 +25,7 @@ export default function CarouselTestimonial({ products }: { products: Product[] 
   const settings: Settings = {
     dots: true,
     infinite: false,
+    lazyLoad: 'ondemand',
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
