@@ -34,7 +34,16 @@
     "import/no-extraneous-dependencies": "off",
     "react/display-name": "off",
     "import/no-unresolved": ["off", { "caseSensitive": false }],
-    "no-unused-vars": "warn",
+    "no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "ignoreRestSiblings": false,
+        "args": "none",
+        "argsIgnorePattern": "all",
+        "varsIgnorePattern": "[iI]gnored"
+      }
+    ],
     "react/jsx-uses-react": "off"
   }
 }

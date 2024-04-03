@@ -76,8 +76,23 @@
   body {
     @apply bg-secondary text-foreground;
   }
+  
+  .slider-container-recommended-tours .slick-list {
+    @apply -mx-2;
+  }
+  .slider-container-recommended-tours .slick-track {
+    @apply flex flex-nowrap items-stretch;
+  }
+
+  .slider-container-recommended-tours .slick-slide {
+    @apply h-auto;
+  }
+
+  .slider-container-recommended-tours .slick-slide > div {
+    @apply mx-2 h-full;;
+  }
 }
 
 @layer utilities {
-  
+
 }

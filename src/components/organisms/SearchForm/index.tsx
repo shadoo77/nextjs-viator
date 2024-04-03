@@ -79,7 +79,7 @@ export default function SearchForm() {
           {/* Search results list */}
           <div
             className={cn(
-              'absolute z-20 py-2 mt-2 bg-white rounded shadow-lg drop-shadow-lg w-full top-full shadow-slate-500/10 text-start',
+              'absolute z-20 py-2 mt-2 bg-white rounded shadow-lg drop-shadow-lg shadow-slate-500/10 w-full top-full text-start',
               'transition-all duration-300 ease-in-out basis-0',
               openSearch ? 'visible opacity-100' : 'invisible opacity-0'
             )}

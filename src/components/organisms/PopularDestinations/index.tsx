@@ -29,10 +29,8 @@ export default function PopularDestinations({ locale }: { locale: Locale }) {
           <div className="flex justify-center mx-auto col-span-12">
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
-              <AlertTitle>{t('homePage.popularDestinationSection.error.title')}</AlertTitle>
-              <AlertDescription>
-                {t('homePage.popularDestinationSection.error.description')}
-              </AlertDescription>
+              <AlertTitle>{t('error.title')}</AlertTitle>
+              <AlertDescription>{t('error.description')}</AlertDescription>
             </Alert>
           </div>
         )}
