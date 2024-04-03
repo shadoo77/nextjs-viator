@@ -11,7 +11,7 @@ interface CurrencyStore {
 }
 
 const initialState: { currency: Currency } = {
-  currency: 'USD'
+  currency: 'EUR'
 };
 
 export const useCurrencyStore = create<CurrencyStore>()(

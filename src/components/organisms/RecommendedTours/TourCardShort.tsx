@@ -39,13 +39,13 @@ export default function TourCardShort({
     <div className="pb-4 h-full">
       <div className="flex flex-col gap-2 overflow-hidden rounded bg-white text-slate-500 drop-shadow-md hover:drop-shadow-lg shadow-md hover:shadow-lg shadow-slate-200 group cursor-pointer h-full">
         {/*  <!-- Image --> */}
-        <figure>
+        <figure className="overflow-hidden">
           <Image
             src={imageVariant?.url || ''}
             alt={image.caption || title}
             width={imageVariant?.width}
             height={imageVariant?.height}
-            className={cn('aspect-video w-full', {
+            className={cn('aspect-video w-full group-hover:scale-110 transition-all duration-300', {
               'object-cover': image.isCover
             })}
           />
