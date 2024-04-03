@@ -3,20 +3,15 @@ import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
 import Hero from '@/components/organisms/Hero';
 import FeatureSection from '@/components/organisms/FeatureSection';
 import PopularDestinations from '@/components/organisms/PopularDestinations';
+import RecommendedTours from '@/components/organisms/RecommendedTours';
 
 import getQueryClient from '@/tanstack/queryClient';
 import { Locale } from '@/i18nConfig';
 import { queryKeys } from '@/tanstack/queryKeys';
-import { getDestinations } from '@/tanstack/queries/destinations';
 import { getBlock } from '@/tanstack/queries/block';
 
 export default async function Home({ params: { locale } }: { params: { locale: Locale } }) {
   const queryClient = getQueryClient();
-
-  await queryClient.prefetchQuery({
-    queryKey: [queryKeys.destinations],
-    queryFn: getDestinations
-  });
 
   await queryClient.prefetchQuery({
     queryKey: [queryKeys.block, locale, 'popular_destinations'],
@@ -30,10 +25,10 @@ export default async function Home({ params: { locale } }: { params: { locale: L
         <Hero />
         {/* Feature Section */}
         <FeatureSection />
-        {/* Top Tours */}
         {/* Popular Destinations */}
         <PopularDestinations locale={locale} />
-        {/* Top Attractions */}
+        {/* Top Tours */}
+        <RecommendedTours locale={locale} />
       </div>
     </HydrationBoundary>
   );

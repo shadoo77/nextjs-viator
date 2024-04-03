@@ -86,3 +86,7 @@ export const popularDestinations = [
     translationKey: 'destinations.miami'
   }
 ];
+
+export const appStorage = Object.freeze({
+  currency: 'TripPlazr--currency'
+});

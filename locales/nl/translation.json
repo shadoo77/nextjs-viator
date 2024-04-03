@@ -7,8 +7,18 @@
     "description": "Controleer de adresbalk van de browser of gebruik de navigatie om naar een bekende pagina te gaan."
   },
   "locales": {
-    "en": "Engels",
+    "en": "English",
     "nl": "Nederlands"
+  },
+  "from": "Van",
+  "to": "Naar",
+  "price": {
+    "from": "Vanaf",
+    "variesByGroupSize": "Prijs varieert per groepsgrootte"
+  },
+  "error": {
+    "title": "Fout",
+    "description": "Er is een fout opgetreden bij het ophalen van de data. Probeer maar later opnieuw."
   },
   "homePage": {
     "hero": {
@@ -36,11 +46,15 @@
     },
     "popularDestinationSection": {
       "title": "Populaire bestemmingen",
-      "description": "Ontdek de beste bestemmingen en activiteiten over de hele wereld.",
-      "error": {
-        "title": "Fout",
-        "description": "Er is een fout opgetreden bij het ophalen van de populaire bestemmingen. Probeer maar later opnieuw."
-      }
+      "description": "Ontdek de beste bestemmingen en activiteiten over de hele wereld."
+    },
+    "recommendedAttractions": {
+      "title": "Aanbevolen attracties",
+      "description": "Ontdek de beste attracties en activiteiten over de hele wereld."
+    },
+    "recommendedTours": {
+      "title": "Aanbevolen tours",
+      "description": "Ontdek de beste tours en activiteiten over de hele wereld."
     }
   },
   "datePicker": {

@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'next/navigation';
 import axios from '@/axios/cms';
 import { queryKeys } from '@/tanstack/queryKeys';
 import { Block, BlockType } from '@/types/block';
@@ -24,9 +25,12 @@ export const getBlock = async ({ queryKey }: { queryKey: unknown[] }) => {
   return data;
 };
 
-export const useBlock = ({ locale, blockType }: Props) =>
-  useQuery({
+export const useBlock = ({ blockType }: Props) => {
+  const { locale } = useParams();
+
+  return useQuery({
     queryKey: [queryKeys.block, locale, blockType],
     queryFn: getBlock,
     refetchOnWindowFocus: false
   });
+};
