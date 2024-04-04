@@ -3,7 +3,7 @@ import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { Image } from '@/types/block';
 import { imageBaseUrl } from '@/lib/imageURLs';
-import { Destination } from '@/types/destinations';
+import { Coordinates, Destination } from '@/types/destinations';
 import { Product } from '@/types/products';
 import { Locale } from '@/i18nConfig';
 
@@ -101,6 +101,7 @@ export const getLocationDetails = (
   destinations: Product['destinations']
 ) => {
   const location = {
+    destinationUrlName: '',
     city: '',
     region: '',
     country: ''
@@ -115,6 +116,7 @@ export const getLocationDetails = (
   if (!destination) return location;
 
   location.city = destination.destinationName;
+  location.destinationUrlName = destination.destinationUrlName;
 
   const parentDestination = allDestinations.find(
     (des) => des.destinationId === destination.parentId
@@ -149,8 +151,37 @@ export const getCurrencySymbol = ({
   const intl = new Intl.NumberFormat(locale, {
     style: 'currency',
     currency,
-    currencyDisplay: 'narrowSymbol'
+    currencyDisplay: 'narrowSymbol',
+    minimumFractionDigits: 0
   });
 
   return intl.format(price);
+};
+
+// Get closest location
+export const closestLocation = (targetLocation: Coordinates, locationData: Destination[]) => {
+  function vectorDistance(dx: number, dy: number) {
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  function locationDistance(location1: Coordinates, location2: Destination) {
+    var dx = location1.latitude - location2.latitude,
+      dy = location1.longitude - location2.longitude;
+
+    return vectorDistance(dx, dy);
+  }
+
+  return locationData.reduce(function (prev, curr) {
+    var prevDistance = locationDistance(targetLocation, prev),
+      currDistance = locationDistance(targetLocation, curr);
+    return prevDistance < currDistance ? prev : curr;
+  });
+
+  // const { location, error: geoErr } = useGeolocation();
+  // const destinations = localizeDestinations[locale].data;
+
+  // if (location) {
+  //   const dests = destinations.filter((dest) => dest.destinationType === 'CITY');
+  //   const nearestCity = closestLocation(location, dests);
+  // }
 };

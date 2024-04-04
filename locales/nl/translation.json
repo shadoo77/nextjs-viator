@@ -16,6 +16,11 @@
     "from": "Vanaf",
     "variesByGroupSize": "Prijs varieert per groepsgrootte"
   },
+  "geolocationError": {
+    "1": "Gebruiker heeft het verzoek om geolocatie afgewezen.",
+    "2": "Locatie-informatie is niet beschikbaar.",
+    "3": "Geolocatie is niet beschikbaar op deze browser."
+  },
   "error": {
     "title": "Fout",
     "description": "Er is een fout opgetreden bij het ophalen van de data. Probeer maar later opnieuw."

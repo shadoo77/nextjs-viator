@@ -29,3 +29,5 @@ export type DestinationResponse = {
   errorMessageText: any;
   vmid: string;
 };
+
+export type Coordinates = { latitude: number; longitude: number };
