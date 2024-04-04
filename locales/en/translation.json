@@ -16,7 +16,11 @@
     "from": "From",
     "variesByGroupSize": "Price varies by group size"
   },
-
+  "geolocationError": {
+    "1": "User denied the request for Geolocation.",
+    "2": "Location information is unavailable.",
+    "3": "Geolocation is not supported by this browser."
+  },
   "error": {
     "title": "Error",
     "description": "An error occurred while fetching the data, please try again later."

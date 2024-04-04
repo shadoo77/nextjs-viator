@@ -19,9 +19,9 @@ export default function RecommendedTours({ locale }: { locale: Locale }) {
 
   const searchFilter: SearchFilter = useMemo(
     () => ({
-      searchTerm: 'tuscany day trip',
-      searchTypes: [{ searchType: 'PRODUCTS', pagination: { start: 1, count: productsNumber } }]
-      // productSorting: { sort: 'REVIEW_AVG_RATING', order: 'DESCENDING' }
+      searchTerm: '*',
+      searchTypes: [{ searchType: 'PRODUCTS', pagination: { start: 1, count: productsNumber } }],
+      productSorting: { sort: 'REVIEW_AVG_RATING', order: 'DESCENDING' }
     }),
     []
   );
