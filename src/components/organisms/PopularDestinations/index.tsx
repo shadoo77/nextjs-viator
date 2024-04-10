@@ -48,7 +48,7 @@ export default function PopularDestinations({ locale }: { locale: Locale }) {
                   <Skeleton className="w-full h-32" />
                 ) : (
                   <Link
-                    href={`/destination/${fields.id}`}
+                    href={`/tours/${fields.destinationUrlName}/did-${fields.id}`}
                     style={{
                       backgroundImage: `url('${getImageUrl({ image: fields.image[0], width: 400, height: 300 })}')`
                     }}

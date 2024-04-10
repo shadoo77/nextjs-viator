@@ -8,6 +8,12 @@ const nextConfig = {
         hostname: 'hare-media-cdn.tripadvisor.com',
         port: '',
         pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'media-cdn.tripadvisor.com',
+        port: '',
+        pathname: '/**'
       }
     ]
   }

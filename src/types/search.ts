@@ -7,7 +7,7 @@ export interface SearchFilter {
   productFiltering?: ProductFiltering;
   productSorting?: ProductSorting;
   searchTypes: SearchType[];
-  currency?: Currency;
+  currency: Currency;
 }
 
 export type ProductFiltering = {

@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { LuMapPin } from 'react-icons/lu';
 import { Product } from '@/types/products';
 import { Locale } from '@/i18nConfig';
-import { cn, getCurrencySymbol, getLocationDetails } from '@/lib/utils';
+import { getCurrencySymbol, getLocationDetails } from '@/lib/utils';
 import RatingReview from '@/components/atoms/RatingReview';
 import Link from '@/components/atoms/NextLink';
-import { useDestination } from '@/tanstack/queries/destinations';
+import { useDestinations } from '@/tanstack/queries/destinations';
 
 export default function TourCardShort({
   productCode,
@@ -19,7 +19,7 @@ export default function TourCardShort({
 }: Product) {
   const { t } = useTranslation();
   const { locale }: { locale: Locale } = useParams();
-  const { data: allDestinations } = useDestination(locale);
+  const { data: allDestinations } = useDestinations(locale);
 
   if (!allDestinations) return null;
 
@@ -29,9 +29,11 @@ export default function TourCardShort({
     price: pricing?.summary.fromPrice
   });
 
-  const { city, country, region, destinationUrlName } = getLocationDetails(
+  const productDestination = destinations.find((destination) => destination.primary);
+
+  const { city, country, region, destinationUrlName, destinationId } = getLocationDetails(
     allDestinations.data,
-    destinations
+    productDestination?.ref
   );
 
   const image = images[0];
@@ -42,7 +44,7 @@ export default function TourCardShort({
 
   return (
     <div className="pb-4 h-full">
-      <Link href={`/tours/${destinationUrlName}/tid-${productCode}`}>
+      <Link href={`/tours/${destinationUrlName}/did-${destinationId}/tid-${productCode}`}>
         <div className="flex flex-col gap-2 overflow-hidden rounded bg-white text-slate-500 drop-shadow-md hover:drop-shadow-lg shadow-md hover:shadow-lg shadow-slate-200 group h-full">
           {/*  <!-- Image --> */}
           <figure className="overflow-hidden">
@@ -51,12 +53,7 @@ export default function TourCardShort({
               alt={image.caption || title}
               width={imageVariant?.width}
               height={imageVariant?.height}
-              className={cn(
-                'aspect-video w-full group-hover:scale-110 transition-all duration-300',
-                {
-                  'object-cover': image.isCover
-                }
-              )}
+              className="aspect-video w-full group-hover:scale-110 transition-all duration-300 object-cover"
             />
           </figure>
           {/*  <!-- Body--> */}

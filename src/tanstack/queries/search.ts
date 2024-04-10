@@ -4,7 +4,6 @@ import axios from '@/axios';
 import { queryKeys } from '@/tanstack/queryKeys';
 import { Locale } from '@/i18nConfig';
 import { SearchFilter, SearchResults } from '@/types/search';
-import { useCurrencyStore } from '@/store/currency';
 
 type MutationFunctionProps = {
   locale: Locale;
@@ -24,8 +23,6 @@ export const getSearchResult = async ({ locale, searchFilter }: MutationFunction
 
 export const useSearch = (searchFilter: SearchFilter, options: Options = {}) => {
   const { locale }: { locale: Locale } = useParams();
-  const { currency } = useCurrencyStore((state) => ({ currency: state.currency }));
-  searchFilter.currency = currency;
 
   return useMutation({
     mutationKey: [queryKeys.search, locale, searchFilter],

@@ -2,6 +2,14 @@
   "test_title": "Getest titel in nederlands",
   "loading": "Laden...",
   "backHome": "Terug naar home pagina",
+  "and": "en",
+  "or": "of",
+  "toUntil": "tot",
+  "minute": "minuut",
+  "minutes": "minuten",
+  "hour": "uur",
+  "hours": "uur",
+  "comma": ",",
   "NotFoundPage": {
     "title": "Pagina niet gevonden",
     "description": "Controleer de adresbalk van de browser of gebruik de navigatie om naar een bekende pagina te gaan."
@@ -88,5 +96,16 @@
     "venice": "Venetië",
     "losAngeles": "Los Angeles",
     "miami": "Miami"
+  },
+  "toursPage": {
+    "seoDescription": "Verken de levendige stad {{cityName}} met onze gevarieerde selectie van rondleidingen. Van historische bezienswaardigheden tot verborgen juweeltjes, onze tours bieden meeslepende ervaringen die zijn afgestemd op elk interessegebied. Ontdek {{cityName}} als nooit tevoren met deskundige gidsen en samengestelde routes. Boek vandaag nog jouw avontuur!",
+    "tour": "Tour",
+    "tours": "Tours",
+    "noResults": "Geen resultaten gevonden",
+    "resultsFound": "{{count}} tours gevonden",
+    "freeCancellation": "Gratis annuleren"
+  },
+  "flags": {
+    "likelyToSellOut": "Meestal snel uitverkocht"
   }
 }
