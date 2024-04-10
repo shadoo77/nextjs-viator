@@ -2,6 +2,14 @@
   "test_title": "Test Title",
   "loading": "Loading...",
   "backHome": "Back to home page",
+  "and": "and",
+  "or": "or",
+  "toUntil": "to",
+  "minute": "minute",
+  "minutes": "minutes",
+  "hour": "hour",
+  "hours": "hours",
+  "comma": "",
   "NotFoundPage": {
     "title": "Page not found",
     "description": "Please double-check the browser address bar or use the navigation to go to a known page."
@@ -88,5 +96,16 @@
     "venice": "Venice",
     "losAngeles": "Los Angeles",
     "miami": "Miami"
+  },
+  "toursPage": {
+    "seoDescription": "Explore the vibrant city of {{cityName}} with our diverse selection of guided tours. From historical landmarks to hidden gems, our tours offer immersive experiences tailored to every interest. Discover {{cityName}} like never before with expert guides and curated itineraries. Book your adventure today!",
+    "tour": "Tour",
+    "tours": "Tours",
+    "noResults": "No tours found",
+    "resultsFound": "{{count}} tours found",
+    "freeCancellation": "Free Cancellation"
+  },
+  "flags": {
+    "likelyToSellOut": "Likely to Sell Out"
   }
 }

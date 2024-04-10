@@ -90,3 +90,5 @@ export const popularDestinations = [
 export const appStorage = Object.freeze({
   currency: 'TripPlazr--currency'
 });
+
+export const toursPageCount = 15;
