@@ -1,6 +1,5 @@
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
-import { useTranslation } from 'react-i18next';
 import { LuMapPin } from 'react-icons/lu';
 import { Product } from '@/types/products';
 import { Locale } from '@/i18nConfig';
@@ -9,6 +8,7 @@ import RatingReview from '@/components/atoms/RatingReview';
 import Link from '@/components/atoms/NextLink';
 import { useDestinations } from '@/tanstack/queries/destinations';
 import { usePricing } from '@/hooks/usePricing';
+import Price from '@/components/organisms/Tours/Price';
 
 export default function TourCardShort({
   productCode,
@@ -18,7 +18,6 @@ export default function TourCardShort({
   destinations,
   images
 }: Product) {
-  const { t } = useTranslation();
   const { locale }: { locale: Locale } = useParams();
   const { data: allDestinations } = useDestinations(locale);
   const prices = usePricing({ pricing, locale });
@@ -72,7 +71,7 @@ export default function TourCardShort({
                   <span>{reviews.totalReviews.toLocaleString()}</span>
                 </span>
               )}
-              {prices?.fromPrice && (
+              {/* {prices?.fromPrice && (
                 <span className="mt-2 flex flex-wrap gap-2 text-sm text-slate-400">
                   <span className="lowercase">{t('price.from')}</span>
                   <span className="font-bold text-muted-foreground">{prices.price}</span>
@@ -90,7 +89,8 @@ export default function TourCardShort({
                     <span className="w-full">{t('price.variesByGroupSize')}</span>
                   )}
                 </span>
-              )}
+              )} */}
+              <Price prices={prices} />
             </section>
           </div>
         </div>

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'usehooks-ts';
 import { Heart, Share2, Clock, Ban } from 'lucide-react';
+import Price from '@/components/organisms/Tours/Price';
 import { Product } from '@/types/products';
 import Link from '@/components/atoms/NextLink';
 import { useDestinationStore } from '@/store/destination';
@@ -55,34 +56,14 @@ export default function TourItem({ product }: { product: Product }) {
         </figure>
         {/*  <!-- Body--> */}
         <div className="sm:basis-7/12 md:basis-1/2 px-3 pt-4 sm:pt-0 sm:ml-5 sm:px-0 flex flex-col h-fit flex-1">
-          <header className="flex gap-4 mb-4">
+          <header className="flex mb-4">
             <div>
               {title && (
                 <h3 className="text-lg sm:text-xl font-bold text-secondary-foreground group-hover:underline line-clamp-3">
                   {title}
                 </h3>
               )}
-              {prices?.fromPrice && (
-                <div className="flex flex-col justify-center gap-2 text-sm text-slate-400">
-                  <div className="flex gap-2">
-                    <span className="lowercase">{t('price.from')}</span>
-                    <span className="font-bold text-muted-foreground">{prices.price}</span>
-                    {prices.priceBeforeDiscount && (
-                      <>
-                        <span className="font-bold line-through text-black">
-                          {prices.priceBeforeDiscount}
-                        </span>
-                        <span className="font-normal text-destructive">
-                          {t('savings', { mount: prices.saving })}
-                        </span>
-                      </>
-                    )}
-                  </div>
-                  {prices.fromPrice >= 100 && (
-                    <span className="w-full">{t('price.variesByGroupSize')}</span>
-                  )}
-                </div>
-              )}
+              <Price prices={prices} />
             </div>
           </header>
           {/* description */}
@@ -91,7 +72,7 @@ export default function TourItem({ product }: { product: Product }) {
           )}
           {/*  additions */}
           {(durationText || flags.includes('FREE_CANCELLATION')) && (
-            <ul className="text-secondary-foreground mb-3">
+            <ul className="text-secondary-foreground mb-2">
               {durationText && (
                 <li className="flex items-center gap-3 py-1">
                   <Clock className="w-5 h-5" />
