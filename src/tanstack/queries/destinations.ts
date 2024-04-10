@@ -14,7 +14,7 @@ export const getDestinations = async ({ queryKey }: { queryKey: unknown[] }) => 
   return data;
 };
 
-export const useDestination = (locale: Locale) =>
+export const useDestinations = (locale: Locale) =>
   useQuery({
     queryKey: [queryKeys.destinations, locale],
     queryFn: getDestinations,

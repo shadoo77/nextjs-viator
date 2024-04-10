@@ -76,5 +76,6 @@ export interface Image {
 export type DestinationTile = {
   id: number;
   name: string;
+  destinationUrlName: string;
   image: Image[];
 };

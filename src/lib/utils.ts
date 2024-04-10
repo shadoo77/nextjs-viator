@@ -4,7 +4,6 @@ import { twMerge } from 'tailwind-merge';
 import { Image } from '@/types/block';
 import { imageBaseUrl } from '@/lib/imageURLs';
 import { Coordinates, Destination } from '@/types/destinations';
-import { Product } from '@/types/products';
 import { Locale } from '@/i18nConfig';
 
 export function cn(...inputs: ClassValue[]) {
@@ -98,25 +97,24 @@ export const sanitizeHtml = (html: string) => html.replace(/(<([^>]+)>)/gi, '');
 // Get location details
 export const getLocationDetails = (
   allDestinations: Destination[],
-  destinations: Product['destinations']
+  destinationId: string | undefined
 ) => {
   const location = {
     destinationUrlName: '',
+    destinationId: '',
     city: '',
     region: '',
     country: ''
   };
 
-  const productLocation = destinations.find((destination) => destination.primary);
-  if (!productLocation) return location;
+  if (!destinationId) return location;
 
-  const destination = allDestinations?.find(
-    (des) => des.destinationId === Number(productLocation?.ref)
-  );
+  const destination = allDestinations?.find((des) => des.destinationId === Number(destinationId));
   if (!destination) return location;
 
   location.city = destination.destinationName;
   location.destinationUrlName = destination.destinationUrlName;
+  location.destinationId = destination.destinationId.toString();
 
   const parentDestination = allDestinations.find(
     (des) => des.destinationId === destination.parentId
@@ -184,4 +182,76 @@ export const closestLocation = (targetLocation: Coordinates, locationData: Desti
   //   const dests = destinations.filter((dest) => dest.destinationType === 'CITY');
   //   const nearestCity = closestLocation(location, dests);
   // }
+};
+
+// Get pluralized string
+export const pluralize = (count: number, singular: string, plural = singular + 's') => {
+  const pluralRules = new Intl.PluralRules('en', { type: 'cardinal' });
+  const pluralForm = pluralRules.select(count);
+  switch (pluralForm) {
+    case 'one':
+      return `${count} ${singular}`;
+    case 'other':
+      return `${count} ${plural}`;
+    default:
+      return '';
+  }
+};
+
+// Get pagination buttons
+export const getPaginationButtons = (
+  activePage: number,
+  totalPages: number,
+  isLargeDevices: boolean
+) => {
+  if (totalPages <= 5) {
+    const pages = [...new Array(totalPages)].map((_, index) => index + 1);
+    return pages;
+  }
+  const pages: (number | string)[] = [1];
+  // large devices
+  if (isLargeDevices) {
+    if (activePage >= 4) {
+      pages.push('...');
+    }
+    if (activePage + 1 > totalPages) {
+      pages.push(activePage - 2);
+    }
+    if (activePage - 1 > 1) {
+      pages.push(activePage - 1);
+    }
+    if (activePage !== 1) {
+      pages.push(activePage);
+    }
+    if (activePage + 1 <= totalPages) {
+      pages.push(activePage + 1);
+    }
+    if (activePage - 1 <= 0) {
+      pages.push(activePage + 2);
+    }
+    if (activePage + 2 < totalPages) {
+      pages.push('...');
+    }
+    if (activePage + 1 < totalPages) {
+      pages.push(totalPages);
+    }
+    return pages;
+  }
+  // small devices
+  if (activePage === 1) {
+    pages.push(2, 3, '...', totalPages);
+  }
+  if (activePage === 2) {
+    pages.push(2, '...', totalPages);
+  }
+  if (activePage > 2 && activePage < totalPages - 1) {
+    pages.push('...', activePage, '...', totalPages);
+  }
+  if (activePage > 2 && activePage === totalPages - 1) {
+    pages.push('...', activePage, totalPages);
+  }
+  if (activePage > 2 && activePage === totalPages) {
+    pages.push('...', activePage - 2, activePage - 1, activePage);
+  }
+  return pages;
 };

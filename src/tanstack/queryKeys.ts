@@ -3,5 +3,7 @@ export const queryKeys = {
   block: 'block',
   global: 'global',
   attractions: 'attractions',
+  productsSearch: 'productsSearch',
+  product: 'product',
   search: 'search'
 };

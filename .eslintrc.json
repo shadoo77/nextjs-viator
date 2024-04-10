@@ -38,7 +38,7 @@
       "warn",
       {
         "vars": "all",
-        "ignoreRestSiblings": false,
+        "ignoreRestSiblings": true,
         "args": "none",
         "argsIgnorePattern": "all",
         "varsIgnorePattern": "[iI]gnored"

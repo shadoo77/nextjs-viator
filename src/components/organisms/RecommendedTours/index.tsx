@@ -12,18 +12,21 @@ import { Locale } from '@/i18nConfig';
 import CarouselTestimonial from '@/components/organisms/RecommendedTours/CarouselTestimonial';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { useCurrencyStore } from '@/store/currency';
 
 export default function RecommendedTours({ locale }: { locale: Locale }) {
   const { t } = useTranslation();
+  const { currency } = useCurrencyStore((state) => ({ currency: state.currency }));
   const productsNumber = 9;
 
   const searchFilter: SearchFilter = useMemo(
     () => ({
       searchTerm: '*',
       searchTypes: [{ searchType: 'PRODUCTS', pagination: { start: 1, count: productsNumber } }],
-      productSorting: { sort: 'REVIEW_AVG_RATING', order: 'DESCENDING' }
+      productSorting: { sort: 'REVIEW_AVG_RATING', order: 'DESCENDING' },
+      currency
     }),
-    []
+    [currency]
   );
 
   const { data, error, isPending, mutate } = useSearch(searchFilter);
