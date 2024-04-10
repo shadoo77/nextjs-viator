@@ -1,20 +1,20 @@
 export interface Product {
   productCode: string;
-  title: string;
-  description: string;
-  images: Image[];
+  title?: string;
+  description?: string;
+  images?: Image[];
   duration?: Duration;
-  itineraryType: 'STANDARD' | 'ACTIVITY' | 'MULTI_DAY_TOUR' | 'HOP_ON_HOP_OFF' | 'UNSTRUCTURED';
-  pricing: Pricing;
-  productUrl: string;
+  itineraryType?: 'STANDARD' | 'ACTIVITY' | 'MULTI_DAY_TOUR' | 'HOP_ON_HOP_OFF' | 'UNSTRUCTURED';
+  pricing?: Pricing;
+  productUrl?: string;
   destinations: {
     ref: string;
     primary: boolean;
   }[];
   tags: number[];
   flags: Flag[];
-  confirmationType: 'INSTANT' | 'MANUAL' | 'INSTANT_THEN_MANUAL';
-  translationInfo: TranslationInfo;
+  confirmationType?: 'INSTANT' | 'MANUAL' | 'INSTANT_THEN_MANUAL';
+  translationInfo?: TranslationInfo;
   reviews?: Reviews;
 }
 
@@ -48,14 +48,14 @@ export interface Duration {
 }
 
 export interface Pricing {
-  summary: Summary;
+  summary?: Summary;
   currency: string;
   partnerNetFromPrice?: number;
 }
 
 export interface Summary {
   fromPrice: number;
-  fromPriceBeforeDiscount: number;
+  fromPriceBeforeDiscount?: number;
 }
 
 export interface TranslationInfo {

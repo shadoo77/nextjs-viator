@@ -144,8 +144,9 @@ export const getCurrencySymbol = ({
 }: {
   currency: string;
   locale: Locale;
-  price: number;
+  price: number | undefined;
 }) => {
+  if (!price) return '';
   const intl = new Intl.NumberFormat(locale, {
     style: 'currency',
     currency,

@@ -4,10 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { LuMapPin } from 'react-icons/lu';
 import { Product } from '@/types/products';
 import { Locale } from '@/i18nConfig';
-import { getCurrencySymbol, getLocationDetails } from '@/lib/utils';
+import { getLocationDetails } from '@/lib/utils';
 import RatingReview from '@/components/atoms/RatingReview';
 import Link from '@/components/atoms/NextLink';
 import { useDestinations } from '@/tanstack/queries/destinations';
+import { usePricing } from '@/hooks/usePricing';
 
 export default function TourCardShort({
   productCode,
@@ -20,14 +21,9 @@ export default function TourCardShort({
   const { t } = useTranslation();
   const { locale }: { locale: Locale } = useParams();
   const { data: allDestinations } = useDestinations(locale);
+  const prices = usePricing({ pricing, locale });
 
   if (!allDestinations) return null;
-
-  const price = getCurrencySymbol({
-    currency: pricing.currency,
-    locale,
-    price: pricing?.summary.fromPrice
-  });
 
   const productDestination = destinations.find((destination) => destination.primary);
 
@@ -36,9 +32,9 @@ export default function TourCardShort({
     productDestination?.ref
   );
 
-  const image = images[0];
+  const image = images?.[0];
 
-  const imageVariant = image.variants.find(
+  const imageVariant = image?.variants.find(
     (variant) => variant.width === 540 && variant.height === 360
   );
 
@@ -50,7 +46,7 @@ export default function TourCardShort({
           <figure className="overflow-hidden">
             <Image
               src={imageVariant?.url || ''}
-              alt={image.caption || title}
+              alt={image?.caption || title || ''}
               width={imageVariant?.width}
               height={imageVariant?.height}
               className="aspect-video w-full group-hover:scale-110 transition-all duration-300 object-cover"
@@ -63,9 +59,11 @@ export default function TourCardShort({
           </span>
           <div className="px-4 py-2 flex flex-col gap-4 justify-between">
             <header>
-              <h3 className="text-base font-bold text-slate-700 group-hover:underline line-clamp-3">
-                {title}
-              </h3>
+              {title && (
+                <h3 className="text-base font-bold text-slate-700 group-hover:underline line-clamp-3">
+                  {title}
+                </h3>
+              )}
             </header>
             <section>
               {reviews && (
@@ -74,11 +72,21 @@ export default function TourCardShort({
                   <span>{reviews.totalReviews.toLocaleString()}</span>
                 </span>
               )}
-              {pricing.summary.fromPrice && (
-                <span className="mt-2 flex flex-wrap gap-2 text-sm text-muted-foreground">
+              {prices?.fromPrice && (
+                <span className="mt-2 flex flex-wrap gap-2 text-sm text-slate-400">
                   <span className="lowercase">{t('price.from')}</span>
-                  <span className="font-bold">{price}</span>
-                  {pricing.summary.fromPrice >= 100 && (
+                  <span className="font-bold text-muted-foreground">{prices.price}</span>
+                  {prices.priceBeforeDiscount && (
+                    <>
+                      <span className="font-bold line-through text-black">
+                        {prices.priceBeforeDiscount}
+                      </span>
+                      <span className="font-normal text-destructive">
+                        {t('savings', { mount: prices.saving })}
+                      </span>
+                    </>
+                  )}
+                  {prices.fromPrice >= 100 && (
                     <span className="w-full">{t('price.variesByGroupSize')}</span>
                   )}
                 </span>
