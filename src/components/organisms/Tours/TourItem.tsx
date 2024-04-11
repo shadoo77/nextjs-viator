@@ -5,15 +5,16 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'usehooks-ts';
 import { Heart, Share2, Clock, Ban } from 'lucide-react';
+import Price from '@/components/organisms/Tours/Price';
 import { Product } from '@/types/products';
 import Link from '@/components/atoms/NextLink';
 import { useDestinationStore } from '@/store/destination';
 import RatingReview from '@/components/atoms/RatingReview';
-import { getCurrencySymbol } from '@/lib/utils';
 import { Locale } from '@/i18nConfig';
 import { Button } from '@/components/ui/button';
 import { useDuration } from '@/hooks/useDuration';
 import { Badge } from '@/components/ui/badge';
+import { usePricing } from '@/hooks/usePricing';
 
 export default function TourItem({ product }: { product: Product }) {
   const { title, description, reviews, pricing, flags, duration, images } = product;
@@ -22,17 +23,13 @@ export default function TourItem({ product }: { product: Product }) {
   const { locale }: { locale: Locale } = useParams();
   const destination = useDestinationStore((state) => state.destination);
 
-  const image = images[0];
+  const image = images?.[0];
 
-  const imageVariant = image.variants.find(
+  const imageVariant = image?.variants.find(
     (variant) => variant.width === 540 && variant.height === 360
   );
 
-  const price = getCurrencySymbol({
-    currency: pricing.currency,
-    locale,
-    price: pricing?.summary.fromPrice
-  });
+  const prices = usePricing({ pricing, locale });
 
   const durationText = useDuration({ duration });
   const likelyToSellOut = flags.includes('LIKELY_TO_SELL_OUT') ? t('flags.likelyToSellOut') : '';
@@ -46,7 +43,7 @@ export default function TourItem({ product }: { product: Product }) {
         <figure className="sm:basis-5/12 md:basis-1/2 relative overflow-hidden rounded-sm">
           <Image
             src={imageVariant?.url || ''}
-            alt={image.caption || title}
+            alt={image?.caption || title || ''}
             width={imageVariant?.width}
             height={imageVariant?.height}
             className="aspect-auto min-h-full object-cover group-hover:scale-110 transition-all duration-300"
@@ -59,31 +56,23 @@ export default function TourItem({ product }: { product: Product }) {
         </figure>
         {/*  <!-- Body--> */}
         <div className="sm:basis-7/12 md:basis-1/2 px-3 pt-4 sm:pt-0 sm:ml-5 sm:px-0 flex flex-col h-fit flex-1">
-          <header className="flex gap-4 mb-4">
+          <header className="flex mb-4">
             <div>
-              <h3 className="text-lg sm:text-xl font-bold text-secondary-foreground group-hover:underline line-clamp-3">
-                {title}
-              </h3>
-              {pricing.summary.fromPrice && (
-                <div className="flex flex-col justify-center gap-2 text-sm text-slate-400">
-                  <div>
-                    <span className="lowercase">{t('price.from')}</span>
-                    <span className="ml-2 font-bold text-muted-foreground">{price}</span>
-                  </div>
-                  {pricing.summary.fromPrice >= 100 && (
-                    <span className="w-full">{t('price.variesByGroupSize')}</span>
-                  )}
-                </div>
+              {title && (
+                <h3 className="text-lg sm:text-xl font-bold text-secondary-foreground group-hover:underline line-clamp-3">
+                  {title}
+                </h3>
               )}
+              <Price prices={prices} />
             </div>
           </header>
           {/* description */}
-          {matchMinWidthSM && (
+          {matchMinWidthSM && description && (
             <p dangerouslySetInnerHTML={{ __html: description }} className="line-clamp-4 mb-4" />
           )}
           {/*  additions */}
           {(durationText || flags.includes('FREE_CANCELLATION')) && (
-            <ul className="text-secondary-foreground mb-3">
+            <ul className="text-secondary-foreground mb-2">
               {durationText && (
                 <li className="flex items-center gap-3 py-1">
                   <Clock className="w-5 h-5" />

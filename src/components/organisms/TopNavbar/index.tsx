@@ -12,9 +12,7 @@ import Link from '@/components/atoms/NextLink';
 
 export default function TopNavbar() {
   const [isToggleOpen, setIsToggleOpen] = useState(false);
-
   const abstractPath = useAbstractPath();
-
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { locale } = useParams();
@@ -89,9 +87,7 @@ export default function TopNavbar() {
                       aria-haspopup="false"
                       className={cn(
                         'flex items-center px-4 transition-colors duration-300 hover:text-primary focus:text-primary focus:outline-none focus-visible:outline-none',
-                        abstractPath === href || (!abstractPath && href === '/')
-                          ? 'text-primary'
-                          : ''
+                        abstractPath === href ? 'text-primary' : ''
                       )}
                       href={href}
                       locale={locale as Locale}

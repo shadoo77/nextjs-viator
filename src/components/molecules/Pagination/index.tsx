@@ -1,24 +1,16 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import { useMediaQuery } from 'usehooks-ts';
 import { ChevronsLeft, ChevronsRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn, getPaginationButtons } from '@/lib/utils';
-import Link from '@/components/atoms/NextLink';
-import { Locale } from '@/i18nConfig';
 import { usePagination } from '@/hooks/usePagination';
 
-export default function Pagination({
-  pathname,
-  totalPages
-}: {
-  pathname: string;
-  totalPages: number;
-}) {
-  const { locale }: { locale: Locale } = useParams();
+export default function Pagination({ totalPages }: { totalPages: number }) {
+  const pathname = usePathname();
   const { activePage } = usePagination();
   const isLargeDevices = useMediaQuery('(min-width: 640px)');
-  const url = pathname.replace(`/${locale}/`, '/');
 
   if (!totalPages || totalPages === 1) {
     return null;
@@ -33,7 +25,7 @@ export default function Pagination({
           <>
             <li>
               <Link
-                href={url}
+                href={pathname}
                 aria-label="Goto Page 1"
                 aria-disabled={activePage === 1}
                 tabIndex={activePage === 1 ? -1 : 0}
@@ -50,7 +42,7 @@ export default function Pagination({
             </li>
             <li>
               <Link
-                href={`${url}?page=${activePage - 1}`}
+                href={`${pathname}?page=${activePage - 1}`}
                 aria-label="Goto Page 1"
                 className={cn(
                   'inline-flex h-10 items-center justify-center gap-4 rounded stroke-slate-700 px-4 text-sm font-medium text-slate-700 transition duration-300 hover:bg-primary/10 hover:stroke-primary hover:text-primary focus:bg-primary/90 focus:stroke-primary focus:text-white focus-visible:outline-none',
@@ -78,7 +70,7 @@ export default function Pagination({
           return (
             <li key={idx}>
               <Link
-                href={`${url}?page=${page}`}
+                href={`${pathname}?page=${page}`}
                 aria-label={`Goto Page ${page}`}
                 className={cn(
                   'inline-flex h-10 items-center justify-center gap-4 rounded stroke-slate-700 px-4 text-sm font-medium text-slate-700 transition duration-300 hover:bg-primary/10 hover:stroke-primary hover:text-primary focus:bg-primary/90 focus:stroke-primary focus:text-white focus-visible:outline-none',
@@ -97,7 +89,7 @@ export default function Pagination({
           <>
             <li>
               <Link
-                href={`${url}?page=${activePage + 1}`}
+                href={`${pathname}?page=${activePage + 1}`}
                 aria-label="Goto Page 2"
                 className={cn(
                   'inline-flex h-10 items-center justify-center gap-4 rounded stroke-slate-700 px-4 text-sm font-medium text-slate-700 transition duration-300 hover:bg-primary/10 hover:stroke-primary hover:text-primary focus:bg-primary/90 focus:stroke-primary focus:text-white focus-visible:outline-none',
@@ -112,7 +104,7 @@ export default function Pagination({
             </li>
             <li>
               <Link
-                href={`${url}?page=${totalPages}`}
+                href={`${pathname}?page=${totalPages}`}
                 aria-label="Goto Page 99"
                 className={cn(
                   'inline-flex h-10 items-center justify-center gap-4 rounded stroke-slate-700 px-4 text-sm font-medium text-slate-700 transition duration-300 hover:bg-primary/10 hover:stroke-primary hover:text-primary focus:bg-primary/90 focus:stroke-primary focus:text-white focus-visible:outline-none',

@@ -1,14 +1,12 @@
 'use client';
 
-import { AlertCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { usePathname } from 'next/navigation';
 import TourItem from './TourItem';
-import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ProductSearchResults } from '@/types/products';
 import Pagination from '@/components/molecules/Pagination';
 import { toursPageCount } from '@/lib/constants';
+import ErrorAlert from '@/components/molecules/ErrorAlert/ErrorAlert';
 
 export default function ToursList({
   searchResults,
@@ -20,7 +18,6 @@ export default function ToursList({
   error: unknown;
 }) {
   const { t } = useTranslation();
-  const pathname = usePathname();
   const totalPages = Math.ceil((searchResults?.totalCount || 0) / toursPageCount);
 
   return (
@@ -39,12 +36,12 @@ export default function ToursList({
           </div>
         ))}
       {error instanceof Error && (
-        <div className="flex justify-center mx-auto col-span-12">
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>{t('toursPage.noResults')}</AlertTitle>
-          </Alert>
-        </div>
+        <ErrorAlert
+          title={t('error.title')}
+          description={t('error.description')}
+          withTryAgainButton
+          className="col-span-12 mx-auto"
+        />
       )}
       {searchResults && (
         <>
@@ -53,11 +50,15 @@ export default function ToursList({
           </span>
 
           <div className="flex flex-col gap-3 sm:gap-6 xs:grid xs:grid-cols-2 sm:flex sm:flex-col">
-            {searchResults.products.map((product) => (
-              <TourItem key={product.productCode} product={product} />
-            ))}
+            {searchResults.products.length > 0 ? (
+              searchResults.products.map((product) => (
+                <TourItem key={product.productCode} product={product} />
+              ))
+            ) : (
+              <ErrorAlert title={t('toursPage.noResults')} className="col-span-12 mx-auto" />
+            )}
           </div>
-          <Pagination pathname={pathname} totalPages={totalPages} />
+          <Pagination totalPages={totalPages} />
         </>
       )}
     </section>

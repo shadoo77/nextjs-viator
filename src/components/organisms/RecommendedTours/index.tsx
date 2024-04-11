@@ -2,9 +2,7 @@
 
 import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { LuAlertCircle } from 'react-icons/lu';
 import SectionWithTitle from '@/components/templates/SectionWithTitle';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useSearch } from '@/tanstack/queries/search';
 import { SearchFilter } from '@/types/search';
@@ -13,6 +11,7 @@ import CarouselTestimonial from '@/components/organisms/RecommendedTours/Carouse
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useCurrencyStore } from '@/store/currency';
+import ErrorAlert from '@/components/molecules/ErrorAlert/ErrorAlert';
 
 export default function RecommendedTours({ locale }: { locale: Locale }) {
   const { t } = useTranslation();
@@ -40,13 +39,12 @@ export default function RecommendedTours({ locale }: { locale: Locale }) {
       {(isPending || error) && (
         <div className="grid gap-6 grid-cols-2 md:grid-cols-4 lg:grid-cols-8">
           {error instanceof Error && (
-            <div className="flex justify-center mx-auto col-span-8">
-              <Alert variant="destructive">
-                <LuAlertCircle className="h-4 w-4" />
-                <AlertTitle>{t('error.title')}</AlertTitle>
-                <AlertDescription>{t('error.description')}</AlertDescription>
-              </Alert>
-            </div>
+            <ErrorAlert
+              title={t('error.title')}
+              description={t('error.description')}
+              withTryAgainButton
+              className="mx-auto col-span-8"
+            />
           )}
           {isPending &&
             new Array(8).fill(0).map((_, index) => (
