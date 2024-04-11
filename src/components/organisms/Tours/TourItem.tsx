@@ -96,6 +96,7 @@ export default function TourItem({ product }: { product: Product }) {
                 className="text-primary hover:text-primary hover:bg-primary/10 text-sm"
                 onClick={(e) => {
                   e.preventDefault();
+                  e.stopPropagation();
                 }}
               >
                 <Heart className="w-5 h-5" />
@@ -106,6 +107,7 @@ export default function TourItem({ product }: { product: Product }) {
                 className="text-primary hover:text-primary hover:bg-primary/10 text-sm"
                 onClick={(e) => {
                   e.preventDefault();
+                  e.stopPropagation();
                 }}
               >
                 <Share2 className="w-5 h-5" />
