@@ -11,6 +11,7 @@
   "hours": "uur",
   "comma": ",",
   "savings": "{{mount}} besparingen",
+  "tryAgain": "Probeer opnieuw",
   "NotFoundPage": {
     "title": "Pagina niet gevonden",
     "description": "Controleer de adresbalk van de browser of gebruik de navigatie om naar een bekende pagina te gaan."

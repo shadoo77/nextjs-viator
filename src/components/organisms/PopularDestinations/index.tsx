@@ -1,14 +1,13 @@
 'use client';
 
 import { useTranslation } from 'react-i18next';
-import { AlertCircle } from 'lucide-react';
 import SectionWithTitle from '@/components/templates/SectionWithTitle';
 import { Locale } from '@/i18nConfig';
 import { useBlock } from '@/tanstack/queries/block';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
 import Link from '@/components/atoms/NextLink';
 import { getImageUrl } from '@/lib/utils';
+import ErrorAlert from '@/components/molecules/ErrorAlert/ErrorAlert';
 
 export default function PopularDestinations({ locale }: { locale: Locale }) {
   const { t } = useTranslation();
@@ -26,13 +25,12 @@ export default function PopularDestinations({ locale }: { locale: Locale }) {
     <SectionWithTitle title={t('homePage.popularDestinationSection.title')}>
       <div className="grid gap-6 grid-cols-4 md:grid-cols-8 lg:grid-cols-12">
         {error instanceof Error && (
-          <div className="flex justify-center mx-auto col-span-12">
-            <Alert variant="destructive">
-              <AlertCircle className="h-4 w-4" />
-              <AlertTitle>{t('error.title')}</AlertTitle>
-              <AlertDescription>{t('error.description')}</AlertDescription>
-            </Alert>
-          </div>
+          <ErrorAlert
+            title={t('error.title')}
+            description={t('error.description')}
+            withTryAgainButton
+            className="mx-auto col-span-12"
+          />
         )}
         {(isLoading || isFetching) &&
           new Array(destinationsNumber).fill(0).map((_, index) => (
