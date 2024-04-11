@@ -91,4 +91,4 @@ export const appStorage = Object.freeze({
   currency: 'TripPlazr--currency'
 });
 
-export const toursPageCount = 15;
+export const toursPageCount = 16;
