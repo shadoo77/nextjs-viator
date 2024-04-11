@@ -55,71 +55,71 @@ export default function TourItem({ product }: { product: Product }) {
           )}
         </figure>
         {/*  <!-- Body--> */}
-        <div className="sm:basis-7/12 md:basis-1/2 px-3 pt-4 sm:h-full sm:pt-0 sm:ml-5 sm:px-0 flex flex-col h-fit flex-1">
-          <header className="flex mb-4">
-            <div>
-              {title && (
-                <h3 className="text-lg sm:text-xl font-bold text-secondary-foreground group-hover:underline line-clamp-3">
-                  {title}
-                </h3>
-              )}
-              <Price prices={prices} />
-            </div>
-          </header>
-          {/* description */}
-          {matchMinWidthSM && description && (
-            <p dangerouslySetInnerHTML={{ __html: description }} className="line-clamp-4 mb-4" />
-          )}
-          {/*  additions */}
-          {(durationText || flags.includes('FREE_CANCELLATION')) && (
-            <ul className="text-secondary-foreground mb-2">
-              {durationText && (
-                <li className="flex items-center gap-3 py-1">
-                  <Clock className="w-5 h-5" />
-                  <span className="text-sm ">{durationText}</span>
-                </li>
-              )}
-              {flags.includes('FREE_CANCELLATION') && (
-                <li className="flex items-center gap-3 py-1">
-                  <Ban className="w-5 h-5" />
-                  <span className="text-sm ">{t('toursPage.freeCancellation')}</span>
-                </li>
-              )}
-            </ul>
-          )}
-          {/* footer (reviews & action buttons) */}
-          <div className="flex flex-col-reverse flex-1 pb-2 sm:pb-0 sm:flex-auto sm:flex-row-reverse sm:justify-between sm:items-center text-secondary-foreground">
-            <div className="flex justify-end gap-2">
-              <Button
-                size="icon"
-                variant="ghost"
-                className="text-primary hover:text-primary hover:bg-primary/10 text-sm"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                }}
-              >
-                <Heart className="w-5 h-5" />
-              </Button>
-              <Button
-                size="icon"
-                variant="ghost"
-                className="text-primary hover:text-primary hover:bg-primary/10 text-sm"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                }}
-              >
-                <Share2 className="w-5 h-5" />
-              </Button>
-            </div>
+        <div className="sm:basis-7/12 md:basis-1/2 px-3 pt-4 sm:pt-0 sm:ml-5 sm:px-0 flex flex-col justify-between flex-1">
+          <section>
+            <header className="flex mb-4">
+              <div>
+                {title && (
+                  <h3 className="text-lg sm:text-xl font-bold text-secondary-foreground group-hover:underline line-clamp-3">
+                    {title}
+                  </h3>
+                )}
+                <Price prices={prices} />
+              </div>
+            </header>
+            {/* description */}
+            {matchMinWidthSM && description && (
+              <p dangerouslySetInnerHTML={{ __html: description }} className="line-clamp-4 mb-4" />
+            )}
+            {/*  additions */}
+            {(durationText || flags.includes('FREE_CANCELLATION')) && (
+              <ul className="text-secondary-foreground mb-2">
+                {durationText && (
+                  <li className="flex items-center gap-3 py-1">
+                    <Clock className="w-5 h-5" />
+                    <span className="text-sm ">{durationText}</span>
+                  </li>
+                )}
+                {flags.includes('FREE_CANCELLATION') && (
+                  <li className="flex items-center gap-3 py-1">
+                    <Ban className="w-5 h-5" />
+                    <span className="text-sm ">{t('toursPage.freeCancellation')}</span>
+                  </li>
+                )}
+              </ul>
+            )}
             {reviews && (
               <span className="flex gap-3 text-sm">
                 <RatingReview averageRating={reviews.combinedAverageRating} />
                 <span>{reviews.totalReviews.toLocaleString()}</span>
               </span>
             )}
-          </div>
+          </section>
+          {/* footer (reviews & action buttons) */}
+          <section className="flex flex-row-reverse gap-2 items-center text-secondary-foreground pb-2 sm:pb-0">
+            <Button
+              size="icon"
+              variant="ghost"
+              className="text-primary hover:text-primary hover:bg-primary/10 text-sm"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+            >
+              <Heart className="w-5 h-5" />
+            </Button>
+            <Button
+              size="icon"
+              variant="ghost"
+              className="text-primary hover:text-primary hover:bg-primary/10 text-sm"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+            >
+              <Share2 className="w-5 h-5" />
+            </Button>
+          </section>
         </div>
       </div>
     </Link>
