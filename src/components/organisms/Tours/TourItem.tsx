@@ -14,7 +14,7 @@ import { Locale } from '@/i18nConfig';
 import { Button } from '@/components/ui/button';
 import { useDuration } from '@/hooks/useDuration';
 import { Badge } from '@/components/ui/badge';
-import { usePricing } from '@/hooks/usePricing';
+import { getPrices } from '@/lib/utils';
 
 export default function TourItem({ product }: { product: Product }) {
   const { title, description, reviews, pricing, flags, duration, images } = product;
@@ -29,7 +29,7 @@ export default function TourItem({ product }: { product: Product }) {
     (variant) => variant.width === 540 && variant.height === 360
   );
 
-  const prices = usePricing({ pricing, locale });
+  const prices = getPrices(pricing, locale);
 
   const durationText = useDuration({ duration });
   const likelyToSellOut = flags.includes('LIKELY_TO_SELL_OUT') ? t('flags.likelyToSellOut') : '';
@@ -55,7 +55,7 @@ export default function TourItem({ product }: { product: Product }) {
           )}
         </figure>
         {/*  <!-- Body--> */}
-        <div className="sm:basis-7/12 md:basis-1/2 px-3 pt-4 sm:pt-0 sm:ml-5 sm:px-0 flex flex-col h-fit flex-1">
+        <div className="sm:basis-7/12 md:basis-1/2 px-3 pt-4 sm:h-full sm:pt-0 sm:ml-5 sm:px-0 flex flex-col h-fit flex-1">
           <header className="flex mb-4">
             <div>
               {title && (
@@ -94,6 +94,9 @@ export default function TourItem({ product }: { product: Product }) {
                 size="icon"
                 variant="ghost"
                 className="text-primary hover:text-primary hover:bg-primary/10 text-sm"
+                onClick={(e) => {
+                  e.preventDefault();
+                }}
               >
                 <Heart className="w-5 h-5" />
               </Button>
@@ -101,6 +104,9 @@ export default function TourItem({ product }: { product: Product }) {
                 size="icon"
                 variant="ghost"
                 className="text-primary hover:text-primary hover:bg-primary/10 text-sm"
+                onClick={(e) => {
+                  e.preventDefault();
+                }}
               >
                 <Share2 className="w-5 h-5" />
               </Button>

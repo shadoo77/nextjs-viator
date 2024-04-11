@@ -3,11 +3,10 @@ import Image from 'next/image';
 import { LuMapPin } from 'react-icons/lu';
 import { Product } from '@/types/products';
 import { Locale } from '@/i18nConfig';
-import { getLocationDetails } from '@/lib/utils';
+import { getLocationDetails, getPrices } from '@/lib/utils';
 import RatingReview from '@/components/atoms/RatingReview';
 import Link from '@/components/atoms/NextLink';
 import { useDestinations } from '@/tanstack/queries/destinations';
-import { usePricing } from '@/hooks/usePricing';
 import Price from '@/components/organisms/Tours/Price';
 
 export default function TourCardShort({
@@ -20,7 +19,7 @@ export default function TourCardShort({
 }: Product) {
   const { locale }: { locale: Locale } = useParams();
   const { data: allDestinations } = useDestinations(locale);
-  const prices = usePricing({ pricing, locale });
+  const prices = getPrices(pricing, locale);
 
   if (!allDestinations) return null;
 
