@@ -5,6 +5,7 @@ import { Image } from '@/types/block';
 import { imageBaseUrl } from '@/lib/imageURLs';
 import { Coordinates, Destination } from '@/types/destinations';
 import { Locale } from '@/i18nConfig';
+import { Pricing } from '@/types/products';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -255,4 +256,36 @@ export const getPaginationButtons = (
     pages.push('...', activePage - 2, activePage - 1, activePage);
   }
   return pages;
+};
+
+// Get prices
+export const getPrices = (pricing: Pricing | undefined, locale: Locale) => {
+  if (!pricing?.summary) return null;
+
+  const { currency, summary } = pricing;
+
+  const price = getCurrencySymbol({
+    currency,
+    locale,
+    price: summary.fromPrice
+  });
+
+  const priceBeforeDiscount = getCurrencySymbol({
+    currency,
+    locale,
+    price:
+      summary?.fromPriceBeforeDiscount && summary?.fromPriceBeforeDiscount !== summary?.fromPrice
+        ? summary?.fromPriceBeforeDiscount
+        : undefined
+  });
+
+  const saving = getCurrencySymbol({
+    currency,
+    locale,
+    price: summary?.fromPriceBeforeDiscount
+      ? summary?.fromPriceBeforeDiscount - summary?.fromPrice
+      : 0
+  });
+
+  return { price, priceBeforeDiscount, saving, fromPrice: summary.fromPrice };
 };
