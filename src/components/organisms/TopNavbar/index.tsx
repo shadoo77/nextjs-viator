@@ -87,7 +87,9 @@ export default function TopNavbar() {
                       aria-haspopup="false"
                       className={cn(
                         'flex items-center px-4 transition-colors duration-300 hover:text-primary focus:text-primary focus:outline-none focus-visible:outline-none',
-                        abstractPath === href ? 'text-primary' : ''
+                        {
+                          'text-primary': abstractPath === href
+                        }
                       )}
                       href={href}
                       locale={locale as Locale}
