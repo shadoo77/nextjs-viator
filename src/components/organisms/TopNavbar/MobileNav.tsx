@@ -42,9 +42,9 @@ export default function MobileNav({ open }: { open: boolean }) {
                   href={href}
                   className={cn(
                     'flex items-center gap-3 rounded p-3 text-slate-700 transition-colors hover:bg-primary/10 hover:text-primary focus:bg-primary/10 aria-[current=page]:bg-primary/10 aria-[current=page]:text-primary',
-                    abstractPath === href || (!abstractPath && href === '/')
-                      ? 'bg-primary/10 text-primary'
-                      : ''
+                    {
+                      'bg-primary/10 text-primary': abstractPath === href
+                    }
                   )}
                   locale={i18n.language}
                 >
