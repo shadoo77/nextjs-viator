@@ -1,10 +1,12 @@
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
+import { cookies } from 'next/headers';
 import TestSingleTour from './TestSingleTour';
 import { Locale } from '@/i18nConfig';
 import getQueryClient from '@/tanstack/queryClient';
 import { queryKeys } from '@/tanstack/queryKeys';
 import { getProduct } from '@/tanstack/queries/product';
 import ToursListPage from '@/components/organisms/Tours/ToursListPage';
+import { currencyFallback } from '@/lib/constants';
 
 export default async function Page({
   params: { locale, slug }
@@ -19,6 +21,7 @@ export default async function Page({
 
   if (slug.length === 3) {
     const productCode = slug[2].replace('tid-', '');
+    const currency = cookies().get('currency') || currencyFallback;
 
     await queryClient.prefetchQuery({
       queryKey: [queryKeys.product, locale, productCode],

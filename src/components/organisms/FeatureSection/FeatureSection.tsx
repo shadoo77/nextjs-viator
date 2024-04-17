@@ -2,7 +2,7 @@
 
 import { useTranslation } from 'react-i18next';
 import { LuDollarSign, LuTicket, LuMapPin, LuCalendarClock } from 'react-icons/lu';
-import FeatureItem from '@/components/molecules/FeatureItem';
+import { FeatureItem } from '@/components/molecules/FeatureItem';
 import SectionWithTitle from '@/components/templates/SectionWithTitle';
 
 const items = [

@@ -11,7 +11,7 @@ import CarouselTestimonial from '@/components/organisms/RecommendedTours/Carouse
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useCurrencyStore } from '@/store/currency';
-import ErrorAlert from '@/components/molecules/ErrorAlert/ErrorAlert';
+import { ErrorAlert } from '@/components/molecules/ErrorAlert';
 
 export default function RecommendedTours({ locale }: { locale: Locale }) {
   const { t } = useTranslation();

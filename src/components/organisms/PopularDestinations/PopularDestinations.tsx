@@ -7,7 +7,7 @@ import { useBlock } from '@/tanstack/queries/block';
 import { Skeleton } from '@/components/ui/skeleton';
 import Link from '@/components/atoms/NextLink';
 import { getImageUrl } from '@/lib/utils';
-import ErrorAlert from '@/components/molecules/ErrorAlert/ErrorAlert';
+import { ErrorAlert } from '@/components/molecules/ErrorAlert';
 
 export default function PopularDestinations({ locale }: { locale: Locale }) {
   const { t } = useTranslation();

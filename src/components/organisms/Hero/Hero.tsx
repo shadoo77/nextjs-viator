@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslation } from 'react-i18next';
-import SearchForm from '@/components/organisms/SearchForm';
+import { SearchForm } from '@/components/organisms/SearchForm';
 
 export default function Hero() {
   const { t } = useTranslation();

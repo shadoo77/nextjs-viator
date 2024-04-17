@@ -53,7 +53,7 @@ const PickerFooter: FC<PickerFooterProps> = ({ date, done, reset }) => {
   );
 };
 
-export function DatePicker({ className }: HTMLAttributes<HTMLDivElement>) {
+export default function DatePicker({ className }: HTMLAttributes<HTMLDivElement>) {
   const { t, i18n } = useTranslation();
 
   const matchMinSM = useMediaQuery('(min-width: 640px)');

@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SearchBox } from '@/components/organisms/SearchBox';
 import { DatePicker } from '@/components/organisms/DatePicker';
 import { Button } from '@/components/ui/button';
-import SearchResultsList from '@/components/organisms/SearchResultsList';
+import { SearchResultsList } from '@/components/organisms/SearchResultsList';
 import { cn } from '@/lib/utils';
 
 export default function SearchForm() {
@@ -30,7 +30,9 @@ export default function SearchForm() {
       .refine((data) => data.from || data.to, {
         message: t('datePicker.required')
       }),
-    openSearch: z.boolean()
+    openSearch: z.boolean(),
+    openDialogSearchBox: z.boolean(),
+    openDialogDatePicker: z.boolean()
   });
 
   const methods = useForm<z.infer<typeof formSchema>>({

@@ -6,7 +6,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { ProductSearchResults } from '@/types/products';
 import Pagination from '@/components/molecules/Pagination';
 import { toursPageCount } from '@/lib/constants';
-import ErrorAlert from '@/components/molecules/ErrorAlert/ErrorAlert';
+import { ErrorAlert } from '@/components/molecules/ErrorAlert';
 
 export default function ToursList({
   searchResults,
