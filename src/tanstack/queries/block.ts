@@ -1,16 +1,15 @@
-import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'next/navigation';
+import { QueryKey, useQuery } from '@tanstack/react-query';
 import axios from '@/axios/cms';
 import { queryKeys } from '@/tanstack/queryKeys';
 import { Block, BlockType } from '@/types/block';
 import { Locale } from '@/i18nConfig';
+import { useLocale } from '@/hooks/useLocale';
 
 type Props = {
-  locale: Locale;
   blockType: BlockType;
 };
 
-export const getBlock = async ({ queryKey }: { queryKey: unknown[] }) => {
+export const getBlock = async ({ queryKey }: { queryKey: QueryKey }) => {
   const locale = queryKey[1] as Locale;
   const blockType = queryKey[2] as BlockType;
 
@@ -26,7 +25,7 @@ export const getBlock = async ({ queryKey }: { queryKey: unknown[] }) => {
 };
 
 export const useBlock = ({ blockType }: Props) => {
-  const { locale } = useParams();
+  const { locale } = useLocale();
 
   return useQuery({
     queryKey: [queryKeys.block, locale, blockType],

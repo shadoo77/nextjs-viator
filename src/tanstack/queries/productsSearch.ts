@@ -1,10 +1,10 @@
-import { useParams } from 'next/navigation';
 import { UseMutationOptions, useMutation } from '@tanstack/react-query';
 import axios from '@/axios';
 import { queryKeys } from '@/tanstack/queryKeys';
 import { Locale } from '@/i18nConfig';
 import { ProductSearchFilters } from '@/types/productSearchFilters';
-import { ProductSearchResults } from '@/types/products';
+import type { ProductSearchResults } from '@/types/products';
+import { useLocale } from '@/hooks/useLocale';
 
 type MutationFunctionProps = {
   locale: Locale;
@@ -33,7 +33,7 @@ export const useProductsSearch = ({
   options?: Options;
   params?: Record<string, unknown>;
 }) => {
-  const { locale }: { locale: Locale } = useParams();
+  const { locale } = useLocale();
 
   return useMutation({
     mutationKey: [queryKeys.productsSearch, locale, searchFilters, params],

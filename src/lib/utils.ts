@@ -1,11 +1,10 @@
-import { ParsedUrlQuery } from 'querystring';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { Image } from '@/types/block';
 import { imageBaseUrl } from '@/lib/imageURLs';
 import { Coordinates, Destination } from '@/types/destinations';
 import { Locale } from '@/i18nConfig';
-import { Pricing } from '@/types/products';
+import { Pricing, Product } from '@/types/products';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -24,17 +23,31 @@ export const isEmpty = <T>(value: T): boolean =>
   (typeof value === 'object' && Object.keys(value).length === 0) ||
   (typeof value === 'string' && value.trim().length === 0);
 
-// Get query string based on flatted object
-export function getQueryString(params: ParsedUrlQuery | Record<string, unknown>) {
-  if (!params) {
-    return '';
-  }
-  const esc = encodeURIComponent;
-  return `${Object.keys(params)
-    .filter((param) => params[param] !== null && params[param] !== undefined)
-    .map((param) => `${esc(param)}=${esc(params[param] as string)}`)
-    .join('&')}`;
-}
+// type PetfinderDataKey = 'key' | 'shelterID' | 'count' | 'animals' | 'term';
+
+// const updateSearchQuery = () => {
+//   const petfinderData: { [key in PetfinderDataKey]: any } = {
+//     key: '12345',
+//     shelterID: 'abc00',
+//     count: 20,
+//     animals: ['dogs', 'cats'],
+//     term: ''
+//   };
+//   const params = new URLSearchParams(searchParams);
+
+//   Object.keys(petfinderData).forEach((key) => {
+//     const petfinderKey = key as PetfinderDataKey;
+//     if (petfinderData[petfinderKey]) {
+//       params.set(petfinderKey, petfinderData[petfinderKey]);
+//     } else {
+//       params.delete(petfinderKey);
+//     }
+//   });
+//   params.set('page', '1');
+//   const queryString = params.toString();
+//   const updatedPath = queryString ? `${pathname}?${queryString}` : pathname;
+//   router.replace(updatedPath, { scroll: false });
+// };
 
 // Parse json safely
 export const safelyParseJSON = (jsonString: string | null | undefined) => {
@@ -54,10 +67,12 @@ export const safelyParseJSON = (jsonString: string | null | undefined) => {
 // Highlight search term
 export const textHighlighter = ({
   text = '',
-  searchTerm = ''
+  searchTerm = '',
+  unHighlightedText = ''
 }: {
   text: string;
   searchTerm: string;
+  unHighlightedText?: string;
 }) => {
   if (!searchTerm) return { __html: text };
   const escapedSearchTerm = searchTerm.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -66,7 +81,7 @@ export const textHighlighter = ({
     regExp,
     (match) => `<strong class="font-bold">${match}</strong>`
   );
-  return { __html: highlightedText };
+  return { __html: `${unHighlightedText} ${highlightedText}` };
 };
 
 // Get base image url
@@ -97,44 +112,39 @@ export const sanitizeHtml = (html: string) => html.replace(/(<([^>]+)>)/gi, '');
 
 // Get location details
 export const getLocationDetails = (
-  allDestinations: Destination[],
-  destinationId: string | undefined
+  identifire: Product['destinations'] | Destination['destinationId'],
+  destinations: Destination[]
 ) => {
-  const location = {
-    destinationUrlName: '',
-    destinationId: '',
-    city: '',
-    region: '',
-    country: ''
-  };
-
-  if (!destinationId) return location;
-
-  const destination = allDestinations?.find((des) => des.destinationId === Number(destinationId));
-  if (!destination) return location;
-
-  location.city = destination.destinationName;
-  location.destinationUrlName = destination.destinationUrlName;
-  location.destinationId = destination.destinationId.toString();
-
-  const parentDestination = allDestinations.find(
-    (des) => des.destinationId === destination.parentId
-  );
-
-  if (parentDestination?.destinationType === 'COUNTRY') {
-    location.country = parentDestination.destinationName;
-    return location;
-  }
-
-  if (parentDestination?.destinationType === 'REGION') {
-    location.region = parentDestination.destinationName;
-    const regionDestination = allDestinations.find(
-      (des) => des.destinationId === parentDestination.parentId
+  const productLocatioDetails: {
+    locationString: string;
+    destination: Destination | null;
+  } = { locationString: '', destination: null };
+  if (!identifire) return productLocatioDetails;
+  let destination = null;
+  if (typeof identifire === 'number') {
+    destination = destinations.find((destination) => destination.destinationId === identifire);
+  } else {
+    const productDestinationRef = identifire.find((destination) => destination.primary);
+    if (!productDestinationRef) return productLocatioDetails;
+    destination = destinations.find(
+      (destination) => destination.destinationId === Number(productDestinationRef.ref)
     );
-    location.country = regionDestination?.destinationName || '';
   }
 
-  return location;
+  if (!destination) return productLocatioDetails;
+  const lookupId = destination.lookupId;
+  productLocatioDetails.destination = destination;
+  productLocatioDetails.locationString = lookupId
+    .split('.')
+    .filter((id, index) => index !== 0)
+    .map((id) => {
+      const dest = destinations.find((destination) => destination.destinationId === Number(id));
+      return dest?.destinationName || '';
+    })
+    .filter((name) => name)
+    .join(', ');
+
+  return productLocatioDetails;
 };
 
 // Get currency symbol
@@ -165,25 +175,18 @@ export const closestLocation = (targetLocation: Coordinates, locationData: Desti
   }
 
   function locationDistance(location1: Coordinates, location2: Destination) {
-    var dx = location1.latitude - location2.latitude,
-      dy = location1.longitude - location2.longitude;
+    const dx = location1.latitude - location2.latitude;
+    const dy = location1.longitude - location2.longitude;
 
     return vectorDistance(dx, dy);
   }
-
-  return locationData.reduce(function (prev, curr) {
-    var prevDistance = locationDistance(targetLocation, prev),
-      currDistance = locationDistance(targetLocation, curr);
-    return prevDistance < currDistance ? prev : curr;
-  });
-
-  // const { location, error: geoErr } = useGeolocation();
-  // const destinations = localizeDestinations[locale].data;
-
-  // if (location) {
-  //   const dests = destinations.filter((dest) => dest.destinationType === 'CITY');
-  //   const nearestCity = closestLocation(location, dests);
-  // }
+  return locationData
+    .filter((dest) => dest.destinationType === 'CITY')
+    .reduce(function (prev, curr) {
+      const prevDistance = locationDistance(targetLocation, prev);
+      const currDistance = locationDistance(targetLocation, curr);
+      return prevDistance < currDistance ? prev : curr;
+    });
 };
 
 // Get pluralized string

@@ -92,3 +92,4 @@ export const appStorage = Object.freeze({
 });
 
 export const toursPageCount = 16;
+export const currencyFallback = 'EUR';

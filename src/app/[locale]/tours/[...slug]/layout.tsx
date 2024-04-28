@@ -1,11 +1,9 @@
 import { ReactNode } from 'react';
 import { Metadata } from 'next';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { Locale } from '@/i18nConfig';
-import DestinationInitializer from '@/store/destination/DestinationInitializer';
 import { getDestinations } from '@/tanstack/queries/destinations';
 import { queryKeys } from '@/tanstack/queryKeys';
-import { getLocationDetails } from '@/lib/utils';
 import initTranslations from '@/i18n';
 
 type Props = {
@@ -19,19 +17,15 @@ export async function generateMetadata({
   params: { locale: Locale; slug: string[] };
 }): Promise<Metadata> {
   const { t } = await initTranslations(locale);
+  const metadata: Metadata = {
+    title: 'Single Tour Page Title',
+    description: 'Single Tour Page Description'
+  };
 
   if (slug.length === 3) {
-    // get seo data of product page (single tour page)
-    return {
-      title: 'Single Tour Page Title',
-      description: 'Single Tour Page Description'
-    } as Metadata;
+    // TODO: get seo data of product page (single tour page)
+    return metadata;
   }
-
-  const metadata: Metadata = {
-    title: 'Tours Page Title',
-    description: 'Tours Page Description'
-  };
 
   try {
     const destinationId = slug[1].replace('did-', '');
@@ -41,63 +35,29 @@ export async function generateMetadata({
     metadata.description = t('toursPage.seoDescription', {
       cityName: destination?.destinationName
     });
+    return metadata;
   } catch (error) {
     return metadata;
   }
-
-  return metadata;
 }
 
-export default async function ToursLayout({ children, params: { locale, slug } }: Props) {
+export default async function ToursLayout({ children, params: { slug } }: Props) {
   if (slug.length > 3 || slug.length < 2) {
     notFound();
   }
 
-  const destinationId = slug[1].replace('did-', '');
+  const destinationId = slug[1].replace('did-', '').trim();
 
   if (!destinationId) {
     notFound();
   }
 
-  let destination = null;
-  let allDestinations = [];
-
-  try {
-    const res = await getDestinations({ queryKey: [queryKeys.destinations, locale] });
-
-    if (!res || !res.data.length) {
-      notFound();
-    }
-    allDestinations = res.data;
-    destination = res.data.find((d) => d.destinationId === Number(destinationId));
-
-    if (!destination) {
-      notFound();
-    }
-  } catch (error) {
-    notFound();
-  }
-
   if (slug.length === 3) {
-    const productCode = slug[2].replace('tid-', '');
+    const productCode = slug[2].replace('tid-', '').trim();
     if (!productCode) {
       notFound();
     }
   }
 
-  if (slug[0].toLowerCase() !== destination.destinationUrlName.toLowerCase()) {
-    redirect(`/${locale}/tours/${destination.destinationUrlName}/${slug.slice(1).join('/')}`);
-  }
-
-  const {
-    destinationId: destId,
-    destinationUrlName,
-    ...location
-  } = getLocationDetails(allDestinations, destination.destinationId.toString());
-
-  return (
-    <DestinationInitializer destination={destination} location={location}>
-      {children}
-    </DestinationInitializer>
-  );
+  return <>{children}</>;
 }

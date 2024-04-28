@@ -1,5 +1,4 @@
 import { Product } from '@/types/products';
-import { Destination } from '@/types/destinations';
 import { Attraction } from '@/types/attractions';
 
 export interface SearchFilter {
@@ -11,13 +10,13 @@ export interface SearchFilter {
 }
 
 export type ProductFiltering = {
-  destination: string | number;
-  dateRange: DateRange;
-  price: NumberRange;
-  rating: NumberRange;
-  durationInMinutes: NumberRange;
-  flags: ProductSearchFlag[];
-  includeAutomaticTranslations: boolean;
+  destination?: string | number;
+  dateRange?: DateRange;
+  price?: NumberRange;
+  rating?: NumberRange;
+  durationInMinutes?: NumberRange;
+  flags?: ProductSearchFlag[];
+  includeAutomaticTranslations?: boolean;
 };
 
 // iso date format
@@ -75,6 +74,19 @@ export type Currency =
 
 // ************************ search results ************************
 
+export type DestinationSearchResults = {
+  id: number;
+  name: string;
+  parentDestinationId: number;
+  parentDestinationName: string;
+  translationDetails: {
+    containsMachineTranslatedText: boolean;
+    translationSource: 'MACHINE' | 'ORIGINAL' | 'MANUAL';
+    translationAttribution: string;
+  };
+  url: string;
+};
+
 export type SearchResults = {
   products: {
     totalCount: number;
@@ -82,7 +94,7 @@ export type SearchResults = {
   };
   destinations: {
     totalCount: number;
-    results: Destination[];
+    results: DestinationSearchResults[];
   };
   attractions: {
     totalCount: number;
