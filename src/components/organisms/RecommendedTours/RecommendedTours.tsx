@@ -10,12 +10,12 @@ import { Locale } from '@/i18nConfig';
 import CarouselTestimonial from '@/components/organisms/RecommendedTours/CarouselTestimonial';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { useCurrencyStore } from '@/store/currency';
-import ErrorAlert from '@/components/molecules/ErrorAlert/ErrorAlert';
+import { ErrorAlert } from '@/components/molecules/ErrorAlert';
+import { useUserPreferences } from '@/store/userPreferences';
 
 export default function RecommendedTours({ locale }: { locale: Locale }) {
   const { t } = useTranslation();
-  const { currency } = useCurrencyStore((state) => ({ currency: state.currency }));
+  const currency = useUserPreferences((state) => state.currency);
   const productsNumber = 9;
 
   const searchFilter: SearchFilter = useMemo(
@@ -37,19 +37,19 @@ export default function RecommendedTours({ locale }: { locale: Locale }) {
   return (
     <SectionWithTitle title={t('homePage.recommendedTours.title')}>
       {(isPending || error) && (
-        <div className="grid gap-6 grid-cols-2 md:grid-cols-4 lg:grid-cols-8">
+        <div className="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-8">
           {error instanceof Error && (
             <ErrorAlert
               title={t('error.title')}
               description={t('error.description')}
               withTryAgainButton
-              className="mx-auto col-span-8"
+              className="col-span-8 mx-auto"
             />
           )}
           {isPending &&
             new Array(8).fill(0).map((_, index) => (
               <div className="col-span-2" key={index}>
-                <Skeleton className="w-full h-32" />
+                <Skeleton className="h-32 w-full" />
               </div>
             ))}
         </div>

@@ -9,7 +9,7 @@ import Providers from '@/lib/Providers';
 import TranslationsProvider from '@/lib/TranslationsProvider';
 import { Toaster } from '@/components/ui/sonner';
 import TopNavbar from '@/components/organisms/TopNavbar';
-import ScrollToTop from '@/components/organisms/ScrollToTop';
+import { ScrollToTop } from '@/components/organisms/ScrollToTop';
 import { getGlobal } from '@/tanstack/queries/global';
 import { queryKeys } from '@/tanstack/queryKeys';
 

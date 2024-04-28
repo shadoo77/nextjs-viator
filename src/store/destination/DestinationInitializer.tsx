@@ -6,22 +6,16 @@ import { useDestinationStore } from '@/store/destination';
 
 export default function DestinationInitializer({
   children,
-  destination,
-  location
+  destination
 }: {
   children: ReactNode;
   destination: Destination;
-  location: {
-    city: string;
-    region: string;
-    country: string;
-  };
 }) {
   useEffect(() => {
     if (destination) {
-      useDestinationStore.setState({ destination, location });
+      useDestinationStore.setState({ destination });
     }
-  }, [destination, location]);
+  }, [destination]);
 
   return children;
 }

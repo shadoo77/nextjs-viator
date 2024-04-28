@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'next/navigation';
 import axios from '@/axios';
 import { queryKeys } from '@/tanstack/queryKeys';
 import { Locale } from '@/i18nConfig';
 import { ProductDetails } from '@/types/productDetails';
+import { useLocale } from '@/hooks/useLocale';
 
 export const getProduct = async ({ queryKey }: { queryKey: unknown[] }) => {
   const locale = queryKey[1] as Locale;
@@ -18,7 +18,7 @@ export const getProduct = async ({ queryKey }: { queryKey: unknown[] }) => {
 };
 
 export const useProduct = ({ productCode }: { productCode: string }) => {
-  const { locale } = useParams();
+  const { locale } = useLocale();
 
   return useQuery({
     queryKey: [queryKeys.product, locale, productCode],

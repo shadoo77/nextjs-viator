@@ -10,6 +10,7 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import i18nConfig, { locales } from '@/i18nConfig';
+import { setCookie } from '@/lib/cookies';
 
 export default function LanguageChanger() {
   const { i18n, t } = useTranslation();
@@ -19,12 +20,7 @@ export default function LanguageChanger() {
 
   const handleChange = (newLocale: string) => {
     // set cookie for next-i18n-router
-    const days = 30;
-    const date = new Date();
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-    const expires = '; expires=' + date.toUTCString();
-    document.cookie = `NEXT_LOCALE=${newLocale};expires=${expires};path=/;SameSite=None;Secure`;
-
+    setCookie({ cname: 'NEXT_LOCALE', value: newLocale, days: 30 });
     // redirect to the new locale path
     if (currentLocale === i18nConfig.defaultLocale && !i18nConfig.prefixDefault) {
       router.push('/' + newLocale + currentPathname);

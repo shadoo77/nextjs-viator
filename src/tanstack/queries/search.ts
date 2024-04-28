@@ -1,9 +1,9 @@
-import { useParams } from 'next/navigation';
 import { UseMutationOptions, useMutation } from '@tanstack/react-query';
 import axios from '@/axios';
 import { queryKeys } from '@/tanstack/queryKeys';
 import { Locale } from '@/i18nConfig';
 import { SearchFilter, SearchResults } from '@/types/search';
+import { useLocale } from '@/hooks/useLocale';
 
 type MutationFunctionProps = {
   locale: Locale;
@@ -22,7 +22,7 @@ export const getSearchResult = async ({ locale, searchFilter }: MutationFunction
 };
 
 export const useSearch = (searchFilter: SearchFilter, options: Options = {}) => {
-  const { locale }: { locale: Locale } = useParams();
+  const { locale } = useLocale();
 
   return useMutation({
     mutationKey: [queryKeys.search, locale, searchFilter],

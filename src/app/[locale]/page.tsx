@@ -1,9 +1,9 @@
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
 // page sections
-import Hero from '@/components/organisms/Hero';
-import FeatureSection from '@/components/organisms/FeatureSection';
-import PopularDestinations from '@/components/organisms/PopularDestinations';
-import RecommendedTours from '@/components/organisms/RecommendedTours';
+import { Hero } from '@/components/organisms/Hero';
+import { FeatureSection } from '@/components/organisms/FeatureSection';
+import { PopularDestinations } from '@/components/organisms/PopularDestinations';
+import { RecommendedTours } from '@/components/organisms/RecommendedTours';
 
 import getQueryClient from '@/tanstack/queryClient';
 import { Locale } from '@/i18nConfig';
