@@ -1,6 +1,6 @@
 'use client';
 
-import { HTMLAttributes, useState, FC, useEffect } from 'react';
+import { HTMLAttributes, useState, useEffect } from 'react';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import { useMediaQuery } from 'usehooks-ts';
 import { useFormContext } from 'react-hook-form';
@@ -12,52 +12,23 @@ import dayOfYear from 'dayjs/plugin/dayOfYear';
 import localeData from 'dayjs/plugin/localeData';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { cn } from '@/lib/utils';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
-import { Separator } from '@/components/ui/separator';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import 'dayjs/locale/nl';
 import { fallbackLng } from '@/i18nConfig';
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
-
-type PickerFooterProps = {
-  date: DateRange | undefined;
-  done: () => void;
-  reset: () => void;
-};
-
-const PickerFooter: FC<PickerFooterProps> = ({ date, done, reset }) => {
-  const { t } = useTranslation();
-  return (
-    <section className="px-4 pb-2">
-      <Separator className="my-4" />
-      <div className="flex justify-between pb-2">
-        {!date?.from && !date?.to && (
-          <p className="w-full text-center">{t('datePicker.pickDate')}</p>
-        )}
-        {(date?.from || date?.to) && (
-          <>
-            <Button
-              onClick={() => reset()}
-              className={cn(buttonVariants({ variant: 'customOutline' }), 'font-semibold')}
-            >
-              {t('datePicker.reset')}
-            </Button>
-            <Button onClick={() => done()} className="font-semibold">
-              {t('datePicker.done')}
-            </Button>
-          </>
-        )}
-      </div>
-    </section>
-  );
-};
+import { PickerFooter } from '@/components/organisms/DatePicker/PickerFooter';
+import {
+  defaultClassNames,
+  smallDevicesClassNames
+} from '@/components/organisms/DatePicker/classNames';
+import { useUserPreferences } from '@/store/userPreferences';
 
 export default function DatePicker({ className }: HTMLAttributes<HTMLDivElement>) {
   const { t, i18n } = useTranslation();
-
   const matchMinSM = useMediaQuery('(min-width: 640px)');
-
   dayjs.extend(dayOfYear);
   dayjs.extend(localeData);
   dayjs.extend(localizedFormat);
@@ -72,81 +43,134 @@ export default function DatePicker({ className }: HTMLAttributes<HTMLDivElement>
     to: undefined
   };
 
-  const { formState, control, setValue, clearErrors } = useFormContext();
-
+  const { formState, control, setValue, clearErrors, watch } = useFormContext();
+  const openDialogDatePicker = watch('openDialogDatePicker');
   const invalid = formState.errors?.date;
+  const setProductFiltering = useUserPreferences((state) => state.setProductFiltering);
 
   const [date, setDate] = useState<DateRange | undefined>(initialDate);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     setValue('date', date);
     clearErrors('date');
-  }, [date, setValue, clearErrors]);
+    if (!date) return;
+    setProductFiltering({
+      dateRange: !date?.from
+        ? undefined
+        : {
+            from: dayjs(date.from).format('YYYY-MM-DD'),
+            to: date.to ? dayjs(date.to).format('YYYY-MM-DD') : ''
+          }
+    });
+  }, [date, setValue, clearErrors, setProductFiltering]);
 
-  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (matchMinSM) {
+      setValue('openDialogDatePicker', false);
+    }
+  }, [matchMinSM, setValue]);
 
   return (
-    <div className={cn('grid gap-2 basis-1 sm:basis-1/2', className)}>
-      <FormField
-        control={control}
-        name="date"
-        render={() => (
-          <FormItem>
-            <FormControl>
-              <Popover onOpenChange={setOpen} open={open}>
-                <PopoverTrigger asChild>
-                  <Button
-                    id="date"
-                    variant={'outline'}
-                    className={cn('w-full justify-start text-left font-normal', {
-                      'text-muted-foreground': !date,
-                      'border-destructive': invalid,
-                      'text-destructive': invalid
-                    })}
-                    onClick={() => setOpen(!open)}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {date?.from ? (
-                      date.to ? (
-                        <>
-                          {dayjs(date.from).format('ll')} - {dayjs(date.to).format('ll')}
-                        </>
+    <>
+      <div className={cn('grid basis-1 gap-2 sm:basis-1/2', className)}>
+        <FormField
+          control={control}
+          name="date"
+          render={() => (
+            <FormItem>
+              <FormControl>
+                <Popover onOpenChange={setOpen} open={open && matchMinSM}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      id="date"
+                      variant={'outline'}
+                      className={cn('w-full justify-start text-left font-normal', {
+                        'text-muted-foreground': !date,
+                        'border-destructive': invalid,
+                        'text-destructive': invalid
+                      })}
+                      onClick={() => {
+                        if (matchMinSM) {
+                          setOpen(true);
+                        } else {
+                          setValue('openDialogDatePicker', true);
+                        }
+                      }}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {date?.from ? (
+                        date.to ? (
+                          <>
+                            {dayjs(date.from).format('ll')} - {dayjs(date.to).format('ll')}
+                          </>
+                        ) : (
+                          dayjs(date.from).format('ll')
+                        )
                       ) : (
-                        dayjs(date.from).format('ll')
-                      )
-                    ) : (
-                      <span>{t('datePicker.pickDate')}</span>
-                    )}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    initialFocus
-                    mode="range"
-                    fromDate={from}
-                    toDate={to}
-                    defaultMonth={date?.from}
-                    selected={date}
-                    onSelect={setDate}
-                    numberOfMonths={matchMinSM ? 2 : 1}
-                    locale={i18n.language === fallbackLng ? enUS : nl}
-                    classNames={{
-                      cell: 'h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-[#ddd6fe] first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20',
-                      day_range_middle: 'aria-selected:bg-[#ddd6fe] aria-selected:text-slate-800'
-                    }}
-                  />
-                  <PickerFooter
-                    date={date}
-                    done={() => setOpen(false)}
-                    reset={() => setDate(initialDate)}
-                  />
-                </PopoverContent>
-              </Popover>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-    </div>
+                        <span>{t('datePicker.pickDate')}</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      initialFocus
+                      mode="range"
+                      fromDate={from}
+                      toDate={to}
+                      defaultMonth={date?.from}
+                      selected={date}
+                      onSelect={setDate}
+                      numberOfMonths={matchMinSM ? 2 : 1}
+                      locale={i18n.language === fallbackLng ? enUS : nl}
+                      classNames={defaultClassNames}
+                    />
+                    <PickerFooter
+                      date={date}
+                      done={() => setOpen(false)}
+                      reset={() => setDate(initialDate)}
+                    />
+                  </PopoverContent>
+                </Popover>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+      <Dialog
+        open={openDialogDatePicker}
+        onOpenChange={() => setValue('openDialogDatePicker', !openDialogDatePicker)}
+      >
+        <DialogContent className="z-top-navbar flex h-screen w-screen max-w-screen-sm flex-col">
+          <DialogHeader>
+            <DialogTitle>{t('datePicker.pickDate')}</DialogTitle>
+          </DialogHeader>
+          <div className="flex-grow">
+            <Calendar
+              initialFocus
+              mode="range"
+              fromDate={from}
+              toDate={to}
+              defaultMonth={date?.from}
+              selected={date}
+              onSelect={setDate}
+              numberOfMonths={matchMinSM ? 2 : 1}
+              locale={i18n.language === fallbackLng ? enUS : nl}
+              classNames={smallDevicesClassNames(date)}
+            />
+            <PickerFooter
+              date={date}
+              done={() => {
+                setOpen(false);
+                setValue('openDialogDatePicker', false);
+              }}
+              reset={() => setDate(initialDate)}
+              isSmallDevice={!matchMinSM}
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }

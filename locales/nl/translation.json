@@ -12,6 +12,7 @@
   "comma": ",",
   "savings": "{{mount}} besparingen",
   "tryAgain": "Probeer opnieuw",
+  "applyChanges": "Wijzigingen toepassen",
   "NotFoundPage": {
     "title": "Pagina niet gevonden",
     "description": "Controleer de adresbalk van de browser of gebruik de navigatie om naar een bekende pagina te gaan."
@@ -81,7 +82,10 @@
   "search": {
     "placeholder": "Plaatsen en activiteiten zoeken",
     "requiredError": "Voer een plaats of activiteit in alstublieft",
-    "submit": "Zoeken"
+    "submit": "Zoeken",
+    "mobileSearchTitle": "Plaats of activiteit",
+    "searchFor": "Zoeken naar",
+    "nearby": "In de buurt"
   },
   "destinations": {
     "paris": "Parijs",

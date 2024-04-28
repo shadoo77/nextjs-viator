@@ -21,12 +21,12 @@ export default function ToursList({
   const totalPages = Math.ceil((searchResults?.totalCount || 0) / toursPageCount);
 
   return (
-    <section className="basis-full lg:basis-3/4 flex flex-col gap-4">
+    <section className="flex basis-full flex-col gap-4 lg:basis-3/4">
       {isLoading &&
         Array.from({ length: 10 }).map((_, index) => (
           <div className="flex flex-nowrap gap-4" key={index}>
             <Skeleton className="h-[150px] w-[250px] rounded-xl" />
-            <div className="space-y-2 flex-grow">
+            <div className="flex-grow space-y-2">
               <Skeleton className="h-4 w-full" />
               <Skeleton className="h-4 w-full" />
               <Skeleton className="h-4 w-[200px]" />
@@ -49,7 +49,7 @@ export default function ToursList({
             {t('toursPage.resultsFound', { count: searchResults.totalCount })}
           </span>
 
-          <div className="flex flex-col gap-3 sm:gap-6 xs:grid xs:grid-cols-2 sm:flex sm:flex-col">
+          <div className="flex flex-col gap-3 xs:grid xs:grid-cols-2 sm:flex sm:flex-col sm:gap-6">
             {searchResults.products.length > 0 ? (
               searchResults.products.map((product) => (
                 <TourItem key={product.productCode} product={product} />

@@ -12,7 +12,6 @@ import { ErrorAlert } from '@/components/molecules/ErrorAlert';
 export default function PopularDestinations({ locale }: { locale: Locale }) {
   const { t } = useTranslation();
   const { data, error, isLoading, isFetching } = useBlock({
-    locale,
     blockType: 'popular_destinations'
   });
 
@@ -23,19 +22,19 @@ export default function PopularDestinations({ locale }: { locale: Locale }) {
 
   return (
     <SectionWithTitle title={t('homePage.popularDestinationSection.title')}>
-      <div className="grid gap-6 grid-cols-4 md:grid-cols-8 lg:grid-cols-12">
+      <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
         {error instanceof Error && (
           <ErrorAlert
             title={t('error.title')}
             description={t('error.description')}
             withTryAgainButton
-            className="mx-auto col-span-12"
+            className="col-span-12 mx-auto"
           />
         )}
         {(isLoading || isFetching) &&
           new Array(destinationsNumber).fill(0).map((_, index) => (
             <div className="col-span-2" key={index}>
-              <Skeleton className="w-full h-32" />
+              <Skeleton className="h-32 w-full" />
             </div>
           ))}
         {!data
@@ -43,18 +42,18 @@ export default function PopularDestinations({ locale }: { locale: Locale }) {
           : data.includes.Entry.map(({ fields, sys }) => (
               <div className="col-span-2" key={sys.id}>
                 {isLoading || isFetching ? (
-                  <Skeleton className="w-full h-32" />
+                  <Skeleton className="h-32 w-full" />
                 ) : (
                   <Link
                     href={`/tours/${fields.destinationUrlName}/did-${fields.id}`}
                     style={{
                       backgroundImage: `url('${getImageUrl({ image: fields.image[0], width: 400, height: 300 })}')`
                     }}
-                    className="relative w-full h-32 rounded-md flex items-center justify-center font-extrabold transition-all duration-300 hover:scale-110 group bg-cover bg-center"
+                    className="group relative flex h-32 w-full items-center justify-center rounded-md bg-cover bg-center font-extrabold transition-all duration-300 hover:scale-110"
                     locale={locale}
                   >
-                    <div className="rounded-md inset-0 absolute z-[1] bg-black transition-all duration-300 opacity-40 group-hover:opacity-5" />
-                    <span className="text-primary-foreground z-10">{fields.name}</span>
+                    <div className="absolute inset-0 z-[1] rounded-md bg-black opacity-40 transition-all duration-300 group-hover:opacity-5" />
+                    <span className="z-[1] text-primary-foreground">{fields.name}</span>
                   </Link>
                 )}
               </div>

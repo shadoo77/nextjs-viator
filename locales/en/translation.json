@@ -12,6 +12,7 @@
   "comma": "",
   "savings": "{{mount}} savings",
   "tryAgain": "Try again",
+  "applyChanges": "Apply changes",
   "NotFoundPage": {
     "title": "Page not found",
     "description": "Please double-check the browser address bar or use the navigation to go to a known page."
@@ -81,7 +82,10 @@
   "search": {
     "placeholder": "Search for a place or activity",
     "requiredError": "Enter a place or activity please",
-    "submit": "Search"
+    "submit": "Search",
+    "mobileSearchTitle": "Place or activity",
+    "searchFor": "Search for",
+    "nearby": "Nearby"
   },
   "destinations": {
     "paris": "Paris",
