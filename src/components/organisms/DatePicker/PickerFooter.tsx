@@ -30,7 +30,14 @@ export function PickerFooter({ date, isSmallDevice, done, reset }: PickerFooterP
             >
               {t('datePicker.reset')}
             </Button>
-            <Button onClick={() => done()} className="font-semibold">
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                done();
+              }}
+              className="font-semibold"
+            >
               {t('datePicker.done')}
             </Button>
           </>

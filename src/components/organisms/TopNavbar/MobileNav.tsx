@@ -29,7 +29,7 @@ export default function MobileNav({ open }: { open: boolean }) {
       id="small-device-menu"
       aria-label="Side navigation"
       className={cn(
-        'fixed top-[calc(var(--navbar-height)+1px)] bottom-0 left-0 z-40 flex w-full md:w-72 flex-col md:border-r border-r-slate-200 bg-white transition-transform lg:-translate-x-full',
+        'fixed bottom-0 left-0 top-[calc(var(--navbar-height)+1px)] z-40 flex w-full flex-col border-r-slate-200 bg-white transition-transform md:w-72 md:border-r lg:-translate-x-full',
         open ? 'translate-x-0' : '-translate-x-full'
       )}
     >

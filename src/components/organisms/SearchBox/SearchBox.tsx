@@ -4,6 +4,11 @@ import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'usehooks-ts';
+import { Button } from '@/components/ui/button';
+import { SearchInput } from '@/components/organisms/SearchBox/SearchInput';
+import { SearchResultsList } from '@/components/organisms/SearchResultsList';
+import { cn } from '@/lib/utils';
+import { useUserPreferences } from '@/store/userPreferences';
 import {
   Dialog,
   DialogContent,
@@ -11,11 +16,6 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { SearchInput } from '@/components/organisms/SearchBox/SearchInput';
-import { SearchResultsList } from '@/components/organisms/SearchResultsList';
-import { cn } from '@/lib/utils';
-import { useUserPreferences } from '@/store/userPreferences';
 
 export default function SearchBox() {
   const { t } = useTranslation();
@@ -34,11 +34,9 @@ export default function SearchBox() {
 
   return (
     <>
-      <div className="basis-1 space-y-8 sm:basis-1/2">
-        <SearchInput />
-      </div>
+      <div className="basis-1 space-y-8 sm:basis-1/2">{!open && <SearchInput />}</div>
       <Dialog open={open} onOpenChange={() => setValue('openDialogSearchBox', !open)}>
-        <DialogContent className="z-top-navbar flex h-screen w-screen max-w-screen-sm flex-col">
+        <DialogContent className="z-top-navbar flex h-full w-screen max-w-screen-sm flex-col">
           <DialogHeader>
             <DialogTitle>{t('search.mobileSearchTitle')}</DialogTitle>
           </DialogHeader>
