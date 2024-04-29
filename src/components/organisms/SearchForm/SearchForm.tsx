@@ -35,8 +35,8 @@ export default function SearchForm() {
       to: z.date().optional()
     }),
     openSearch: z.boolean(),
-    openDialogSearchBox: z.boolean(),
-    openDialogDatePicker: z.boolean()
+    openDialogSearchBox: z.boolean().optional(),
+    openDialogDatePicker: z.boolean().optional()
   });
 
   const methods = useForm<z.infer<typeof formSchema>>({
@@ -78,7 +78,6 @@ export default function SearchForm() {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log('onSubmit', values);
     let url = '';
     if (selectedDestination && selectedProductCode) {
       url = `/tours/${selectedDestination.destinationUrlName}/did-${selectedDestination.destinationId}/tid-${selectedProductCode}?${queryString}`;
