@@ -36,7 +36,7 @@ export default function SearchBox() {
     <>
       <div className="basis-1 space-y-8 sm:basis-1/2">{!open && <SearchInput />}</div>
       <Dialog open={open} onOpenChange={() => setValue('openDialogSearchBox', !open)}>
-        <DialogContent className="z-top-navbar flex h-full w-screen max-w-screen-sm flex-col">
+        <DialogContent className="z-top-navbar flex h-full w-screen max-w-screen-sm flex-col overflow-auto px-4 [&_li]:px-0 [&_ul]:p-0">
           <DialogHeader>
             <DialogTitle>{t('search.mobileSearchTitle')}</DialogTitle>
           </DialogHeader>

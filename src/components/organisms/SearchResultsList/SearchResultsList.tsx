@@ -94,54 +94,56 @@ export default function SearchResultsList() {
         />
       )}
       {isPending && <Loader />}
-      {items.map(({ title, subtitle, type, image, destination, productCode }, index) => (
-        <li
-          key={index}
-          onClick={() => {
-            setSelectedDestination(destination);
-            if (type === 'PRODUCT' && productCode) {
-              setSelectedProductCode(productCode);
-            }
-            setSeachTerm(title);
-            setValue('searchTerm', title);
-            setValue('openSearch', false);
-          }}
-          className="group flex cursor-pointer items-center gap-4 px-4 py-3 hover:bg-primary/10"
-        >
-          <div className="flex shrink-0 items-center self-center text-primary">
-            {type === 'DESTINATION' ? (
-              <LuMapPin className="h-6 w-6" />
-            ) : image?.url ? (
-              <img
-                src={image.url}
-                alt={image.caption}
-                width={image.width}
-                height={image.height}
-                className="h-12 w-12 rounded object-cover"
+      {!storedSearchTerm &&
+        items.map(({ title, subtitle, type, image, destination, productCode }, index) => (
+          <li
+            key={index}
+            onClick={() => {
+              setSelectedDestination(destination);
+              if (type === 'PRODUCT' && productCode) {
+                setSelectedProductCode(productCode);
+              }
+              setSeachTerm(title);
+              setValue('searchTerm', title);
+              setValue('openSearch', false);
+            }}
+            className="group flex cursor-pointer items-center gap-4 px-4 py-3 hover:bg-primary/10"
+          >
+            <div className="flex shrink-0 items-center self-center text-primary">
+              {type === 'DESTINATION' ? (
+                <LuMapPin className="h-6 w-6" />
+              ) : image?.url ? (
+                <img
+                  src={image.url}
+                  alt={image.caption}
+                  width={image.width}
+                  height={image.height}
+                  className="h-12 w-12 rounded object-cover"
+                />
+              ) : (
+                <LuBaggageClaim className="h-6 w-6" />
+              )}
+            </div>
+            <div className="flex min-h-[2rem] w-full min-w-0 flex-col items-start justify-center gap-0">
+              <h4
+                className="text-base text-slate-800 group-hover:text-primary"
+                dangerouslySetInnerHTML={textHighlighter({ text: title, searchTerm })}
               />
-            ) : (
-              <LuBaggageClaim className="h-6 w-6" />
-            )}
-          </div>
-          <div className="flex min-h-[2rem] w-full min-w-0 flex-col items-start justify-center gap-0">
-            <h4
-              className="text-base text-slate-700 group-hover:text-primary"
-              dangerouslySetInnerHTML={textHighlighter({ text: title, searchTerm })}
-            />
-            <p
-              className="w-full text-sm text-slate-500 group-hover:text-primary/50"
-              dangerouslySetInnerHTML={textHighlighter({
-                text: subtitle,
-                searchTerm
-              })}
-            />
-          </div>
-        </li>
-      ))}
+              <p
+                className="w-full text-xs text-slate-400 group-hover:text-primary/50"
+                dangerouslySetInnerHTML={textHighlighter({
+                  text: subtitle,
+                  searchTerm
+                })}
+              />
+            </div>
+          </li>
+        ))}
       {searchTerm.trim().length > 0 && (
         <li
           onClick={() => {
             setSeachTerm(searchTerm);
+            setValue('searchTerm', searchTerm);
             setValue('openSearch', false);
           }}
           className="group flex cursor-pointer items-center gap-4 px-4 py-3 hover:bg-primary/10"
