@@ -26,7 +26,7 @@ export default async function Home({ params: { locale } }: { params: { locale: L
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div className="md:min-h-[calc(100vh-var(--navbar-height)-1px)] flex flex-col gap-6">
+      <div className="flex flex-col gap-6 md:min-h-[calc(100vh-var(--navbar-height)-1px)]">
         {/* Hero */}
         <Hero />
         {/* Feature Section */}

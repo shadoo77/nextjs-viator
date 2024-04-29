@@ -13,9 +13,9 @@ import localeData from 'dayjs/plugin/localeData';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import 'dayjs/locale/nl';
 import { fallbackLng } from '@/i18nConfig';
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
@@ -142,7 +142,7 @@ export default function DatePicker({ className }: HTMLAttributes<HTMLDivElement>
         open={openDialogDatePicker}
         onOpenChange={() => setValue('openDialogDatePicker', !openDialogDatePicker)}
       >
-        <DialogContent className="z-top-navbar flex h-screen w-screen max-w-screen-sm flex-col">
+        <DialogContent className="z-top-navbar flex h-full w-screen max-w-screen-sm flex-col">
           <DialogHeader>
             <DialogTitle>{t('datePicker.pickDate')}</DialogTitle>
           </DialogHeader>
