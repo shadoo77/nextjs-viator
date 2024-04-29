@@ -98,7 +98,7 @@ export default function SearchForm() {
   return (
     <FormProvider {...methods}>
       <form
-        className="relative flex w-full flex-col gap-2 sm:flex-row"
+        className="relative flex w-full flex-col gap-2 rounded-2xl bg-white p-4 sm:flex-row"
         onSubmit={methods.handleSubmit(onSubmit)}
       >
         <div className="relative flex flex-grow flex-col gap-2 sm:flex-row">
