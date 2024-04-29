@@ -78,6 +78,7 @@ export default function SearchForm() {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log('onSubmit', values);
     let url = '';
     if (selectedDestination && selectedProductCode) {
       url = `/tours/${selectedDestination.destinationUrlName}/did-${selectedDestination.destinationId}/tid-${selectedProductCode}?${queryString}`;

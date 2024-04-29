@@ -13,13 +13,14 @@ import { Locale } from '@/i18nConfig';
 import { Button } from '@/components/ui/button';
 import { useDuration } from '@/hooks/useDuration';
 import { Badge } from '@/components/ui/badge';
-import { getPrices } from '@/lib/utils';
+import { cn, getPrices } from '@/lib/utils';
 import { useDestinations } from '@/tanstack/queries/destinations';
 
 export default function TourItem({ product }: { product: Product }) {
   const { title, description, reviews, pricing, flags, duration, images } = product;
   const { locale, slug }: { locale: Locale; slug: string[] } = useParams();
   const { t } = useTranslation();
+  const min390MaxXS = useMediaQuery('(min-width: 390px) and (max-width: 480px)');
   const matchMinWidthSM = useMediaQuery('(min-width: 640px)');
   const destinationId = slug[1].replace('did-', '').trim();
   const { data: destination } = useDestinations({
@@ -31,7 +32,9 @@ export default function TourItem({ product }: { product: Product }) {
   const image = images?.[0];
 
   const imageVariant = image?.variants.find(
-    (variant) => variant.width === 540 && variant.height === 360
+    (variant) =>
+      variant.width === (matchMinWidthSM || min390MaxXS ? 540 : 360) &&
+      variant.height === (matchMinWidthSM || min390MaxXS ? 360 : 240)
   );
 
   const prices = getPrices(pricing, locale);
@@ -49,9 +52,13 @@ export default function TourItem({ product }: { product: Product }) {
           <Image
             src={imageVariant?.url || ''}
             alt={image?.caption || title || ''}
-            width={imageVariant?.width}
-            height={imageVariant?.height}
-            className="aspect-auto min-h-full object-cover transition-all duration-300 group-hover:scale-110"
+            width={matchMinWidthSM ? imageVariant?.width : 0}
+            height={matchMinWidthSM ? imageVariant?.height : 0}
+            sizes="100vw"
+            className={cn(
+              'aspect-auto min-h-full object-cover transition-all duration-300 group-hover:scale-110',
+              { 'h-auto w-full': !matchMinWidthSM }
+            )}
           />
           {likelyToSellOut && (
             <Badge variant="destructive" className="absolute left-2 top-2 rounded-sm text-sm">
