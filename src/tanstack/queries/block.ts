@@ -1,5 +1,5 @@
 import { QueryKey, useQuery } from '@tanstack/react-query';
-import axios from '@/axios/cms';
+import contentfulAxios from '@/axios/cms';
 import { queryKeys } from '@/tanstack/queryKeys';
 import { Block, BlockType } from '@/types/block';
 import { Locale } from '@/i18nConfig';
@@ -13,7 +13,7 @@ export const getBlock = async ({ queryKey }: { queryKey: QueryKey }) => {
   const locale = queryKey[1] as Locale;
   const blockType = queryKey[2] as BlockType;
 
-  const { data } = await axios.get<Block>('/entries', {
+  const { data } = await contentfulAxios.get<Block>('/entries', {
     params: {
       locale,
       content_type: 'blockModel',
