@@ -22,7 +22,7 @@ const nextConfig = {
     return [
       {
         source: '/ext-api/:path*',
-        destination: `${process.env.API_URL || '/'}/:path*` // Proxy to Backend
+        destination: `${process.env.API_URL || 'https://api.viator.com/partner'}/:path*` // Proxy to Backend
       }
     ];
   }
