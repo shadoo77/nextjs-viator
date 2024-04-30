@@ -1,5 +1,6 @@
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
+import { Metadata } from 'next';
 import { Locale } from '@/i18nConfig';
 import getQueryClient from '@/tanstack/queryClient';
 import { queryKeys } from '@/tanstack/queryKeys';
@@ -7,6 +8,39 @@ import { getProduct } from '@/tanstack/queries/product';
 import { currencyFallback } from '@/lib/constants';
 import { getDestinations } from '@/tanstack/queries/destinations';
 import Container from '@/components/organisms/Tours/Container';
+import initTranslations from '@/i18n';
+
+export async function generateMetadata({
+  params: { locale, slug }
+}: {
+  params: { locale: Locale; slug: string[] };
+}): Promise<Metadata> {
+  const { t } = await initTranslations(locale);
+  const metadata: Metadata = {
+    title: 'Single Tour Page Title',
+    description: 'Single Tour Page Description'
+  };
+
+  const isProductPage = slug.length === 3;
+
+  if (isProductPage) {
+    // TODO: get seo data of product page (single tour page)
+    return metadata;
+  }
+
+  try {
+    const destinationId = slug[1].replace('did-', '');
+    const res = await getDestinations({ queryKey: [queryKeys.destinations, locale] });
+    const destination = res.data.find((d) => d.destinationId === Number(destinationId));
+    metadata.title = `${destination?.destinationName} tours`;
+    metadata.description = t('toursPage.seoDescription', {
+      cityName: destination?.destinationName
+    });
+    return metadata;
+  } catch (error) {
+    return metadata;
+  }
+}
 
 export default async function Page({
   params: { locale, slug }
