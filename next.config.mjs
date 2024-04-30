@@ -17,6 +17,14 @@ const nextConfig = {
         pathname: '/**'
       }
     ]
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/ext-api/:path*',
+        destination: `${process.env.API_URL}/:path*` // Proxy to Backend
+      }
+    ];
   }
 };
 

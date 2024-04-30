@@ -15,6 +15,6 @@ export function middleware(request: NextRequest) {
 
 // only applies this middleware to files in the app directory
 export const config = {
-  matcher: '/((?!api|static|.*\\..*|_next).*)'
+  matcher: '/((?!api|ext-api|static|.*\\..*|_next).*)'
   // matcher: ['/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js).*)']
 };

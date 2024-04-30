@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from '@/axios/cms';
+import contentfulAxios from '@/axios/cms';
 import { queryKeys } from '@/tanstack/queryKeys';
 import { isSSR } from '@/lib/utils';
 import { GlobalInfo } from '@/types/global';
@@ -10,7 +10,7 @@ export const getGlobal = async ({ queryKey }: { queryKey: unknown[] }) => {
   try {
     const locale = queryKey[1] as Locale;
 
-    const { data } = await axios.get<GlobalInfo>('/entries', {
+    const { data } = await contentfulAxios.get<GlobalInfo>('/entries', {
       params: {
         locale,
         content_type: 'globalSiteInfo',
