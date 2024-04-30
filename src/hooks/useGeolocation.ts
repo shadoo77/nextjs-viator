@@ -27,7 +27,12 @@ export function useGeolocation() {
       setError(t(`geolocationError.${error.code}`));
     };
 
-    navigator.geolocation.getCurrentPosition(handleSuccess, handleError);
+    if ('geolocation' in navigator) {
+      navigator.geolocation?.getCurrentPosition(handleSuccess, handleError);
+    } else {
+      // Handle the case where geolocation is not supported
+      setError('Geolocation is not supported');
+    }
   }, [t]);
 
   return { location, error };
