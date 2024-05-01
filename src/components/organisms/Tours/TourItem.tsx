@@ -42,13 +42,40 @@ export default function TourItem({ product }: { product: Product }) {
   const durationText = useDuration({ duration });
   const likelyToSellOut = flags.includes('LIKELY_TO_SELL_OUT') ? t('flags.likelyToSellOut') : '';
 
+  const Footer = (
+    <section className="flex flex-row-reverse items-center gap-2 pb-2 text-secondary-foreground sm:pb-0">
+      <Button
+        size="icon"
+        variant="ghost"
+        className="text-sm text-primary hover:bg-primary/10 hover:text-primary"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+      >
+        <Heart className="h-5 w-5" />
+      </Button>
+      <Button
+        size="icon"
+        variant="ghost"
+        className="text-sm text-primary hover:bg-primary/10 hover:text-primary"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+      >
+        <Share2 className="h-5 w-5" />
+      </Button>
+    </section>
+  );
+
   return (
     <Link
       href={`/tours/${destination?.destinationUrlName}/did-${destination?.destinationId}/tid-${product.productCode}`}
     >
       <div className="group box-border flex h-full flex-col overflow-hidden rounded border-r border-t border-slate-200 bg-white text-slate-500 shadow-md shadow-slate-200 sm:flex-row sm:p-4">
         {/*  <!-- Image --> */}
-        <figure className="relative overflow-hidden rounded-sm sm:basis-5/12 md:basis-1/2">
+        <figure className="relative overflow-hidden rounded-sm sm:basis-5/12">
           <Image
             src={imageVariant?.url || ''}
             alt={image?.caption || title || ''}
@@ -67,71 +94,53 @@ export default function TourItem({ product }: { product: Product }) {
           )}
         </figure>
         {/*  <!-- Body--> */}
-        <div className="flex flex-1 flex-col justify-between px-3 pt-4 sm:ml-5 sm:basis-7/12 sm:px-0 sm:pt-0 md:basis-1/2">
-          <section>
-            <header className="mb-4 flex">
-              <div>
-                {title && (
-                  <h3 className="line-clamp-3 text-lg font-bold text-secondary-foreground group-hover:underline sm:text-xl">
-                    {title}
-                  </h3>
-                )}
-                <Price prices={prices} />
-              </div>
-            </header>
-            {/* description */}
-            {matchMinWidthSM && description && (
-              <p dangerouslySetInnerHTML={{ __html: description }} className="mb-4 line-clamp-4" />
-            )}
-            {/*  additions */}
-            {(durationText || flags.includes('FREE_CANCELLATION')) && (
-              <ul className="mb-2 text-secondary-foreground">
-                {durationText && (
-                  <li className="flex items-center gap-3 py-1">
-                    <Clock className="h-5 w-5" />
-                    <span className="text-sm ">{durationText}</span>
-                  </li>
-                )}
-                {flags.includes('FREE_CANCELLATION') && (
-                  <li className="flex items-center gap-3 py-1">
-                    <Ban className="h-5 w-5" />
-                    <span className="text-sm ">{t('toursPage.freeCancellation')}</span>
-                  </li>
-                )}
-              </ul>
-            )}
+        <div className="flex flex-col px-3 pt-4 sm:ml-5 sm:basis-7/12 sm:px-0 sm:pt-0">
+          {/* <section> */}
+          <header className="mb-4 flex">
+            <div>
+              {title && (
+                <h3 className="line-clamp-3 text-lg font-bold text-secondary-foreground group-hover:underline sm:text-xl">
+                  {title}
+                </h3>
+              )}
+              <Price prices={prices} />
+            </div>
+          </header>
+          {/* description */}
+          {matchMinWidthSM && description && (
+            <p
+              dangerouslySetInnerHTML={{ __html: description }}
+              className="mb-4 line-clamp-3 text-sm"
+            />
+          )}
+          {/*  additions */}
+          {(durationText || flags.includes('FREE_CANCELLATION')) && (
+            <ul className="mb-2 text-secondary-foreground">
+              {durationText && (
+                <li className="flex items-center gap-3 py-1">
+                  <Clock className="h-5 w-5" />
+                  <span className="text-sm ">{durationText}</span>
+                </li>
+              )}
+              {flags.includes('FREE_CANCELLATION') && (
+                <li className="flex items-center gap-3 py-1">
+                  <Ban className="h-5 w-5" />
+                  <span className="text-sm ">{t('toursPage.freeCancellation')}</span>
+                </li>
+              )}
+            </ul>
+          )}
+          <div className="mb-2 flex flex-row items-center justify-between gap-2 sm:flex-row-reverse">
+            {matchMinWidthSM && Footer}
             {reviews && (
               <span className="flex gap-3 text-sm">
                 <RatingReview averageRating={reviews.combinedAverageRating} />
                 <span>{reviews.totalReviews.toLocaleString()}</span>
               </span>
             )}
-          </section>
-          {/* footer (reviews & action buttons) */}
-          <section className="flex flex-row-reverse items-center gap-2 pb-2 text-secondary-foreground sm:pb-0">
-            <Button
-              size="icon"
-              variant="ghost"
-              className="text-sm text-primary hover:bg-primary/10 hover:text-primary"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-              }}
-            >
-              <Heart className="h-5 w-5" />
-            </Button>
-            <Button
-              size="icon"
-              variant="ghost"
-              className="text-sm text-primary hover:bg-primary/10 hover:text-primary"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-              }}
-            >
-              <Share2 className="h-5 w-5" />
-            </Button>
-          </section>
+          </div>
+          {/* </section> */}
+          {!matchMinWidthSM && Footer}
         </div>
       </div>
     </Link>
