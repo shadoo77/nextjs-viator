@@ -110,7 +110,7 @@ export default function TourItem({ product }: { product: Product }) {
           {matchMinWidthSM && description && (
             <p
               dangerouslySetInnerHTML={{ __html: description }}
-              className="mb-4 line-clamp-3 text-sm"
+              className="mb-4 line-clamp-2 text-sm lg:line-clamp-3"
             />
           )}
           {/*  additions */}
