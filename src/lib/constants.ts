@@ -93,3 +93,13 @@ export const appStorage = Object.freeze({
 
 export const toursPageCount = 16;
 export const currencyFallback = 'EUR';
+
+export const durationOptions = [
+  { label: 'upTo1Hour', to: 60 },
+  { label: '1To4Hours', from: 60, to: 240 },
+  { label: '4HoursTo1Day', from: 240, to: 1440 },
+  { label: '1To3Days', from: 1440, to: 4320 },
+  { label: '+3Days', from: 4320 }
+];
+
+export const ratingOptions = ['5', '4', '3'];

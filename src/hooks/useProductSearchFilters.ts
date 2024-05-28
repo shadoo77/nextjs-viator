@@ -65,46 +65,61 @@ export function useProductSearchFilters({ destination }: { destination: Destinat
       pagination,
       currency
     };
-    if (params.tags) {
+    if (params.tags && getArrayParam({ param: params.tags, isArrayOfNumbers: true })) {
       obj.filtering.tags = getArrayParam({ param: params.tags, isArrayOfNumbers: true });
     }
-    if (params.flags) {
+    if (params.flags && getArrayParam({ param: params.flags })) {
       obj.filtering.flags = getArrayParam({ param: params.flags });
     }
-    if (params.confirmationType) {
+    if (params.confirmationType && getParam({ param: params.confirmationType })) {
       obj.filtering.confirmationType = getParam({ param: params.confirmationType });
     }
-    if (params.rating) {
-      obj.filtering.rating = getObjectParam({ param: params.rating, requiredKeys: ['from', 'to'] });
+    if (params.rating && getObjectParam({ param: params.rating, requiredKeys: [] })) {
+      obj.filtering.rating = getObjectParam({ param: params.rating, requiredKeys: [] });
     }
-    if (params.durationInMinutes) {
+    if (
+      params.durationInMinutes &&
+      getObjectParam({
+        param: params.durationInMinutes,
+        requiredKeys: []
+      })
+    ) {
       obj.filtering.durationInMinutes = getObjectParam({
         param: params.durationInMinutes,
-        requiredKeys: ['from', 'to']
+        requiredKeys: []
       });
     }
-    if (params.includeAutomaticTranslations) {
+    if (
+      params.includeAutomaticTranslations &&
+      getParam({
+        param: params.includeAutomaticTranslations,
+        isBoolean: true
+      })
+    ) {
       obj.filtering.includeAutomaticTranslations = getParam({
         param: params.includeAutomaticTranslations,
         isBoolean: true
       });
     }
-    if (params.attractionId) {
+    if (params.attractionId && getParam({ param: params.attractionId, isNumber: true })) {
       obj.filtering.attractionId = getParam({ param: params.attractionId, isNumber: true });
     }
-    if (params.lowestPrice) {
+    if (params.lowestPrice && getParam({ param: params.lowestPrice, isNumber: true })) {
       obj.filtering.lowestPrice = getParam({ param: params.lowestPrice, isNumber: true });
     }
-    if (params.highestPrice) {
+    if (params.highestPrice && getParam({ param: params.highestPrice, isNumber: true })) {
       obj.filtering.highestPrice = getParam({ param: params.highestPrice, isNumber: true });
     }
-    if (params.startDate) {
+    if (params.startDate && getParam({ param: params.startDate })) {
       obj.filtering.startDate = getParam({ param: params.startDate });
     }
-    if (params.endDate) {
+    if (params.endDate && getParam({ param: params.endDate })) {
       obj.filtering.endDate = getParam({ param: params.endDate });
     }
-    if (params.sorting) {
+    if (
+      params.sorting &&
+      getObjectParam({ param: params.sorting, requiredKeys: ['sort', 'order'] })
+    ) {
       obj.sorting = getObjectParam({ param: params.sorting, requiredKeys: ['sort', 'order'] });
     }
 

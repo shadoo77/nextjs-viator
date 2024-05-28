@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { LuSearch, LuLoader2 } from 'react-icons/lu';
 import { useTranslation } from 'react-i18next';
 import z from 'zod';
@@ -16,10 +16,17 @@ import { cn } from '@/lib/utils';
 import { useClient } from '@/hooks/useClient';
 import { useUserPreferences } from '@/store/userPreferences';
 import { useQueryParams } from '@/hooks/useQueryParams';
+import { Destination } from '@/types/destinations';
+import { useAbstractPath } from '@/hooks/useAbstractPath';
 
-export default function SearchForm() {
+export default function SearchForm({ destination }: { destination?: Destination }) {
   const { t } = useTranslation();
   const router = useRouter();
+  const { abstractPath, isHomePage } = useAbstractPath();
+  const searchParams = useSearchParams();
+  const term = searchParams.get('term');
+  const startDate = searchParams.get('startDate');
+  const endDate = searchParams.get('endDate');
   const matchMinWidthSM = useMediaQuery('(min-width: 640px)');
   const isLoading = false;
   const isClient = useClient();
@@ -58,19 +65,50 @@ export default function SearchForm() {
     selectedDestination,
     selectedProductCode,
     resetUserPreferences,
-    productFiltering
+    productFiltering,
+    setSelectedDestination,
+    setSearchTerm
   } = useUserPreferences((state) => ({
     storedSearchTerm: state.searchTerm,
     selectedDestination: state.selectedDestination,
     selectedProductCode: state.selectedProductCode,
     resetUserPreferences: state.reset,
-    productFiltering: state.productFiltering
+    productFiltering: state.productFiltering,
+    setSelectedDestination: state.setSelectedDestination,
+    setSearchTerm: state.setSearchTerm
   }));
+
+  const setValue = methods.setValue;
 
   // Reset user preferences on component mount
   useEffect(() => {
     resetUserPreferences();
-  }, [resetUserPreferences]);
+    if (
+      destination &&
+      (abstractPath.startsWith('/searchResults') || abstractPath.startsWith('/tours'))
+    ) {
+      const queryTerm =
+        abstractPath.startsWith('/searchResults') && term ? term : destination.destinationName;
+      setSearchTerm(queryTerm);
+      setValue('searchTerm', queryTerm);
+      setSelectedDestination(destination);
+      (startDate || endDate) &&
+        setValue('date', {
+          from: startDate ? new Date(startDate) : undefined,
+          to: endDate ? new Date(endDate) : undefined
+        });
+    }
+  }, [
+    destination,
+    endDate,
+    abstractPath,
+    resetUserPreferences,
+    setSearchTerm,
+    setSelectedDestination,
+    setValue,
+    startDate,
+    term
+  ]);
 
   const { queryString } = useQueryParams({
     startDate: productFiltering?.dateRange?.from,
@@ -98,7 +136,9 @@ export default function SearchForm() {
   return (
     <FormProvider {...methods}>
       <form
-        className="relative flex w-full flex-col gap-2 rounded-2xl bg-white p-4 sm:flex-row"
+        className={cn('relative flex w-full flex-col gap-2 rounded-2xl bg-white p-4 sm:flex-row', {
+          'mx-auto bg-primary p-3 md:max-w-screen-lg md:p-4': !isHomePage
+        })}
         onSubmit={methods.handleSubmit(onSubmit)}
       >
         <div className="relative flex flex-grow flex-col gap-2 sm:flex-row">
@@ -117,14 +157,16 @@ export default function SearchForm() {
             </div>
           )}
         </div>
-        <Button type="submit" disabled={isLoading} className="font-bold">
-          {isLoading ? (
-            <LuLoader2 className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <LuSearch className="mr-2 h-4 w-4" />
-          )}
-          {t('search.submit')}
-        </Button>
+        {isHomePage && (
+          <Button type="submit" disabled={isLoading} className="font-bold">
+            {isLoading ? (
+              <LuLoader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <LuSearch className="mr-2 h-4 w-4" />
+            )}
+            {t('search.submit')}
+          </Button>
+        )}
       </form>
     </FormProvider>
   );

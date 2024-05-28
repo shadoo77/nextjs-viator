@@ -11,8 +11,10 @@
   "hours": "uur",
   "comma": ",",
   "savings": "{{mount}} besparingen",
+  "seeResults": "{{count}} Resultaten bekijken",
   "tryAgain": "Probeer opnieuw",
   "applyChanges": "Wijzigingen toepassen",
+  "clear": "Wissen",
   "NotFoundPage": {
     "title": "Pagina niet gevonden",
     "description": "Controleer de adresbalk van de browser of gebruik de navigatie om naar een bekende pagina te gaan."
@@ -111,7 +113,31 @@
     "resultsFound": "{{count}} tours gevonden",
     "freeCancellation": "Gratis annuleren"
   },
+  "filters": {
+    "summary": {
+      "title": "Filters",
+      "clearAll": "Alles wissen"
+    },
+    "categories": "Categorieën",
+    "specials": "Speciale aanbiedingen",
+    "duration": "Duur",
+    "price": "Prijs",
+    "rating": "Beoordeling"
+  },
   "flags": {
-    "likelyToSellOut": "Meestal snel uitverkocht"
+    "NEW_ON_VIATOR": "Nieuw op TripPlazr",
+    "VIATOR_EXCLUSIVE": "Exclusief op TripPlazr",
+    "FREE_CANCELLATION": "Gratis annuleren",
+    "SKIP_THE_LINE": "Sla de wachtrij over",
+    "PRIVATE_TOUR": "Privétour",
+    "SPECIAL_OFFER": "Speciale aanbieding",
+    "LIKELY_TO_SELL_OUT": "Waarschijnlijk uitverkocht"
+  },
+  "duration": {
+    "upTo1Hour": "Tot 1 uur",
+    "1To4Hours": "1 tot 4 uur",
+    "4HoursTo1Day": "4 uur tot 1 dag",
+    "1To3Days": "1 tot 3 dagen",
+    "+3Days": "Meer dan 3 dagen"
   }
 }

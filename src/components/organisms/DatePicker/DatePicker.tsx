@@ -25,6 +25,7 @@ import {
   smallDevicesClassNames
 } from '@/components/organisms/DatePicker/classNames';
 import { useUserPreferences } from '@/store/userPreferences';
+import { useQueryParams } from '@/hooks/useQueryParams';
 
 export default function DatePicker({ className }: HTMLAttributes<HTMLDivElement>) {
   const { t, i18n } = useTranslation();
@@ -43,17 +44,30 @@ export default function DatePicker({ className }: HTMLAttributes<HTMLDivElement>
     to: undefined
   };
 
-  const { formState, control, setValue, clearErrors, watch } = useFormContext();
+  const { formState, control, setValue, watch } = useFormContext();
   const openDialogDatePicker = watch('openDialogDatePicker');
+  const date: DateRange | undefined = watch('date');
+
   const invalid = formState.errors?.date;
   const setProductFiltering = useUserPreferences((state) => state.setProductFiltering);
 
-  const [date, setDate] = useState<DateRange | undefined>(initialDate);
+  const { updatedPath } = useQueryParams();
+
   const [open, setOpen] = useState(false);
 
+  const setApplyDate = (val: boolean) => {
+    setOpen(val);
+    if (!val) {
+      updatedPath({
+        updatedQuery: {
+          startDate: date?.from ? dayjs(date.from).format('YYYY-MM-DD') : undefined,
+          endDate: date?.to ? dayjs(date.to).format('YYYY-MM-DD') : undefined
+        }
+      });
+    }
+  };
+
   useEffect(() => {
-    setValue('date', date);
-    clearErrors('date');
     if (!date) return;
     setProductFiltering({
       dateRange: !date?.from
@@ -63,7 +77,7 @@ export default function DatePicker({ className }: HTMLAttributes<HTMLDivElement>
             to: date.to ? dayjs(date.to).format('YYYY-MM-DD') : ''
           }
     });
-  }, [date, setValue, clearErrors, setProductFiltering]);
+  }, [date, setProductFiltering]);
 
   useEffect(() => {
     if (matchMinSM) {
@@ -80,7 +94,7 @@ export default function DatePicker({ className }: HTMLAttributes<HTMLDivElement>
           render={() => (
             <FormItem>
               <FormControl>
-                <Popover onOpenChange={setOpen} open={open && matchMinSM}>
+                <Popover onOpenChange={(v) => setApplyDate(v)} open={open && matchMinSM}>
                   <PopoverTrigger asChild>
                     <Button
                       id="date"
@@ -92,7 +106,7 @@ export default function DatePicker({ className }: HTMLAttributes<HTMLDivElement>
                       })}
                       onClick={() => {
                         if (matchMinSM) {
-                          setOpen(true);
+                          setApplyDate(true);
                         } else {
                           setValue('openDialogDatePicker', true);
                         }
@@ -120,15 +134,15 @@ export default function DatePicker({ className }: HTMLAttributes<HTMLDivElement>
                       toDate={to}
                       defaultMonth={date?.from}
                       selected={date}
-                      onSelect={setDate}
+                      onSelect={(d) => setValue('date', d)}
                       numberOfMonths={matchMinSM ? 2 : 1}
                       locale={i18n.language === fallbackLng ? enUS : nl}
                       classNames={defaultClassNames}
                     />
                     <PickerFooter
                       date={date}
-                      done={() => setOpen(false)}
-                      reset={() => setDate(initialDate)}
+                      done={() => setApplyDate(false)}
+                      reset={() => setValue('date', initialDate)}
                     />
                   </PopoverContent>
                 </Popover>
@@ -154,7 +168,7 @@ export default function DatePicker({ className }: HTMLAttributes<HTMLDivElement>
               toDate={to}
               defaultMonth={date?.from}
               selected={date}
-              onSelect={setDate}
+              onSelect={(d) => setValue('date', d)}
               numberOfMonths={matchMinSM ? 2 : 1}
               locale={i18n.language === fallbackLng ? enUS : nl}
               classNames={smallDevicesClassNames(date)}
@@ -162,10 +176,10 @@ export default function DatePicker({ className }: HTMLAttributes<HTMLDivElement>
             <PickerFooter
               date={date}
               done={() => {
-                setOpen(false);
+                setApplyDate(false);
                 setValue('openDialogDatePicker', false);
               }}
-              reset={() => setDate(initialDate)}
+              reset={() => setValue('date', initialDate)}
               isSmallDevice={!matchMinSM}
             />
           </div>
