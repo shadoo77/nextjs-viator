@@ -21,7 +21,7 @@ export default function ToursList({
   const totalPages = Math.ceil((searchResults?.totalCount || 0) / toursPageCount);
 
   return (
-    <section className="flex basis-full flex-col gap-4 overflow-hidden lg:basis-3/4">
+    <section className="flex basis-full flex-col gap-4 lg:basis-3/4">
       {isLoading &&
         Array.from({ length: 10 }).map((_, index) => (
           <div className="flex flex-nowrap gap-4" key={index}>
