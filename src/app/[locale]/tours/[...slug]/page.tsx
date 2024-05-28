@@ -9,6 +9,7 @@ import { currencyFallback } from '@/lib/constants';
 import { getDestinations } from '@/tanstack/queries/destinations';
 import Container from '@/components/organisms/Tours/Container';
 import initTranslations from '@/i18n';
+import { getTags } from '@/tanstack/queries/tags';
 
 export async function generateMetadata({
   params: { locale, slug }
@@ -55,6 +56,11 @@ export default async function Page({
   await queryClient.prefetchQuery({
     queryKey: [queryKeys.destinations, locale],
     queryFn: getDestinations
+  });
+  // prefetch all tags
+  await queryClient.prefetchQuery({
+    queryKey: [queryKeys.tags],
+    queryFn: getTags
   });
 
   const destinationId = slug[1].replace('did-', '').trim();

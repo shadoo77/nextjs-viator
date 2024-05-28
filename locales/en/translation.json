@@ -11,8 +11,10 @@
   "hours": "hours",
   "comma": "",
   "savings": "{{mount}} savings",
+  "seeResults": "See {{count}} results",
   "tryAgain": "Try again",
   "applyChanges": "Apply changes",
+  "clear": "Clear",
   "NotFoundPage": {
     "title": "Page not found",
     "description": "Please double-check the browser address bar or use the navigation to go to a known page."
@@ -111,7 +113,31 @@
     "resultsFound": "{{count}} tours found",
     "freeCancellation": "Free Cancellation"
   },
+  "filters": {
+    "summary": {
+      "title": "Filters",
+      "clearAll": "Clear all"
+    },
+    "categories": "Categories",
+    "specials": "Specials",
+    "duration": "Duration",
+    "price": "Price",
+    "rating": "Rating"
+  },
   "flags": {
-    "likelyToSellOut": "Likely to Sell Out"
+    "NEW_ON_VIATOR": "New on TripPlazr",
+    "VIATOR_EXCLUSIVE": "TripPlazr Exclusive",
+    "FREE_CANCELLATION": "Free Cancellation",
+    "SKIP_THE_LINE": "Skip the Line",
+    "PRIVATE_TOUR": "Private Tour",
+    "SPECIAL_OFFER": "Special Offer",
+    "LIKELY_TO_SELL_OUT": "Likely to sell out"
+  },
+  "duration": {
+    "upTo1Hour": "up to 1 hour",
+    "1To4Hours": "1 to 4 hours",
+    "4HoursTo1Day": "4 hours to 1 day",
+    "1To3Days": "1 to 3 days",
+    "+3Days": "3+ days"
   }
 }

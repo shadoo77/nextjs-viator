@@ -12,7 +12,7 @@ import Link from '@/components/atoms/NextLink';
 
 export default function TopNavbar() {
   const [isToggleOpen, setIsToggleOpen] = useState(false);
-  const abstractPath = useAbstractPath();
+  const { abstractPath } = useAbstractPath();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { locale } = useParams();
@@ -24,11 +24,11 @@ export default function TopNavbar() {
 
   return (
     <>
-      <header className="sticky top-0 left-0 z-[51] w-full bg-white border-b shadow-lg border-b-1 border-slate-200 shadow-slate-700/5 after:absolute after:top-full after:left-0 after:z-10 after:block after:h-px after:w-full after:bg-slate-200 lg:border-slate-200 lg:backdrop-blur-sm lg:after:hidden">
-        <div className="relative max-w-full mx-auto">
+      <header className="border-b-1 sticky left-0 top-0 z-[51] w-full border-b border-slate-200 bg-white shadow-lg shadow-slate-700/5 after:absolute after:left-0 after:top-full after:z-10 after:block after:h-px after:w-full after:bg-slate-200 lg:border-slate-200 lg:backdrop-blur-sm lg:after:hidden">
+        <div className="relative mx-auto max-w-full">
           <nav
             aria-label="main navigation"
-            className="container flex items-stretch justify-between px-2 font-medium md:px-3 lg:px-4 h-navbar-height text-slate-700"
+            className="container flex h-navbar-height items-stretch justify-between px-2 font-medium text-slate-700 md:px-3 lg:px-4"
             role="navigation"
           >
             {/*      <!-- Brand logo --> */}
@@ -36,7 +36,7 @@ export default function TopNavbar() {
               id="WindUI"
               aria-label="WindUI logo"
               aria-current="page"
-              className="flex items-center gap-2 py-3 text-lg whitespace-nowrap focus:outline-none"
+              className="flex items-center gap-2 whitespace-nowrap py-3 text-lg focus:outline-none"
               href="/"
               locale={locale as Locale}
             >
@@ -47,7 +47,7 @@ export default function TopNavbar() {
               className={cn(
                 'relative order-10 block h-10 w-10 self-center lg:hidden',
                 isToggleOpen
-                  ? 'visible opacity-100 [&_span:nth-child(1)]:w-6 [&_span:nth-child(1)]:translate-y-0 [&_span:nth-child(1)]:rotate-45 [&_span:nth-child(3)]:w-0 [&_span:nth-child(2)]:-rotate-45 '
+                  ? 'visible opacity-100 [&_span:nth-child(1)]:w-6 [&_span:nth-child(1)]:translate-y-0 [&_span:nth-child(1)]:rotate-45 [&_span:nth-child(2)]:-rotate-45 [&_span:nth-child(3)]:w-0 '
                   : ''
               )}
               onClick={() => setIsToggleOpen(!isToggleOpen)}
@@ -58,7 +58,7 @@ export default function TopNavbar() {
               aria-haspopup="menu"
               aria-controls="small-device-menu"
             >
-              <div className="absolute w-6 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+              <div className="absolute left-1/2 top-1/2 w-6 -translate-x-1/2 -translate-y-1/2 transform">
                 <span
                   aria-hidden="true"
                   className="absolute block h-0.5 w-9/12 -translate-y-2 transform rounded-full bg-slate-900 transition-all duration-300"
@@ -77,10 +77,10 @@ export default function TopNavbar() {
             <ul
               role="menubar"
               aria-label="Select page"
-              className="relative hidden top-0 h-full w-auto overflow-visible px-0 py-0 font-medium transition-[opacity,visibility] duration-300 lg:flex lg:justify-center lg:items-center"
+              className="relative top-0 hidden h-full w-auto overflow-visible px-0 py-0 font-medium transition-[opacity,visibility] duration-300 lg:flex lg:items-center lg:justify-center"
             >
               {menuItems.map(({ id, label, href, type }) => (
-                <li role="none" className="flex mx-2" key={id}>
+                <li role="none" className="mx-2 flex" key={id}>
                   {type === 'text' ? (
                     <Link
                       role="menuitem"
@@ -101,7 +101,7 @@ export default function TopNavbar() {
               ))}
             </ul>
 
-            <span className="hidden lg:inline-block self-center">
+            <span className="hidden self-center lg:inline-block">
               <LanguageChanger />
             </span>
           </nav>
@@ -111,7 +111,7 @@ export default function TopNavbar() {
 
       {/*  <!-- Backdrop --> */}
       <div
-        className={`fixed top-0 bottom-0 left-0 right-0 z-10 bg-slate-900/20 transition-colors lg:hidden ${
+        className={`fixed bottom-0 left-0 right-0 top-0 z-10 bg-slate-900/20 transition-colors lg:hidden ${
           isToggleOpen ? 'block' : 'hidden'
         }`}
         onClick={() => setIsToggleOpen(false)}

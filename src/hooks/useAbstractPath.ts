@@ -2,8 +2,9 @@
 
 import { useParams, usePathname } from 'next/navigation';
 
-export function useAbstractPath(): string {
+export function useAbstractPath() {
   const pathname = usePathname();
   const { locale } = useParams();
-  return pathname.replace(`/${locale}`, '') || '/';
+  const abstractPath = pathname.replace(`/${locale}`, '') || '/';
+  return { abstractPath, isHomePage: abstractPath === '/' };
 }
