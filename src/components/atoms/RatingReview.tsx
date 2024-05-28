@@ -25,15 +25,15 @@ export default function RatingReview({
 
   if (avgRating % 1 === 0) {
     rating = avgRating;
-  }
-
-  rating = Math.floor(avgRating);
-  const diff = avgRating - rating;
-
-  if (diff > 0.5) {
-    rating += 1;
   } else {
-    rating += 0.5;
+    rating = Math.floor(avgRating);
+    const diff = avgRating - rating;
+
+    if (diff > 0.5) {
+      rating += 1;
+    } else {
+      rating += 0.5;
+    }
   }
 
   return (
@@ -45,9 +45,9 @@ export default function RatingReview({
             <BiSolidStar
               fill="currentColor"
               className={cn({
-                'w-5 h-5': size === 'normal',
-                'w-4 h-4': size === 'small',
-                'w-6 h-6': size === 'large'
+                'h-5 w-5': size === 'normal',
+                'h-4 w-4': size === 'small',
+                'h-6 w-6': size === 'large'
               })}
               key={index}
             />
@@ -58,9 +58,9 @@ export default function RatingReview({
             <BiSolidStarHalf
               fill="currentColor"
               className={cn({
-                'w-5 h-5': size === 'normal',
-                'w-4 h-4': size === 'small',
-                'w-6 h-6': size === 'large'
+                'h-5 w-5': size === 'normal',
+                'h-4 w-4': size === 'small',
+                'h-6 w-6': size === 'large'
               })}
               key={index}
             />
@@ -70,9 +70,9 @@ export default function RatingReview({
           <BiStar
             fill="currentColor"
             className={cn({
-              'w-5 h-5': size === 'normal',
-              'w-4 h-4': size === 'small',
-              'w-6 h-6': size === 'large'
+              'h-5 w-5': size === 'normal',
+              'h-4 w-4': size === 'small',
+              'h-6 w-6': size === 'large'
             })}
             key={index}
           />

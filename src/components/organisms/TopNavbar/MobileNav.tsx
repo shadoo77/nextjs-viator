@@ -13,7 +13,7 @@ export default function MobileNav({ open }: { open: boolean }) {
   const { i18n } = useTranslation();
   const minWidthLarge = useMediaQuery('(min-width: 1024px)');
 
-  const abstractPath = useAbstractPath();
+  const { abstractPath } = useAbstractPath();
 
   // this prevents the scroll if the back page is scrollable
   useEffect(() => {

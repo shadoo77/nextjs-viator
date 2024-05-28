@@ -5,5 +5,6 @@ export const queryKeys = {
   attractions: 'attractions',
   productsSearch: 'productsSearch',
   product: 'product',
-  search: 'search'
+  search: 'search',
+  tags: 'tags'
 };

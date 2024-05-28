@@ -13,26 +13,27 @@ export interface ProductSearchFilters {
   currency: Currency;
 }
 
+export type Flag =
+  | 'NEW_ON_VIATOR'
+  | 'VIATOR_EXCLUSIVE'
+  | 'FREE_CANCELLATION'
+  | 'SKIP_THE_LINE'
+  | 'PRIVATE_TOUR'
+  | 'SPECIAL_OFFER'
+  | 'LIKELY_TO_SELL_OUT';
+
 export interface Filtering {
   destination: string;
   tags?: number[];
-  flags?: (
-    | 'NEW_ON_VIATOR'
-    | 'VIATOR_EXCLUSIVE'
-    | 'FREE_CANCELLATION'
-    | 'SKIP_THE_LINE'
-    | 'PRIVATE_TOUR'
-    | 'SPECIAL_OFFER'
-    | 'LIKELY_TO_SELL_OUT'
-  )[];
+  flags?: Flag[];
   confirmationType?: 'INSTANT';
   rating?: {
     from: number;
     to: number;
   };
   durationInMinutes?: {
-    from: number;
-    to: number;
+    from?: number;
+    to?: number;
   };
   includeAutomaticTranslations?: boolean;
   attractionId?: number;

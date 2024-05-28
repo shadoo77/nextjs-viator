@@ -1,10 +1,12 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import qs from 'qs';
 import { Image } from '@/types/block';
 import { imageBaseUrl } from '@/lib/imageURLs';
 import { Coordinates, Destination } from '@/types/destinations';
 import { Locale } from '@/i18nConfig';
 import { Pricing, Product } from '@/types/products';
+import { Filtering } from '@/types/productSearchFilters';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -23,31 +25,23 @@ export const isEmpty = <T>(value: T): boolean =>
   (typeof value === 'object' && Object.keys(value).length === 0) ||
   (typeof value === 'string' && value.trim().length === 0);
 
-// type PetfinderDataKey = 'key' | 'shelterID' | 'count' | 'animals' | 'term';
-
-// const updateSearchQuery = () => {
-//   const petfinderData: { [key in PetfinderDataKey]: any } = {
-//     key: '12345',
-//     shelterID: 'abc00',
-//     count: 20,
-//     animals: ['dogs', 'cats'],
-//     term: ''
-//   };
-//   const params = new URLSearchParams(searchParams);
-
-//   Object.keys(petfinderData).forEach((key) => {
-//     const petfinderKey = key as PetfinderDataKey;
-//     if (petfinderData[petfinderKey]) {
-//       params.set(petfinderKey, petfinderData[petfinderKey]);
-//     } else {
-//       params.delete(petfinderKey);
-//     }
-//   });
-//   params.set('page', '1');
-//   const queryString = params.toString();
-//   const updatedPath = queryString ? `${pathname}?${queryString}` : pathname;
-//   router.replace(updatedPath, { scroll: false });
-// };
+export const getQueryParams = (
+  params: Record<string, any>,
+  { addQueryPrefix = true }: { addQueryPrefix?: boolean } = {}
+) =>
+  qs
+    .stringify(params, {
+      addQueryPrefix,
+      skipNulls: true,
+      encode: false,
+      filter: (prefix, value) => {
+        if (typeof value === 'string' && !value.trim()) {
+          return;
+        }
+        return value;
+      }
+    })
+    .toString();
 
 // Parse json safely
 export const safelyParseJSON = (jsonString: string | null | undefined) => {
@@ -157,7 +151,7 @@ export const getCurrencySymbol = ({
   locale: Locale;
   price: number | undefined;
 }) => {
-  if (!price) return '';
+  if (price === undefined || price === null) return '';
   const intl = new Intl.NumberFormat(locale, {
     style: 'currency',
     currency,
@@ -291,4 +285,21 @@ export const getPrices = (pricing: Pricing | undefined, locale: Locale) => {
   });
 
   return { price, priceBeforeDiscount, saving, fromPrice: summary.fromPrice };
+};
+
+// Get active filters count
+export const getActiveFiltersCount = ({
+  tags,
+  flags,
+  rating,
+  durationInMinutes,
+  highestPrice
+}: Filtering) => {
+  let filtersCount = 0;
+  if (tags) filtersCount += tags.length;
+  if (flags) filtersCount += flags.length;
+  if (rating) filtersCount++;
+  if (durationInMinutes) filtersCount++;
+  if (highestPrice) filtersCount++;
+  return filtersCount;
 };

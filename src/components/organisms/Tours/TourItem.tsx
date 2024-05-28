@@ -40,7 +40,8 @@ export default function TourItem({ product }: { product: Product }) {
   const prices = getPrices(pricing, locale);
 
   const durationText = useDuration({ duration });
-  const likelyToSellOut = flags.includes('LIKELY_TO_SELL_OUT') ? t('flags.likelyToSellOut') : '';
+  const likelyToSellOut = flags.includes('LIKELY_TO_SELL_OUT') ? t('flags.LIKELY_TO_SELL_OUT') : '';
+  const specialOffer = flags.includes('SPECIAL_OFFER') ? t('flags.SPECIAL_OFFER') : '';
 
   const Footer = (
     <section className="flex flex-row-reverse items-center gap-2 pb-2 text-secondary-foreground sm:pb-0">
@@ -75,7 +76,7 @@ export default function TourItem({ product }: { product: Product }) {
     >
       <div className="group box-border flex h-full flex-col overflow-hidden rounded border-r border-t border-slate-200 bg-white text-slate-500 shadow-md shadow-slate-200 sm:flex-row sm:p-4">
         {/*  <!-- Image --> */}
-        <figure className="relative overflow-hidden rounded-sm sm:basis-5/12">
+        <figure className="relative overflow-hidden sm:basis-5/12 sm:rounded-sm">
           <Image
             src={imageVariant?.url || ''}
             alt={image?.caption || title || ''}
@@ -90,6 +91,11 @@ export default function TourItem({ product }: { product: Product }) {
           {likelyToSellOut && (
             <Badge variant="destructive" className="absolute left-2 top-2 rounded-sm text-sm">
               {likelyToSellOut}
+            </Badge>
+          )}
+          {specialOffer && (
+            <Badge variant="destructive" className="absolute left-2 top-2 rounded-sm text-sm">
+              {specialOffer}
             </Badge>
           )}
         </figure>

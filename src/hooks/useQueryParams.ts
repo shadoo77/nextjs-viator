@@ -14,24 +14,27 @@ export function useQueryParams(queryObject: Record<string, any> = {}) {
   const getSearchQuery = useCallback(
     (qObject: Record<string, any>) => {
       const params = qs.parse(searchParams.toString(), { allowEmptyArrays: false });
-      if (!qObject || isEmpty(qObject)) {
+      if (isEmpty(qObject)) {
         const path = params.toString() ? `${pathname}?${params.toString()}` : pathname;
         return { path, queryString: params.toString() };
       }
-      const newParams = qs.stringify(
-        { ...params, ...qObject },
-        {
-          skipNulls: true,
-          encode: false,
-          filter: (prefix, value) => {
-            if (typeof value === 'string' && !value.trim()) {
-              return;
+
+      const queryString = qs
+        .stringify(
+          { ...params, ...qObject },
+          {
+            skipNulls: true,
+            encode: false,
+            filter: (prefix, value) => {
+              if (typeof value === 'string' && !value.trim()) {
+                return;
+              }
+              return value;
             }
-            return value;
           }
-        }
-      );
-      const queryString = newParams.toString();
+        )
+        .toString();
+
       const path = queryString ? `${pathname}?${queryString}` : pathname;
       return { path, queryString };
     },
@@ -54,5 +57,10 @@ export function useQueryParams(queryObject: Record<string, any> = {}) {
     router.replace(newPath, { scroll });
   };
 
-  return { updatedPath, ...pathInfo };
+  // Clear all query params
+  const clearQueryParams = () => {
+    router.replace(pathname);
+  };
+
+  return { updatedPath, clearQueryParams, ...pathInfo };
 }
