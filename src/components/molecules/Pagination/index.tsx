@@ -1,14 +1,14 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useMediaQuery } from 'usehooks-ts';
 import { ChevronsLeft, ChevronsRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn, getPaginationButtons } from '@/lib/utils';
 import { usePagination } from '@/hooks/usePagination';
+import { useQueryParams } from '@/hooks/useQueryParams';
 
 export default function Pagination({ totalPages }: { totalPages: number }) {
-  const pathname = usePathname();
+  const { getUpdatedPath } = useQueryParams();
   const { activePage } = usePagination();
   const isLargeDevices = useMediaQuery('(min-width: 640px)');
 
@@ -25,14 +25,14 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
           <>
             <li>
               <Link
-                href={pathname}
+                href={getUpdatedPath()}
                 aria-label="Goto Page 1"
                 aria-disabled={activePage === 1}
                 tabIndex={activePage === 1 ? -1 : 0}
                 className={cn(
                   'inline-flex h-10 items-center justify-center gap-4 rounded stroke-slate-700 px-4 text-sm font-medium text-slate-700 transition duration-300 hover:bg-primary/10 hover:stroke-primary hover:text-primary focus:bg-primary/90 focus:stroke-primary focus:text-white focus-visible:outline-none',
                   {
-                    'stroke-slate-400 text-slate-400 pointer-events-none': activePage === 1
+                    'pointer-events-none stroke-slate-400 text-slate-400': activePage === 1
                   }
                 )}
               >
@@ -42,12 +42,12 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
             </li>
             <li>
               <Link
-                href={`${pathname}?page=${activePage - 1}`}
+                href={getUpdatedPath({ page: activePage - 1 })}
                 aria-label="Goto Page 1"
                 className={cn(
                   'inline-flex h-10 items-center justify-center gap-4 rounded stroke-slate-700 px-4 text-sm font-medium text-slate-700 transition duration-300 hover:bg-primary/10 hover:stroke-primary hover:text-primary focus:bg-primary/90 focus:stroke-primary focus:text-white focus-visible:outline-none',
                   {
-                    'stroke-slate-400 text-slate-400 pointer-events-none': activePage === 1
+                    'pointer-events-none stroke-slate-400 text-slate-400': activePage === 1
                   }
                 )}
               >
@@ -70,12 +70,12 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
           return (
             <li key={idx}>
               <Link
-                href={`${pathname}?page=${page}`}
+                href={getUpdatedPath({ page })}
                 aria-label={`Goto Page ${page}`}
                 className={cn(
                   'inline-flex h-10 items-center justify-center gap-4 rounded stroke-slate-700 px-4 text-sm font-medium text-slate-700 transition duration-300 hover:bg-primary/10 hover:stroke-primary hover:text-primary focus:bg-primary/90 focus:stroke-primary focus:text-white focus-visible:outline-none',
                   {
-                    'whitespace-nowrap bg-primary text-white hover:bg-primary hover:text-white ring-offset-2':
+                    'whitespace-nowrap bg-primary text-white ring-offset-2 hover:bg-primary hover:text-white':
                       activePage === page
                   }
                 )}
@@ -89,12 +89,12 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
           <>
             <li>
               <Link
-                href={`${pathname}?page=${activePage + 1}`}
+                href={getUpdatedPath({ page: activePage + 1 })}
                 aria-label="Goto Page 2"
                 className={cn(
                   'inline-flex h-10 items-center justify-center gap-4 rounded stroke-slate-700 px-4 text-sm font-medium text-slate-700 transition duration-300 hover:bg-primary/10 hover:stroke-primary hover:text-primary focus:bg-primary/90 focus:stroke-primary focus:text-white focus-visible:outline-none',
                   {
-                    'stroke-slate-400 text-slate-400 pointer-events-none': activePage === totalPages
+                    'pointer-events-none stroke-slate-400 text-slate-400': activePage === totalPages
                   }
                 )}
               >
@@ -104,12 +104,12 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
             </li>
             <li>
               <Link
-                href={`${pathname}?page=${totalPages}`}
+                href={getUpdatedPath({ page: totalPages })}
                 aria-label="Goto Page 99"
                 className={cn(
                   'inline-flex h-10 items-center justify-center gap-4 rounded stroke-slate-700 px-4 text-sm font-medium text-slate-700 transition duration-300 hover:bg-primary/10 hover:stroke-primary hover:text-primary focus:bg-primary/90 focus:stroke-primary focus:text-white focus-visible:outline-none',
                   {
-                    'stroke-slate-400 text-slate-400 pointer-events-none': activePage === totalPages
+                    'pointer-events-none stroke-slate-400 text-slate-400': activePage === totalPages
                   }
                 )}
               >

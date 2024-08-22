@@ -4,7 +4,7 @@ export interface ProductSearchFilters {
   filtering: Filtering;
   sorting?: {
     sort: 'DEFAULT' | 'ITINERARY_DURATION' | 'PRICE' | 'TRAVELER_RATING' | 'DATE_ADDED';
-    order: 'ASCENDING' | 'DESCENDING';
+    order?: 'ASCENDING' | 'DESCENDING';
   };
   pagination?: {
     start: number;

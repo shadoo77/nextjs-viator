@@ -113,6 +113,13 @@
     "resultsFound": "{{count}} tours gevonden",
     "freeCancellation": "Gratis annuleren"
   },
+  "searchResultsPage": {
+    "seoTitle": "Ontdek de beste tours en activiteiten in {{term}}",
+    "seoDescription": "Ontdek de beste tours en activiteiten in {{term}}. Boek uw tickets online en profiteer van de laagste prijzen en de beste aanbiedingen. Geniet van uw reis naar {{term}} met TripPlazr!",
+    "noResults": "Geen resultaten gevonden",
+    "resultsFound": "{{count}} resultaten gevonden",
+    "pageTitle": "Hier is wat we hebben gevonden voor <strong>{{searchTerm}}</strong>"
+  },
   "filters": {
     "summary": {
       "title": "Filters",
@@ -123,6 +130,16 @@
     "duration": "Duur",
     "price": "Prijs",
     "rating": "Beoordeling"
+  },
+  "sort": {
+    "title": "Sorteren op",
+    "featured": "Aanbevolen",
+    "priceLowToHigh": "Prijs: Laag naar Hoog",
+    "priceHighToLow": "Prijs: Hoog naar Laag",
+    "rating": "Beoordeling",
+    "durationShortToLong": "Duur: Kort naar Lang",
+    "durationLongToShort": "Duur: Lang naar Kort",
+    "newOnTripPlazr": "Nieuw op TripPlazr"
   },
   "flags": {
     "NEW_ON_VIATOR": "Nieuw op TripPlazr",

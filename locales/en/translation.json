@@ -113,6 +113,13 @@
     "resultsFound": "{{count}} tours found",
     "freeCancellation": "Free Cancellation"
   },
+  "searchResultsPage": {
+    "seoTitle": "Discover the best tours and activities in {{term}}",
+    "seoDescription": "Discover the best tours and activities in {{term}}. From sightseeing tours to adventure activities, find the perfect experience for your next trip. Explore {{term}} like a local with expert guides and curated itineraries. Book your adventure today!",
+    "noResults": "No results found",
+    "resultsFound": "{{count}} results found",
+    "pageTitle": "Here is what we found for <strong>{{searchTerm}}</strong>"
+  },
   "filters": {
     "summary": {
       "title": "Filters",
@@ -123,6 +130,16 @@
     "duration": "Duration",
     "price": "Price",
     "rating": "Rating"
+  },
+  "sort": {
+    "title": "Sort by",
+    "featured": "Featured",
+    "priceLowToHigh": "Price: Low to High",
+    "priceHighToLow": "Price: High to Low",
+    "rating": "Rating",
+    "durationShortToLong": "Duration: Short to Long",
+    "durationLongToShort": "Duration: Long to Short",
+    "newOnTripPlazr": "New on TripPlazr"
   },
   "flags": {
     "NEW_ON_VIATOR": "New on TripPlazr",

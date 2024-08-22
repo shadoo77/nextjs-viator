@@ -3,22 +3,25 @@
 import { useTranslation } from 'react-i18next';
 import TourItem from './TourItem';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ProductSearchResults } from '@/types/products';
+import { Product } from '@/types/products';
 import Pagination from '@/components/molecules/Pagination';
 import { toursPageCount } from '@/lib/constants';
 import { ErrorAlert } from '@/components/molecules/ErrorAlert';
+import { Sorting } from '@/components/organisms/Sorting';
 
 export default function ToursList({
-  searchResults,
+  products,
+  totalNumber = 0,
   isLoading,
   error
 }: {
-  searchResults: ProductSearchResults | undefined;
+  products?: Product[];
+  totalNumber?: number;
   isLoading: boolean;
   error: unknown;
 }) {
   const { t } = useTranslation();
-  const totalPages = Math.ceil((searchResults?.totalCount || 0) / toursPageCount);
+  const totalPages = Math.ceil(totalNumber / toursPageCount);
 
   return (
     <section className="flex basis-full flex-col gap-4 lg:basis-3/4">
@@ -43,17 +46,18 @@ export default function ToursList({
           className="col-span-12 mx-auto"
         />
       )}
-      {searchResults && (
+      {products && totalNumber && (
         <>
-          <span className="text-sm text-slate-500">
-            {t('toursPage.resultsFound', { count: searchResults.totalCount })}
-          </span>
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-slate-500">
+              {t('toursPage.resultsFound', { count: totalNumber })}
+            </span>
+            <Sorting />
+          </div>
 
           <div className="flex flex-col gap-3 xs:grid xs:grid-cols-2 sm:flex sm:flex-col sm:gap-6">
-            {searchResults.products.length > 0 ? (
-              searchResults.products.map((product) => (
-                <TourItem key={product.productCode} product={product} />
-              ))
+            {products.length > 0 ? (
+              products.map((product) => <TourItem key={product.productCode} product={product} />)
             ) : (
               <ErrorAlert title={t('toursPage.noResults')} className="col-span-12 mx-auto" />
             )}

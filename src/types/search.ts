@@ -21,18 +21,18 @@ export type ProductFiltering = {
 
 // iso date format
 export type DateRange = {
-  from: string;
-  to: string;
+  from?: string;
+  to?: string;
 };
 
 export type NumberRange = {
-  from: number;
-  to: number;
+  from?: number;
+  to?: number;
 };
 
 export interface ProductSorting {
   sort: 'DEFAULT' | 'ITINERARY_DURATION' | 'PRICE' | 'REVIEW_AVG_RATING' | 'DATE_ADDED';
-  order: 'ASCENDING' | 'DESCENDING';
+  order?: 'ASCENDING' | 'DESCENDING';
 }
 
 export interface SearchType {

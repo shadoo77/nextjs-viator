@@ -103,3 +103,29 @@ export const durationOptions = [
 ];
 
 export const ratingOptions = ['5', '4', '3'];
+
+// Define a static representation of the id values
+export type SortingOptionIds =
+  | 'featured'
+  | 'durationShortToLong'
+  | 'durationLongToShort'
+  | 'priceLowToHigh'
+  | 'priceHighToLow'
+  | 'rating'
+  | 'newOnTripPlazr';
+
+export const getSortingOptions = (isSearchResultsPage?: boolean) => {
+  const sortingOptions: { id: SortingOptionIds; sort: string; order?: string }[] = [
+    { id: 'featured', sort: 'DEFAULT' },
+    { id: 'durationShortToLong', sort: 'ITINERARY_DURATION', order: 'ASCENDING' },
+    { id: 'durationLongToShort', sort: 'ITINERARY_DURATION', order: 'DESCENDING' },
+    { id: 'priceLowToHigh', sort: 'PRICE', order: 'ASCENDING' },
+    { id: 'priceHighToLow', sort: 'PRICE', order: 'DESCENDING' },
+    {
+      id: 'rating',
+      sort: isSearchResultsPage ? 'REVIEW_AVG_RATING' : 'TRAVELER_RATING'
+    },
+    { id: 'newOnTripPlazr', sort: 'DATE_ADDED', order: 'DESCENDING' }
+  ];
+  return { sortingOptions };
+};
