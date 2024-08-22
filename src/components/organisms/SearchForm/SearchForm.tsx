@@ -83,15 +83,14 @@ export default function SearchForm({ destination }: { destination?: Destination 
   // Reset user preferences on component mount
   useEffect(() => {
     resetUserPreferences();
-    if (
-      destination &&
-      (abstractPath.startsWith('/searchResults') || abstractPath.startsWith('/tours'))
-    ) {
+    if (abstractPath.startsWith('/searchResults') || abstractPath.startsWith('/tours')) {
       const queryTerm =
-        abstractPath.startsWith('/searchResults') && term ? term : destination.destinationName;
-      setSearchTerm(queryTerm);
-      setValue('searchTerm', queryTerm);
-      setSelectedDestination(destination);
+        abstractPath.startsWith('/searchResults') && term ? term : destination?.destinationName;
+      if (queryTerm) {
+        setSearchTerm(queryTerm);
+        setValue('searchTerm', queryTerm);
+      }
+      destination && setSelectedDestination(destination);
       (startDate || endDate) &&
         setValue('date', {
           from: startDate ? new Date(startDate) : undefined,

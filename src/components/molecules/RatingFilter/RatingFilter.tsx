@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import { useQueryParams } from '@/hooks/useQueryParams';
-import { Filtering } from '@/types/productSearchFilters';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Button } from '@/components/ui/button';
 import RatingReview from '@/components/atoms/RatingReview';
 import { ratingOptions } from '@/lib/constants';
+import { ProductFiltering } from '@/types/search';
 
-export default function RatingFilter({ rating }: { rating?: Filtering['rating'] }) {
+export default function RatingFilter({ rating }: { rating?: ProductFiltering['rating'] }) {
   const { t } = useTranslation();
   const { updatedPath } = useQueryParams();
 
@@ -15,13 +15,15 @@ export default function RatingFilter({ rating }: { rating?: Filtering['rating'] 
     <section className="py-4">
       <div className="flex justify-between">
         <h2 className="mb-2 text-xl font-bold">{t('filters.rating')}</h2>
-        <Button
-          className="text-primary-500 hover:underline"
-          variant="link"
-          onClick={() => updatedPath({ updatedQuery: { rating: undefined } })}
-        >
-          {t('clear')}
-        </Button>
+        {rating && (
+          <Button
+            className="text-primary-500 hover:underline"
+            variant="link"
+            onClick={() => updatedPath({ updatedQuery: { rating: undefined } })}
+          >
+            {t('clear')}
+          </Button>
+        )}
       </div>
       <RadioGroup
         defaultValue={rating?.from?.toString() || ''}

@@ -1,6 +1,5 @@
 'use client';
 
-import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'usehooks-ts';
@@ -9,24 +8,27 @@ import Price from '@/components/organisms/Tours/Price';
 import { Product } from '@/types/products';
 import Link from '@/components/atoms/NextLink';
 import RatingReview from '@/components/atoms/RatingReview';
-import { Locale } from '@/i18nConfig';
 import { Button } from '@/components/ui/button';
 import { useDuration } from '@/hooks/useDuration';
 import { Badge } from '@/components/ui/badge';
 import { cn, getPrices } from '@/lib/utils';
 import { useDestinations } from '@/tanstack/queries/destinations';
+import { useLocale } from '@/hooks/useLocale';
 
 export default function TourItem({ product }: { product: Product }) {
-  const { title, description, reviews, pricing, flags, duration, images } = product;
-  const { locale, slug }: { locale: Locale; slug: string[] } = useParams();
+  const { title, description, reviews, pricing, flags, duration, images, destinations } = product;
+  const { locale } = useLocale();
   const { t } = useTranslation();
   const min390MaxXS = useMediaQuery('(min-width: 390px) and (max-width: 480px)');
   const matchMinWidthSM = useMediaQuery('(min-width: 640px)');
-  const destinationId = slug[1].replace('did-', '').trim();
+  const productDestinationRef = destinations.find((destination) => destination.primary);
+  const destinationId = productDestinationRef?.ref;
+
   const { data: destination } = useDestinations({
     select: (data) => {
       return data.data.find((d) => d.destinationId === Number(destinationId));
-    }
+    },
+    enabled: !!destinationId
   });
 
   const image = images?.[0];

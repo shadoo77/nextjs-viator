@@ -57,10 +57,22 @@ export function useQueryParams(queryObject: Record<string, any> = {}) {
     router.replace(newPath, { scroll });
   };
 
-  // Clear all query params
-  const clearQueryParams = () => {
-    router.replace(pathname);
-  };
+  // Get current path with new query params
+  const getUpdatedPath = (updatedQuery: Record<string, any> = {}) =>
+    getSearchQuery(updatedQuery).path;
 
-  return { updatedPath, clearQueryParams, ...pathInfo };
+  // Get all query params
+  const getParams = () => qs.parse(searchParams.toString(), { allowEmptyArrays: false });
+
+  // Clear all query params
+  const clearQueryParams = () => router.replace(pathname);
+
+  return {
+    updatedPath,
+    clearQueryParams,
+    getUpdatedPath,
+    getParams,
+    abstractPathname: pathname,
+    ...pathInfo
+  };
 }

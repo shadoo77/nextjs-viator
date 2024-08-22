@@ -3,25 +3,41 @@ import { useTranslation } from 'react-i18next';
 import { Chip } from '@/components/atoms/Chip';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { Filtering } from '@/types/productSearchFilters';
 import { useTags } from '@/tanstack/queries/tags';
 import { useLocale } from '@/hooks/useLocale';
 import { useQueryParams } from '@/hooks/useQueryParams';
-import { isEmpty } from '@/lib/utils';
 import { Tag } from '@/types/tags';
-import { durationOptions } from '@/lib/constants';
+import { durationOptions, getSortingOptions } from '@/lib/constants';
 import RatingReview from '@/components/atoms/RatingReview';
+import { Flag } from '@/types/products';
 
-export function FilterSummary({ filters }: { filters: Filtering }) {
+export function FilterSummary({
+  tags,
+  flags,
+  rating,
+  durationInMinutes,
+  highestPrice
+}: {
+  tags?: number[];
+  flags?: Flag[];
+  rating?: { from?: number };
+  durationInMinutes?: { from?: string | number; to?: string | number };
+  highestPrice?: number;
+}) {
   const { locale } = useLocale();
   const { t } = useTranslation();
-  const { tags, flags, rating, durationInMinutes, highestPrice } = filters;
-  const { destination, ...restFilters } = filters;
   const { data } = useTags();
   const tagFilters = tags
     ?.map((tagId) => data?.find((tag) => tag.tagId === tagId))
     .filter((tag) => tag !== undefined) as Tag[];
-  const { clearQueryParams, updatedPath } = useQueryParams();
+  const { updatedPath, abstractPathname, getParams } = useQueryParams();
+
+  const isSearchResultsPage = abstractPathname.endsWith('searchResults');
+  const { sortingOptions } = getSortingOptions(isSearchResultsPage);
+  const { sortType, sortOrder } = getParams();
+  const sorting = sortingOptions.find(
+    (option) => option.sort === sortType && option.order === sortOrder
+  );
 
   const flagFilters = flags?.map((flag) => ({
     label: t(`flags.${flag}`),
@@ -53,9 +69,7 @@ export function FilterSummary({ filters }: { filters: Filtering }) {
     return t(`duration.${item.label}`);
   };
 
-  if (isEmpty(restFilters)) {
-    return null;
-  }
+  if (!tags && !flags && !rating && !durationInMinutes && !highestPrice && !sorting) return null;
 
   return (
     <section className="mt-6 flex flex-col gap-4">
@@ -67,11 +81,34 @@ export function FilterSummary({ filters }: { filters: Filtering }) {
           <span className="text-2xl font-bold">{t('filters.summary.title')}</span>
         </div>
         <Separator orientation="vertical" />
-        <Button variant="link" onClick={() => clearQueryParams()}>
+        <Button
+          variant="link"
+          onClick={() =>
+            updatedPath({
+              updatedQuery: {
+                highestPrice: undefined,
+                tags: undefined,
+                flags: undefined,
+                durationInMinutes: undefined,
+                rating: undefined,
+                sortType: undefined,
+                sortOrder: undefined
+              }
+            })
+          }
+        >
           {t('filters.summary.clearAll')}
         </Button>
       </div>
       <div className="flex flex-wrap gap-3">
+        {sortType && (
+          <Chip
+            label={t(`sort.${sorting?.id}`)}
+            onClose={() =>
+              updatedPath({ updatedQuery: { sortType: undefined, sortOrder: undefined } })
+            }
+          />
+        )}
         {tagFilters &&
           tagFilters.map((tag, index) => (
             <Chip
@@ -96,7 +133,7 @@ export function FilterSummary({ filters }: { filters: Filtering }) {
             onClose={() => updatedPath({ updatedQuery: { durationInMinutes: undefined } })}
           />
         )}
-        {rating && (
+        {rating && rating.from && (
           <Chip
             label={
               <div className="flex items-center gap-2">
