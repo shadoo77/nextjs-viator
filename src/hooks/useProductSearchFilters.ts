@@ -116,11 +116,21 @@ export function useProductSearchFilters({ destination }: { destination: Destinat
     if (params.endDate && getParam({ param: params.endDate })) {
       obj.filtering.endDate = getParam({ param: params.endDate });
     }
-    if (
-      params.sorting &&
-      getObjectParam({ param: params.sorting, requiredKeys: ['sort', 'order'] })
-    ) {
-      obj.sorting = getObjectParam({ param: params.sorting, requiredKeys: ['sort', 'order'] });
+
+    if (params.sortType) {
+      const sort = params.sortType as
+        | 'DEFAULT'
+        | 'ITINERARY_DURATION'
+        | 'PRICE'
+        | 'TRAVELER_RATING'
+        | 'DATE_ADDED';
+      const sorting: ProductSearchFilters['sorting'] = {
+        sort
+      };
+      if (params.sortOrder) {
+        sorting.order = params.sortOrder as 'ASCENDING' | 'DESCENDING';
+      }
+      obj.sorting = sorting;
     }
 
     return obj;

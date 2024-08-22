@@ -7,6 +7,7 @@ import { Coordinates, Destination } from '@/types/destinations';
 import { Locale } from '@/i18nConfig';
 import { Pricing, Product } from '@/types/products';
 import { Filtering } from '@/types/productSearchFilters';
+import { ProductFiltering } from '@/types/search';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -301,5 +302,30 @@ export const getActiveFiltersCount = ({
   if (rating) filtersCount++;
   if (durationInMinutes) filtersCount++;
   if (highestPrice) filtersCount++;
+  return filtersCount;
+};
+
+// Get active filters count
+export const getSearchResultsActiveFiltersCount = (
+  productFiltering: ProductFiltering | undefined
+) => {
+  if (!productFiltering) return 0;
+  const {
+    flags,
+    rating,
+    durationInMinutes,
+    price,
+    destination,
+    dateRange,
+    includeAutomaticTranslations
+  } = productFiltering;
+  let filtersCount = 0;
+  if (flags) filtersCount += flags.length;
+  if (rating) filtersCount++;
+  if (durationInMinutes) filtersCount++;
+  if (price) filtersCount++;
+  if (destination) filtersCount++;
+  if (dateRange) filtersCount++;
+  if (includeAutomaticTranslations) filtersCount++;
   return filtersCount;
 };

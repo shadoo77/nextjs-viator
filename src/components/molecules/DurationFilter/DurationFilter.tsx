@@ -34,13 +34,15 @@ export default function DurationFilter({
     <section className="py-4">
       <div className="flex justify-between">
         <h2 className="mb-2 text-xl font-bold">{t('filters.duration')}</h2>
-        <Button
-          className="text-primary-500 hover:underline"
-          variant="link"
-          onClick={() => updatedPath({ updatedQuery: { durationInMinutes: undefined } })}
-        >
-          {t('clear')}
-        </Button>
+        {durationInMinutes && (
+          <Button
+            className="text-primary-500 hover:underline"
+            variant="link"
+            onClick={() => updatedPath({ updatedQuery: { durationInMinutes: undefined } })}
+          >
+            {t('clear')}
+          </Button>
+        )}
       </div>
       <RadioGroup
         defaultValue={getDefaultValue()}

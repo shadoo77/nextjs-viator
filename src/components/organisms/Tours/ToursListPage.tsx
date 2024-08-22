@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Loader2, SlidersHorizontal } from 'lucide-react';
 import { useMediaQuery } from 'usehooks-ts';
+import { useSearchParams } from 'next/navigation';
 import { useProductsSearch } from '@/tanstack/queries/productsSearch';
 import ToursList from '@/components/organisms/Tours/ToursList';
 import { Destination } from '@/types/destinations';
@@ -29,9 +30,11 @@ export default function ToursListPage({ destination }: { destination: Destinatio
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const matchMinLg = useMediaQuery('(min-width: 1024px)');
   const isClient = useClient();
+  const searchParams = useSearchParams();
+  const sortType = searchParams.get('sortType');
 
   const searchFilters = useProductSearchFilters({ destination });
-  const filtersCount = getActiveFiltersCount(searchFilters.filtering);
+  const filtersCount = getActiveFiltersCount(searchFilters.filtering) + (sortType ? 1 : 0);
 
   const { data, isPending, mutate, error } = useProductsSearch({
     searchFilters,
@@ -75,12 +78,31 @@ export default function ToursListPage({ destination }: { destination: Destinatio
           )}
         </Button>
       </div>
-      {isClient && matchMinLg && <FilterSummary filters={searchFilters.filtering} />}
+      {isClient && matchMinLg && (
+        <FilterSummary
+          tags={searchFilters.filtering.tags}
+          flags={searchFilters.filtering.flags}
+          rating={searchFilters.filtering.rating}
+          durationInMinutes={searchFilters.filtering?.durationInMinutes}
+          highestPrice={searchFilters.filtering?.highestPrice}
+        />
+      )}
       <section className="mt-6 flex gap-4">
         <section className="hidden basis-0 lg:flex lg:basis-1/4">
-          <Filters searchResults={data} filters={searchFilters.filtering} />
+          <Filters
+            products={data?.products}
+            flags={searchFilters.filtering?.flags}
+            rating={searchFilters.filtering?.rating}
+            durationInMinutes={searchFilters.filtering?.durationInMinutes}
+            highestPrice={searchFilters.filtering.highestPrice}
+          />
         </section>
-        <ToursList searchResults={data} isLoading={isPending} error={error} />
+        <ToursList
+          products={data?.products}
+          totalNumber={data?.totalCount}
+          isLoading={isPending}
+          error={error}
+        />
       </section>
       {/** Mobile filters */}
       <Dialog open={mobileFiltersOpen} onOpenChange={setMobileFiltersOpen}>
@@ -89,8 +111,20 @@ export default function ToursListPage({ destination }: { destination: Destinatio
             <DialogTitle>{t('filters.summary.title')}</DialogTitle>
           </DialogHeader>
           <div className="flex-grow overflow-auto py-4">
-            <FilterSummary filters={searchFilters.filtering} />
-            <Filters searchResults={data} filters={searchFilters.filtering} />
+            <FilterSummary
+              tags={searchFilters.filtering.tags}
+              flags={searchFilters.filtering.flags}
+              rating={searchFilters.filtering.rating}
+              durationInMinutes={searchFilters.filtering?.durationInMinutes}
+              highestPrice={searchFilters.filtering?.highestPrice}
+            />
+            <Filters
+              products={data?.products}
+              flags={searchFilters.filtering?.flags}
+              rating={searchFilters.filtering?.rating}
+              durationInMinutes={searchFilters.filtering?.durationInMinutes}
+              highestPrice={searchFilters.filtering.highestPrice}
+            />
           </div>
           <DialogFooter className="absolute bottom-3 left-0 right-0 z-10 w-full overflow-hidden border-t border-slate-300 bg-white p-3 pb-0">
             <Button
